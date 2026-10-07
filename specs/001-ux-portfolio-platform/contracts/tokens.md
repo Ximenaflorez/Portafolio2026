@@ -68,6 +68,21 @@ vale 4px).
 | `12` | `96px` |
 | `16` | `128px` |
 
+## Movimiento
+
+| Token | Variable CSS | Valor |
+|---|---|---|
+| Duración de estado | `--duration-state` | `200ms`; `0ms` con `prefers-reduced-motion: reduce` |
+
+Solo se animan cambios de estado (puntero, presión, foco). No hay animaciones de aparición,
+de scroll ni en bucle (FR-029).
+
+## Tamaño de objetivo
+
+| Token | Variable CSS | Valor |
+|---|---|---|
+| Objetivo mínimo | `--target-min` | `44px` (FR-027) |
+
 ## Foco
 
 ```text

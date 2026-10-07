@@ -57,13 +57,13 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T016 [P] Definir los 13 tokens de color como canales RGB en `src/styles/tokens/_color.scss`, con los valores exactos de `contracts/tokens.md`
 - [ ] T017 [P] Definir familias (Manrope titulares, Inter texto) y los 7 pasos de la escala 1.25 en `rem` en `src/styles/tokens/_typography.scss`
 - [ ] T018 [P] Definir el espaciado (4px medio paso y múltiplos de 8px: 0, 4, 8, 16, 24, 32, 40, 48, 64, 80, 96, 128) en `src/styles/tokens/_spacing.scss`
-- [ ] T019 Emitir todos los tokens como variables CSS en `:root` desde `src/styles/tokens/_index.scss` y `src/styles/main.scss`
+- [ ] T019 Emitir todos los tokens como variables CSS en `:root`, incluidos `--duration-state: 200ms` y `--target-min: 44px`, desde `src/styles/tokens/_index.scss` y `src/styles/main.scss`
 - [ ] T020 Configurar `tailwind.config.ts` para **reemplazar** `colors`, `fontFamily`, `fontSize` y `spacing` con `rgb(var(--color-*) / <alpha-value>)` y `var(--*)`, según `contracts/tokens.md`
 - [ ] T021 Ejecutar T012 a T014 y confirmar que pasan
 
 ### Accesibilidad global
 
-- [ ] T022 [P] Escribir el reset con `box-sizing`, márgenes a cero y soporte de `prefers-reduced-motion` en `src/styles/base/_reset.scss`
+- [ ] T022 [P] Escribir el reset con `box-sizing` y márgenes a cero, y fijar `--duration-state: 0ms` con `prefers-reduced-motion: reduce`, en `src/styles/base/_reset.scss`
 - [ ] T023 [P] Definir `:focus-visible` global con outline de 2px `rgb(var(--color-focus))` y `outline-offset: 2px`, y `:focus:not(:focus-visible)` sin outline, en `src/styles/base/_focus.scss`
 - [ ] T024 [P] Definir la tipografía base (cuerpo Inter paso 0, encabezados Manrope) en `src/styles/base/_typography.scss`
 - [ ] T025 Crear el documento raíz con `lang="es"`, carga de Fontsource, precarga de Inter y `main.scss` en `src/root.tsx`
@@ -91,7 +91,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 **Goal**: Encabezado, navegación, enlace para saltar al contenido y pie, presentes en todas las rutas (FR-017)
 
-- [ ] T035 ⛔ APROBACIÓN: presentar la propuesta de encabezado, navegación (incluido el comportamiento en teléfono), enlace para saltar al contenido y pie, y obtener aprobación explícita
+- [ ] T035 ⛔ APROBACIÓN: presentar la propuesta de encabezado no fijo, navegación (incluido el comportamiento en teléfono), enlace para saltar al contenido y pie, y obtener aprobación explícita
 - [ ] T036 [P] Escribir prueba axe y de teclado para `SkipLink`, `NavLink` y `TextLink` en `tests/unit/components/atoms.test.tsx`
 - [ ] T037 [P] Crear el átomo `SkipLink` hacia `#contenido` en `src/components/atoms/SkipLink.tsx`
 - [ ] T038 [P] Crear el átomo `TextLink` con estados de puntero, presión y foco desde tokens en `src/components/atoms/TextLink.tsx`
@@ -142,9 +142,9 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Tests for User Story 2
 
-- [ ] T057 [P] [US2] Escribir prueba e2e de teclado: orden de Tab, foco visible (outline presente y no oculto por el encabezado), sin trampas, en todas las rutas, en `tests/e2e/keyboard.spec.ts`
+- [ ] T057 [P] [US2] Escribir prueba e2e de teclado: orden de Tab, foco visible (outline presente y sin ningún elemento fijo encima, FR-028), sin trampas, y cada control con área de al menos 44×44 px (FR-027), en todas las rutas, en `tests/e2e/keyboard.spec.ts`
 - [ ] T058 [P] [US2] Escribir prueba e2e de responsive: sin desborde horizontal en 320, 360, 768 y 1280px y con texto al 200%, en `tests/e2e/responsive.spec.ts`
-- [ ] T059 [P] [US2] Escribir prueba e2e de estados: el estilo al pasar el puntero, al presionar y con foco difiere del de reposo en `TextLink`, `NavLink` y `CaseCard`, en `tests/e2e/states.spec.ts`
+- [ ] T059 [P] [US2] Escribir prueba e2e de estados: el estilo al pasar el puntero, al presionar y con foco difiere del de reposo en `TextLink`, `NavLink` y `CaseCard`; ninguna transición dura más de 200 ms y ninguna existe con movimiento reducido (FR-029), en `tests/e2e/states.spec.ts`
 
 ### Implementation for User Story 2
 
@@ -173,7 +173,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T066 [US3] ⛔ APROBACIÓN: presentar las propuestas de Inicio, Sobre mí y proceso, Contacto y 404, y obtener aprobación explícita de cada una
 - [ ] T067 [P] [US3] Crear la molécula `ContactList` (correo, perfil profesional, CV) en `src/components/molecules/ContactList.tsx`
 - [ ] T068 [P] [US3] Crear el organismo `ProfileIntro` (nombre, rol, propuesta de valor, llamado a contacto) en `src/components/organisms/ProfileIntro.tsx`
-- [ ] T069 [P] [US3] Crear el organismo `FeaturedCases` con los casos `featured` en `src/components/organisms/FeaturedCases.tsx`
+- [ ] T069 [P] [US3] Crear el organismo `HomeCases` con los 3 casos de producto ordenados por `order` en `src/components/organisms/HomeCases.tsx`
 - [ ] T070 [US3] Crear el template `ContentTemplate` para páginas de módulo en `src/components/templates/ContentTemplate.tsx`
 - [ ] T071 [US3] Crear las pages `HomePage`, `AboutPage`, `ContactPage` y `NotFoundPage` en `src/components/pages/`
 - [ ] T072 [US3] Conectar `/`, `/sobre-mi/`, `/contacto/` y la 404 con loader y meta en `src/routes/`
@@ -189,7 +189,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T075 [P] Configurar el despliegue en GitHub Pages con `BASE_PATH` y `SITE_URL` como variables y `REQUIRE_COMPLETE_CONTENT=true`, en `.github/workflows/deploy.yml`
 - [ ] T076 [P] Optimizar imágenes (dimensiones declaradas, carga diferida, formatos modernos) en `src/components/atoms/Figure.tsx`
 - [ ] T077 Ejecutar `npm run lighthouse` y corregir hasta superar 95 en las tres categorías, en teléfono y escritorio
-- [ ] T078 Completar el contenido real: ningún `[COMPLETAR]` en `src/content/`, y pasar los 4 casos a `status: published`
+- [ ] T078 Completar el contenido real: ningún `[COMPLETAR]` en `src/content/`, revisar a mano el anonimato de cada caso (FR-030), y pasar los 4 casos a `status: published`
 - [ ] T079 Ejecutar todos los escenarios de `quickstart.md`
 - [ ] T080 Realizar los recorridos con evaluadores de SC-001, SC-009 y SC-010 (al menos 4 de 5) y una revisión con NVDA
 

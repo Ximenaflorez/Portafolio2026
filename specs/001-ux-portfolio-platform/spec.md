@@ -8,6 +8,16 @@
 
 **Input**: User description: "Plataforma de portafolio para un perfil de UX/UI y product design. Debe superar al portafolio estático de pantallas finales y demostrar pensamiento sistémico, arquitectura de la solución y criterio de producto ante engineering managers, product managers y reclutadores especializados. El portafolio es el caso de estudio principal. Incluye al menos dos casos con problema, evidencia de usuario, arquitectura de la solución y resultados o aprendizajes. La experiencia debe ser accesible (WCAG 2.2 AA), consistente desde un sistema visual central, usable con teclado, responsiva en teléfono, tableta y escritorio, rápida y encontrable en buscadores."
 
+## Clarifications
+
+### Session 2026-10-07
+
+- Q: ¿Qué tamaño mínimo deben tener los controles que se tocan o se cliquean? → A: 44×44 px como mínimo para todos los controles.
+- Q: ¿El encabezado se queda fijo arriba al hacer scroll o se desplaza con la página? → A: Se desplaza con la página.
+- Q: ¿Cómo se comporta el portafolio con animaciones y transiciones? → A: Solo transiciones breves de estado, de hasta 200 ms, desactivadas si el sistema pide reducir movimiento.
+- Q: ¿Cuántos casos destacados muestra Inicio y cómo se eligen? → A: Los 3 casos de producto, en el orden que fija el responsable.
+- Q: ¿Qué regla se aplica a citas, datos de usuario e información de empresas en los casos? → A: Todo anonimizado siempre, incluido el nombre de la empresa.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Evaluar el pensamiento de producto (Priority: P1)
@@ -68,7 +78,7 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - Un caso con una de las cuatro partes vacía, o con un espacio de plantilla sin completar, no se publica.
 - Si hay menos de tres casos de producto completos, la plataforma no cumple el alcance de esta especificación.
 - El caso meta no cuenta para el mínimo de tres casos de producto.
-- Si un resultado es confidencial, el caso lo expresa como porcentaje, rango o efecto observado, y sigue contando como completo.
+- Las métricas de resultado se expresan siempre como porcentaje, rango o efecto observado (FR-030), y el caso sigue contando como completo.
 - Si el CV no está disponible, el contacto sigue funcionando con correo y perfil profesional.
 - En tacto, sin puntero, ninguna información necesaria depende del estado al pasar el puntero.
 - Con el texto ampliado al 200%, el contenido principal sigue legible, sin solapes ni recortes.
@@ -87,8 +97,8 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-004**: La entrada MUST identificar el perfil como UX/UI y product design, más allá de una galería de pantallas finales.
 - **FR-005**: La plataforma MUST ofrecer un medio de contacto visible: correo, perfil profesional y enlace al CV.
 - **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
-- **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los casos destacados y el acceso a contacto.
-- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado.
+- **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los 3 casos de producto y el acceso a contacto.
+- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado. Inicio y Trabajos MUST usar el mismo orden de casos, fijado por el responsable.
 - **FR-020**: Cada caso MUST abrir con un resumen de producto, rol, equipo, duración y resultado clave.
 - **FR-021**: Cada caso MUST seguir el arco narrativo: tensión, descubrimiento, decisión, prueba, impacto y reflexión.
 - **FR-022**: En la arquitectura de la solución, cada caso MUST documentar al menos una decisión clave con su motivo y la alternativa descartada.
@@ -96,6 +106,10 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-024**: El caso meta MUST explicar el sistema de diseño, la estructura de componentes, el enfoque de accesibilidad y el uso de IA en el desarrollo del portafolio.
 - **FR-025**: Sobre mí y proceso MUST describir la forma de trabajar, los métodos dominados y el tipo de problemas que busca el perfil.
 - **FR-026**: Ningún caso MUST publicarse con espacios de plantilla sin completar.
+- **FR-027**: Todo control interactivo MUST tener un área de toque o clic de al menos 44×44 px, incluidos los enlaces de la navegación, los llamados a contacto y los enlaces de "ver caso". Un enlace dentro de un párrafo cumple si su área de toque, aunque no se vea, alcanza ese tamaño sin solaparse con otro control.
+- **FR-028**: El encabezado MUST desplazarse con la página, sin quedar fijo. Ningún elemento fijo MUST tapar, ni en parte, el control que tiene el foco del teclado.
+- **FR-029**: El movimiento MUST limitarse a transiciones de cambio de estado (puntero, presión, foco) de 200 ms como máximo. No hay animaciones de aparición, de scroll ni en bucle. Si el sistema pide reducir movimiento, MUST no haber ninguna transición.
+- **FR-030**: Todo caso MUST estar anonimizado: sin nombre de empresa ni de clientes, sin nombres de personas, con citas sin atribución y con métricas en porcentajes o rangos. Las imágenes MUST no mostrar logos, nombres ni datos reales. La empresa se describe solo por sector y tamaño.
 - **FR-006**: Todo control interactivo MUST poder alcanzarse y activarse solo con teclado, sin trampas de foco.
 - **FR-007**: Todo control interactivo MUST mostrar un foco de teclado visible. Si el control admite puntero o presión, MUST distinguir el estado al pasar el puntero y el estado al presionar.
 - **FR-008**: La información necesaria para entender un caso MUST estar disponible sin depender del estado al pasar el puntero.

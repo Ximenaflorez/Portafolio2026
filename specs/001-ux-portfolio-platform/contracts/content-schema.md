@@ -12,8 +12,7 @@ Frontmatter:
 | `slug` | string | Obligatorio, minúsculas y guiones, único |
 | `type` | `product` \| `meta` | Obligatorio |
 | `status` | `draft` \| `published` | Obligatorio |
-| `order` | entero ≥ 1 | Obligatorio; orden en Trabajos |
-| `featured` | boolean | Opcional; aparece en Inicio |
+| `order` | entero ≥ 1 | Obligatorio y único por tipo; orden en Inicio y en Trabajos |
 | `title` | string | Obligatorio, 1 a 80 caracteres |
 | `seo.title` | string | Obligatorio, 1 a 60 caracteres |
 | `seo.description` | string | Obligatorio, 50 a 160 caracteres |
@@ -42,6 +41,8 @@ Reglas de publicación (`status: published`):
 - `Resultados y aprendizajes` contiene `**Lo que no funcionó:**` o `**Lo que haría distinto:**`
   con texto (FR-023).
 - Un caso `meta` no exige las etiquetas de equipo, índice ni tipo de producto.
+- El anonimato (FR-030) no se puede validar del todo de forma automática. Se revisa a mano antes de
+  pasar un caso a `published`.
 - Toda imagen tiene texto alternativo no vacío (FR-016).
 - Para publicar el sitio MUST haber exactamente 3 casos `product` publicados y 1 caso `meta`
   publicado (FR-001).

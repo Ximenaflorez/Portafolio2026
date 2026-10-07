@@ -5,8 +5,8 @@ URL canónica, un único `<h1>` y `lang="es"` en el documento (FR-014).
 
 | Ruta | Módulo | Fuente de contenido | En sitemap |
 |---|---|---|---|
-| `/` | Inicio | `pages/inicio.md`, `profile.md`, casos `featured` | Sí |
-| `/trabajos/` | Trabajos | casos `product` publicados | Sí |
+| `/` | Inicio | `pages/inicio.md`, `profile.md`, los 3 casos `product` por `order` | Sí |
+| `/trabajos/` | Trabajos | casos `product` publicados, por `order` | Sí |
 | `/trabajos/:slug/` | Caso de estudio | `cases/<slug>.md` con `type: product` | Sí, uno por caso publicado |
 | `/trabajos/este-portafolio/` | Caso meta | `cases/este-portafolio.md` | Sí |
 | `/sobre-mi/` | Sobre mí y proceso | `pages/sobre-mi.md` | Sí |
@@ -24,6 +24,8 @@ Presentes en todas las rutas, en este orden de tabulación:
 4. Pie con correo y perfil profesional.
 
 Desde cualquier ruta, Contacto queda a una acción en la navegación (SC-010).
+El encabezado se desplaza con la página y no es fijo (FR-028).
+Todo control tiene un área de toque o clic de al menos 44×44 px (FR-027).
 
 ## Sitemap y robots
 

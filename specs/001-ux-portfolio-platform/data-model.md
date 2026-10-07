@@ -8,10 +8,11 @@ cada campo están en [contracts/content-schema.md](./contracts/content-schema.md
 ### CaseStudy
 
 - **Campos**: `slug`, `type` (`product` | `meta`), `status` (`draft` | `published`), `order`,
-  `featured`, `title`, `seo`, `summary`, `body`.
+  `title`, `seo`, `summary`, `body`. `order` fija el orden en Inicio y en Trabajos (FR-019).
 - **Relaciones**: pertenece a un `Profile`. Genera una `PublicPage`.
 - **Validación**: resumen completo (FR-020), cuatro secciones en orden (FR-002), decisión con
-  alternativa (FR-022), lo que no funcionó (FR-023), sin `[COMPLETAR]` al publicar (FR-026).
+  alternativa (FR-022), lo que no funcionó (FR-023), sin `[COMPLETAR]` al publicar (FR-026),
+  anonimizado (FR-030, revisión manual antes de publicar).
 
 ### Profile
 

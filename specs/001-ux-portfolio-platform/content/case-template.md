@@ -21,7 +21,9 @@ Cada caso sigue el mismo arco (FR-021):
 - **3 minutos (product manager):** títulos y hallazgos de las cuatro partes (SC-001).
 - **10 minutos (engineering manager):** decisiones, trade-offs y colaboración con ingeniería.
 
-Si un resultado es confidencial, usa porcentajes, rangos o efectos observados en lugar de cifras absolutas.
+Todo caso se anonimiza siempre (FR-030): sin nombre de empresa ni de clientes, sin nombres de personas,
+citas sin atribución, métricas en porcentajes, rangos o efectos observados, e imágenes sin logos ni
+datos reales. Describe la empresa solo por sector y tamaño.
 
 ---
 

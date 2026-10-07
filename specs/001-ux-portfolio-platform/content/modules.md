@@ -15,7 +15,7 @@ cada pantalla se aprueba antes de construirla.
 - **Nombre público:** [COMPLETAR]
 - **Rol:** [COMPLETAR: p. ej. Product Designer y UX Engineer]
 - **Propuesta de valor en una frase:** [COMPLETAR: qué haces y para quién]
-- **Casos destacados:** [COMPLETAR: cuáles de los tres casos, y en qué orden]
+- **Orden de los 3 casos:** [COMPLETAR: el mismo orden se usa en Inicio y en Trabajos]
 - **Llamado a contacto:** [COMPLETAR]
 
 ## Trabajos (FR-019)
