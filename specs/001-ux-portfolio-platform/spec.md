@@ -1,0 +1,148 @@
+# Feature Specification: Plataforma de portafolio UX/UI
+
+**Feature Branch**: `001-ux-portfolio-platform`
+
+**Created**: 2026-10-07
+
+**Status**: Draft
+
+**Input**: User description: "Plataforma de portafolio para un perfil de UX/UI y product design. Debe superar al portafolio estático de pantallas finales y demostrar pensamiento sistémico, arquitectura de la solución y criterio de producto ante engineering managers, product managers y reclutadores especializados. El portafolio es el caso de estudio principal. Incluye al menos dos casos con problema, evidencia de usuario, arquitectura de la solución y resultados o aprendizajes. La experiencia debe ser accesible (WCAG 2.2 AA), consistente desde un sistema visual central, usable con teclado, responsiva en teléfono, tableta y escritorio, rápida y encontrable en buscadores."
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Evaluar el pensamiento de producto (Priority: P1)
+
+Un engineering manager, product manager o reclutador abre un caso de estudio y entiende el problema, la evidencia de usuario, cómo se estructuró la solución y qué resultado o aprendizaje quedó. No necesita reconstruir esa historia a partir de pantallas finales sueltas.
+
+**Why this priority**: Es la razón de existir de la plataforma. Sin esta narrativa, el portafolio vuelve a ser una galería estática y no permite juzgar madurez de producto.
+
+**Independent Test**: Con los casos de producto y el caso meta publicados, un evaluador abre cada uno, lee el resumen y señala las cuatro partes sin ayuda. Eso ya entrega el valor central, aunque el resto del sitio siga mínimo.
+
+**Acceptance Scenarios**:
+
+1. **Given** un caso publicado, **When** el evaluador lo recorre de principio a fin, **Then** encuentra problema inicial, investigación o datos de usuario, arquitectura de la solución, y resultados o aprendizajes.
+2. **Given** un caso que solo muestra pantallas finales, **When** se revisa si cuenta para el mínimo, **Then** no se considera completo.
+3. **Given** la entrada del portafolio, **When** el evaluador elige un caso, **Then** llega a ese caso y puede volver al conjunto de trabajos sin perder el contexto de que está evaluando al mismo perfil.
+4. **Given** el inicio de un caso, **When** un reclutador lee solo el resumen, **Then** conoce producto, rol, equipo, duración y resultado clave en menos de 30 segundos.
+5. **Given** el caso meta, **When** un engineering manager lo recorre, **Then** entiende cómo se construyó el portafolio: sistema de diseño, estructura de componentes, accesibilidad y uso de IA en el desarrollo.
+
+---
+
+### User Story 2 - Confiar en la calidad de la experiencia (Priority: P2)
+
+El evaluador recorre la plataforma y comprueba que la experiencia es operable, legible y estable: teclado, foco visible, contraste, estados de interacción y lectura correcta en teléfono, tableta y escritorio. También comprueba que la apariencia sale de un solo sistema visual.
+
+**Why this priority**: Este público evalúa si el criterio de diseño es viable, no solo si la narrativa convence. La calidad perceptible de la propia plataforma es parte de la prueba.
+
+**Independent Test**: En la entrada publicada, una persona solo con teclado recorre navegación y enlaces, ve el foco, y la misma vista se lee sin romperse en teléfono, tableta y escritorio. Un cambio de una decisión visual central se nota en toda la vista.
+
+**Acceptance Scenarios**:
+
+1. **Given** la navegación principal y los enlaces o botones de un caso, **When** el evaluador usa solo el teclado, **Then** llega a cada control, lo activa y ve un foco visible, sin quedar atrapado.
+2. **Given** un control que admite puntero, **When** se pasa el puntero o se presiona, **Then** el estado al pasar el puntero y el estado al presionar se distinguen del estado en reposo y del foco por teclado.
+3. **Given** una decisión central de color, tipografía o espaciado, **When** esa decisión cambia, **Then** todas las vistas que la usan cambian de la misma manera y no quedan valores visuales sueltos.
+4. **Given** anchos de teléfono, tableta y escritorio, **When** el evaluador lee un caso, **Then** el contenido principal no se solapa, no se corta y no queda fuera de alcance.
+
+---
+
+### User Story 3 - Encontrar el perfil y contactarlo (Priority: P3)
+
+Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe cómo contactar. Las páginas públicas se pueden indexar con título y descripción propios.
+
+**Why this priority**: La evaluación no ocurre si el perfil no se encuentra o si, al terminar, no hay un paso de contacto.
+
+**Independent Test**: Desde la entrada pública, un visitante identifica el rol del perfil y un medio de contacto, y cada página pública expone título y descripción propios más una lista descubrible del conjunto.
+
+**Acceptance Scenarios**:
+
+1. **Given** la entrada pública, **When** un reclutador llega por primera vez, **Then** identifica que se trata de un perfil de UX/UI y product design y ve cómo contactar.
+2. **Given** el módulo Sobre mí y proceso, **When** un product manager lo lee, **Then** entiende la forma de trabajar, los métodos que domina el perfil y el tipo de problemas que busca.
+3. **Given** el módulo Contacto, **When** un reclutador quiere avanzar, **Then** encuentra correo, perfil profesional y un enlace al CV.
+4. **Given** una página pública, **When** se prepara para aparecer en resultados de búsqueda, **Then** tiene un título propio, una descripción breve y una estructura de encabezados comprensible.
+5. **Given** el conjunto de páginas públicas, **When** un buscador necesita descubrirlas, **Then** existe una lista descubrible de esas páginas.
+
+---
+
+### Edge Cases
+
+- Un caso con una de las cuatro partes vacía, o con un espacio de plantilla sin completar, no se publica.
+- Si hay menos de tres casos de producto completos, la plataforma no cumple el alcance de esta especificación.
+- El caso meta no cuenta para el mínimo de tres casos de producto.
+- Si un resultado es confidencial, el caso lo expresa como porcentaje, rango o efecto observado, y sigue contando como completo.
+- Si el CV no está disponible, el contacto sigue funcionando con correo y perfil profesional.
+- En tacto, sin puntero, ninguna información necesaria depende del estado al pasar el puntero.
+- Con el texto ampliado al 200%, el contenido principal sigue legible, sin solapes ni recortes.
+- Si una imagen no carga, la argumentación del caso sigue pudiendo leerse.
+- Un flujo donde el foco entra y no puede salir no se considera listo para publicar.
+- Entre los anchos de teléfono, tableta y escritorio, el contenido no se rompe en los anchos intermedios.
+- Una página pública sin título propio o sin descripción breve no se considera lista para indexar.
+
+## Requirements *(mandatory)*
+
+### Functional Requirements
+
+- **FR-001**: La plataforma MUST publicar tres casos de producto completos y un caso meta sobre la construcción del propio portafolio.
+- **FR-002**: Cada caso de producto completo MUST incluir problema inicial, investigación o datos de usuario, arquitectura de la solución, y resultados o aprendizajes.
+- **FR-003**: Un evaluador MUST poder ir de la entrada del portafolio a cada caso y regresar al conjunto de trabajos.
+- **FR-004**: La entrada MUST identificar el perfil como UX/UI y product design, más allá de una galería de pantallas finales.
+- **FR-005**: La plataforma MUST ofrecer un medio de contacto visible: correo, perfil profesional y enlace al CV.
+- **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
+- **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los casos destacados y el acceso a contacto.
+- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado.
+- **FR-020**: Cada caso MUST abrir con un resumen de producto, rol, equipo, duración y resultado clave.
+- **FR-021**: Cada caso MUST seguir el arco narrativo: tensión, descubrimiento, decisión, prueba, impacto y reflexión.
+- **FR-022**: En la arquitectura de la solución, cada caso MUST documentar al menos una decisión clave con su motivo y la alternativa descartada.
+- **FR-023**: En resultados y aprendizajes, cada caso MUST incluir lo que no funcionó o lo que se haría distinto.
+- **FR-024**: El caso meta MUST explicar el sistema de diseño, la estructura de componentes, el enfoque de accesibilidad y el uso de IA en el desarrollo del portafolio.
+- **FR-025**: Sobre mí y proceso MUST describir la forma de trabajar, los métodos dominados y el tipo de problemas que busca el perfil.
+- **FR-026**: Ningún caso MUST publicarse con espacios de plantilla sin completar.
+- **FR-006**: Todo control interactivo MUST poder alcanzarse y activarse solo con teclado, sin trampas de foco.
+- **FR-007**: Todo control interactivo MUST mostrar un foco de teclado visible. Si el control admite puntero o presión, MUST distinguir el estado al pasar el puntero y el estado al presionar.
+- **FR-008**: La información necesaria para entender un caso MUST estar disponible sin depender del estado al pasar el puntero.
+- **FR-009**: La plataforma MUST cumplir WCAG 2.2 nivel AA en contraste, nombre accesible y estado de los elementos interactivos.
+- **FR-010**: Una descripción accesible adicional MUST usarse solo cuando el significado nativo del elemento no alcance.
+- **FR-011**: Color, tipografía y espaciado MUST provenir de un único sistema visual central.
+- **FR-012**: Un cambio en una decisión de ese sistema visual MUST reflejarse en todas las vistas que la usan, sin valores visuales sueltos.
+- **FR-013**: La lectura MUST mantenerse íntegra en teléfono, tableta y escritorio, incluidos los anchos intermedios.
+- **FR-014**: Cada página pública MUST tener título propio, descripción breve y una jerarquía de encabezados comprensible.
+- **FR-015**: El conjunto de páginas públicas MUST poder descubrirse mediante una lista de esas páginas.
+- **FR-016**: El contenido principal de un caso MUST poder leerse aunque fallen las imágenes de apoyo.
+
+### Key Entities
+
+- **Caso de estudio**: Unidad de evaluación. Atributos visibles: título, resumen (producto, rol, equipo, duración, resultado clave), problema inicial, evidencia de usuario, arquitectura de la solución, resultados o aprendizajes, y apoyo visual que no reemplaza esa narrativa. Tipo: caso de producto o caso meta.
+- **Perfil**: La persona evaluada. Atributos visibles: práctica (UX/UI y product design), forma de trabajar, métodos, correo, perfil profesional y CV. Se relaciona con tres casos de producto y un caso meta.
+- **Módulo**: Destino del portafolio con un propósito propio: Inicio, Trabajos, Caso de estudio, Caso meta, Sobre mí y proceso, o Contacto.
+- **Sistema visual**: Conjunto único de decisiones de color, tipografía y espaciado que aplican a todas las vistas publicadas.
+- **Página pública**: Destino encontrable. Atributos: título, descripción breve y lugar en la lista de páginas públicas. Puede ser la entrada, un caso o el destino de contacto.
+
+## Success Criteria *(mandatory)*
+
+### Measurable Outcomes
+
+- **SC-001**: En al menos 4 de 5 recorridos de prueba, un evaluador identifica las cuatro partes de un caso (problema, evidencia de usuario, arquitectura de la solución, resultados o aprendizajes) en menos de 3 minutos.
+- **SC-002**: La plataforma publica 3 casos de producto que cumplen SC-001, más el caso meta. Cero casos incompletos cuentan para ese mínimo.
+- **SC-009**: En al menos 4 de 5 recorridos de prueba, un reclutador que lee solo el resumen de un caso nombra el rol y el resultado clave en menos de 30 segundos.
+- **SC-010**: En al menos 4 de 5 recorridos de prueba, un visitante llega desde cualquier módulo a Contacto en no más de 2 acciones.
+- **SC-003**: El 100% de los controles de la navegación principal y de los casos se alcanza y se activa solo con teclado, con foco visible y sin trampas de foco.
+- **SC-004**: Una auditoría automatizada de la versión pública supera 95 sobre 100 en accesibilidad, en rendimiento y en buenas prácticas, tanto en una vista de teléfono como en una de escritorio.
+- **SC-005**: En vistas de teléfono, tableta y escritorio, el contenido principal no se solapa ni se corta, incluido el texto ampliado al 200%.
+- **SC-006**: Al cambiar una decisión central de color, de tipografía o de espaciado, el 100% de las vistas que la usan reflejan el cambio y no conservan un valor visual suelto de esa decisión.
+- **SC-007**: El 100% de las páginas públicas tiene título propio y descripción breve, y existe una lista que enumera exactamente esas páginas.
+- **SC-008**: Las combinaciones de texto y de controles publicadas no presentan fallos de contraste respecto de WCAG 2.2 AA.
+
+## Assumptions
+
+- La interfaz pública está en español. No hay segunda lengua en este alcance.
+- Hay un solo perfil. El nombre público es contenido pendiente y no cambia estos requisitos.
+- El contacto es un destino visible con correo, perfil profesional y enlace al CV. No hay cuentas, formulario, mensajes internos ni agenda.
+- El contenido de cada caso parte de la plantilla en `specs/001-ux-portfolio-platform/content/`. El responsable completa los espacios vacíos antes de publicar.
+- El contenido se publica con la plataforma. No hay edición por usuarios autenticados ni panel de administración.
+- El sistema visual tiene un tema claro. Un tema oscuro queda fuera de este alcance.
+- Los casos demuestran criterio de producto en entornos de impacto operativo. No es obligatorio que sean del mismo sector.
+- "Resultados o aprendizajes" acepta un efecto observado, una métrica o un aprendizaje explícito. No exige una métrica de negocio en cada caso.
+- La conformidad de accesibilidad es WCAG 2.2 AA, que cubre la exigencia 2.1/2.2 planteada por el responsable.
+- La auditoría de SC-004 es la auditoría pública automatizada que el responsable fijó como criterio de aceptación, ejecutada sobre la versión pública en vista de teléfono y de escritorio.
+- Las reglas de implementación del proyecto viven en la constitución. Esta especificación no las convierte en requisitos de usuario.
+- Ninguna pantalla diseñada forma parte de este alcance hasta que el responsable la apruebe. Aquí se fijan resultados, no la composición visual de cada vista.
+- Quedan fuera: bitácora o blog, filtros de proyectos, formulario de contacto, internacionalización, tema oscuro y cualquier producto B2B distinto de este portafolio.
