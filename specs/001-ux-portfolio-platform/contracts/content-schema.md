@@ -60,6 +60,7 @@ Reglas de publicación (`status: published`):
 
 ## Páginas de módulo (`src/content/pages/*.md`)
 
-`inicio.md`, `sobre-mi.md` y `contacto.md` llevan `seo.title`, `seo.description` y cuerpo Markdown.
+`inicio.md`, `trabajos.md`, `sobre-mi.md` y `contacto.md` llevan `seo.title`, `seo.description` y
+cuerpo Markdown (`trabajos.md` puede no tener cuerpo).
 `sobre-mi.md` MUST contener `## Forma de trabajar`, `## Métodos` y `## Problemas que busco`
 (FR-025).

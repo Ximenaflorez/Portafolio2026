@@ -1,0 +1,11 @@
+@use "sass:meta";
+@use "tokens";
+
+@tailwind base;
+
+@include meta.load-css("base/reset");
+@include meta.load-css("base/typography");
+@include meta.load-css("base/focus");
+
+@tailwind components;
+@tailwind utilities;

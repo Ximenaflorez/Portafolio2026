@@ -1,0 +1,20 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "color-no-hex": true,
+    "color-named": "never",
+    "unit-disallowed-list": ["px", "rem", "em", "ms", "s"],
+    "at-rule-no-unknown": null,
+    "at-rule-empty-line-before": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/at-rule-no-unknown": [true, { "ignoreAtRules": ["tailwind", "apply", "layer"] }]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/tokens/**/*.scss"],
+      "rules": {
+        "unit-disallowed-list": null
+      }
+    }
+  ]
+}

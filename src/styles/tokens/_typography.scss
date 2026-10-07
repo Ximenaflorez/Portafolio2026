@@ -1,0 +1,27 @@
+$font-families: (
+  "heading": ("Manrope", system-ui, sans-serif),
+  "body": ("Inter", system-ui, sans-serif),
+);
+
+// Escala modular de ratio 1.25 sobre 16px.
+$text-steps: (
+  "-1": 0.8rem,
+  "0": 1rem,
+  "1": 1.25rem,
+  "2": 1.563rem,
+  "3": 1.953rem,
+  "4": 2.441rem,
+  "5": 3.052rem,
+);
+
+$font-weights: (
+  "body": 400,
+  "body-strong": 600,
+  "heading": 700,
+  "heading-soft": 600,
+);
+
+$line-heights: (
+  "body": 1.5,
+  "heading": 1.2,
+);

@@ -48,6 +48,17 @@ Valor en Tailwind: `rgb(var(--color-<token>) / <alpha-value>)`.
 
 El tamaño se expresa en `rem` para respetar la ampliación de texto al 200% (SC-005).
 
+| Token | Variable CSS | Valor | Clase Tailwind |
+|---|---|---|---|
+| Peso texto | `--weight-body` | `400` | `font-normal` |
+| Peso texto con énfasis | `--weight-body-strong` | `600` | `font-semibold` |
+| Peso titulares | `--weight-heading` | `700` | `font-bold` |
+| Peso titulares secundario | `--weight-heading-soft` | `600` | `font-semibold` |
+| Interlineado texto | `--leading-body` | `1.5` | `leading-body` |
+| Interlineado titulares | `--leading-heading` | `1.2` | `leading-heading` |
+
+Pesos cargados (aprobados): Inter 400 y 600, Manrope 600 y 700.
+
 ## Espaciado
 
 Unidad base de 8px. En este proyecto la clave `1` de Tailwind vale 8px (en Tailwind por defecto
@@ -85,8 +96,14 @@ de scroll ni en bucle (FR-029).
 
 ## Foco
 
+| Token | Variable CSS | Valor |
+|---|---|---|
+| Grosor del anillo | `--focus-ring-width` | `2px` |
+| Separación del anillo | `--focus-ring-offset` | `2px` |
+
 ```text
-:focus-visible → outline 2px solid rgb(var(--color-focus)); outline-offset 2px
+:focus-visible → outline var(--focus-ring-width) solid rgb(var(--color-focus));
+                 outline-offset var(--focus-ring-offset)
 ```
 
 Ningún componente MUST anular este estilo sin reemplazarlo por uno equivalente.

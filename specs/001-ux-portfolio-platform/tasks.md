@@ -25,17 +25,17 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 **Purpose**: Proyecto vacío y herramientas, sin ninguna pantalla
 
-- [ ] T001 Crear el proyecto React Router 7 en modo framework sobre Vite con TypeScript, con `appDirectory: "src"` y `prerender` activado, en `react-router.config.ts`, `vite.config.ts` y `package.json`
-- [ ] T002 Fijar Node.js 24 LTS en `.nvmrc` y en `engines` de `package.json`
-- [ ] T003 [P] Instalar SASS y Tailwind CSS 3.4 con PostCSS en `postcss.config.js`
-- [ ] T004 [P] Instalar `@fontsource/manrope` y `@fontsource/inter`, solo los pesos 400 y 600 de Inter y 600 y 700 de Manrope, en `package.json`
-- [ ] T005 [P] Configurar ESLint y Prettier para TypeScript y React en `eslint.config.js` y `.prettierrc`
-- [ ] T006 [P] Configurar Stylelint con prohibición de colores y medidas literales fuera de `src/styles/tokens/` en `.stylelintrc.json`
-- [ ] T007 [P] Configurar Vitest con jsdom, Testing Library y `vitest-axe` en `vitest.config.ts` y `tests/setup.ts`
-- [ ] T008 [P] Configurar Playwright con `@axe-core/playwright` y proyectos de 360, 768 y 1280px en `playwright.config.ts`
-- [ ] T009 [P] Configurar Lighthouse CI con umbral 0.95 en Rendimiento, Accesibilidad y Buenas prácticas, en teléfono y escritorio, en `lighthouserc.json`
-- [ ] T010 Crear las carpetas vacías `src/components/atoms/`, `molecules/`, `organisms/`, `templates/` y `pages/` con un `.gitkeep` en cada una
-- [ ] T011 Definir los scripts `dev`, `build`, `preview`, `lint`, `test:unit`, `test:e2e` y `lighthouse` en `package.json`
+- [X] T001 Crear el proyecto React Router 7 en modo framework sobre Vite con TypeScript, con `appDirectory: "src"` y `prerender` activado, en `react-router.config.ts`, `vite.config.ts` y `package.json`
+- [X] T002 Fijar Node.js 24 LTS en `.nvmrc` y en `engines` de `package.json`
+- [X] T003 [P] Instalar SASS y Tailwind CSS 3.4 con PostCSS en `postcss.config.js`
+- [X] T004 [P] Instalar `@fontsource/manrope` y `@fontsource/inter`, solo los pesos 400 y 600 de Inter y 600 y 700 de Manrope, en `package.json`
+- [X] T005 [P] Configurar ESLint y Prettier para TypeScript y React en `eslint.config.js` y `.prettierrc`
+- [X] T006 [P] Configurar Stylelint con prohibición de colores y medidas literales fuera de `src/styles/tokens/` en `.stylelintrc.json`
+- [X] T007 [P] Configurar Vitest con jsdom, Testing Library y `vitest-axe` en `vitest.config.ts` y `tests/setup.ts`
+- [X] T008 [P] Configurar Playwright con `@axe-core/playwright` y proyectos de 360, 768 y 1280px en `playwright.config.ts`
+- [X] T009 [P] Configurar Lighthouse CI con umbral 0.95 en Rendimiento, Accesibilidad y Buenas prácticas, en teléfono y escritorio, en `lighthouserc.json`
+- [X] T010 Crear las carpetas vacías `src/components/atoms/`, `molecules/`, `organisms/`, `templates/` y `pages/` con un `.gitkeep` en cada una
+- [X] T011 Definir los scripts `dev`, `build`, `preview`, `lint`, `test:unit`, `test:e2e` y `lighthouse` en `package.json`
 
 ---
 
@@ -47,41 +47,41 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Pruebas de tokens y de arquitectura (escribir primero, deben fallar)
 
-- [ ] T012 [P] Escribir la prueba de contraste que compila `src/styles/main.scss` con la API de `sass`, lee las variables de `:root` y mide cada pareja de `contracts/tokens.md` (4.5:1 texto, 3:1 foco y bordes de control) en `tests/unit/tokens/contrast.test.ts`
-- [ ] T013 [P] Escribir la prueba de propagación: compila con un valor alterado de `--color-primary` y comprueba que cambia el CSS resuelto de `bg-primary` en `tests/unit/tokens/propagation.test.ts`
-- [ ] T014 [P] Escribir la prueba que rechaza clases arbitrarias de Tailwind (`[#...]`, `[13px]`, `[1.1rem]`) y estilos en línea con valores visuales en `src/components/` en `tests/unit/tokens/no-hardcoded.test.ts`
-- [ ] T015 [P] Escribir la prueba de capas: ningún archivo de una capa importa una capa superior (atoms < molecules < organisms < templates < pages) en `tests/unit/architecture/layers.test.ts`
+- [X] T012 [P] Escribir la prueba de contraste que compila `src/styles/main.scss` con la API de `sass`, lee las variables de `:root` y mide cada pareja de `contracts/tokens.md` (4.5:1 texto, 3:1 foco y bordes de control) en `tests/unit/tokens/contrast.test.ts`
+- [X] T013 [P] Escribir la prueba de propagación: compila con un valor alterado de `--color-primary` y comprueba que cambia el CSS resuelto de `bg-primary` en `tests/unit/tokens/propagation.test.ts`
+- [X] T014 [P] Escribir la prueba que rechaza clases arbitrarias de Tailwind (`[#...]`, `[13px]`, `[1.1rem]`) y estilos en línea con valores visuales en `src/components/` en `tests/unit/tokens/no-hardcoded.test.ts`
+- [X] T015 [P] Escribir la prueba de capas: ningún archivo de una capa importa una capa superior (atoms < molecules < organisms < templates < pages) en `tests/unit/architecture/layers.test.ts`
 
 ### Tokens (SASS como origen, Tailwind como consumidor)
 
-- [ ] T016 [P] Definir los 13 tokens de color como canales RGB en `src/styles/tokens/_color.scss`, con los valores exactos de `contracts/tokens.md`
-- [ ] T017 [P] Definir familias (Manrope titulares, Inter texto) y los 7 pasos de la escala 1.25 en `rem` en `src/styles/tokens/_typography.scss`
-- [ ] T018 [P] Definir el espaciado (4px medio paso y múltiplos de 8px: 0, 4, 8, 16, 24, 32, 40, 48, 64, 80, 96, 128) en `src/styles/tokens/_spacing.scss`
-- [ ] T019 Emitir todos los tokens como variables CSS en `:root`, incluidos `--duration-state: 200ms` y `--target-min: 44px`, desde `src/styles/tokens/_index.scss` y `src/styles/main.scss`
-- [ ] T020 Configurar `tailwind.config.ts` para **reemplazar** `colors`, `fontFamily`, `fontSize`, `spacing` y `transitionDuration` (solo `state: var(--duration-state)`) con `rgb(var(--color-*) / <alpha-value>)` y `var(--*)`, y extender `minWidth` y `minHeight` con `target: var(--target-min)`, según `contracts/tokens.md`
-- [ ] T021 Ejecutar T012 a T014 y confirmar que pasan
+- [X] T016 [P] Definir los 13 tokens de color como canales RGB en `src/styles/tokens/_color.scss`, con los valores exactos de `contracts/tokens.md`
+- [X] T017 [P] Definir familias (Manrope titulares, Inter texto) y los 7 pasos de la escala 1.25 en `rem` en `src/styles/tokens/_typography.scss`
+- [X] T018 [P] Definir el espaciado (4px medio paso y múltiplos de 8px: 0, 4, 8, 16, 24, 32, 40, 48, 64, 80, 96, 128) en `src/styles/tokens/_spacing.scss`
+- [X] T019 Emitir todos los tokens como variables CSS en `:root`, incluidos `--duration-state: 200ms` y `--target-min: 44px`, desde `src/styles/tokens/_index.scss` y `src/styles/main.scss`
+- [X] T020 Configurar `tailwind.config.ts` para **reemplazar** `colors`, `fontFamily`, `fontSize`, `spacing` y `transitionDuration` (solo `state: var(--duration-state)`) con `rgb(var(--color-*) / <alpha-value>)` y `var(--*)`, y extender `minWidth` y `minHeight` con `target: var(--target-min)`, según `contracts/tokens.md`
+- [X] T021 Ejecutar T012 a T014 y confirmar que pasan
 
 ### Accesibilidad global
 
-- [ ] T022 [P] Escribir el reset con `box-sizing` y márgenes a cero, y fijar `--duration-state: 0ms` con `prefers-reduced-motion: reduce`, en `src/styles/base/_reset.scss`
-- [ ] T023 [P] Definir `:focus-visible` global con outline de 2px `rgb(var(--color-focus))` y `outline-offset: 2px`, y `:focus:not(:focus-visible)` sin outline, en `src/styles/base/_focus.scss`
-- [ ] T024 [P] Definir la tipografía base (cuerpo Inter paso 0, encabezados Manrope) en `src/styles/base/_typography.scss`
-- [ ] T025 Crear el documento raíz con `lang="es"`, carga de Fontsource, precarga de Inter y `main.scss` en `src/root.tsx`
+- [X] T022 [P] Escribir el reset con `box-sizing` y márgenes a cero, y fijar `--duration-state: 0ms` con `prefers-reduced-motion: reduce`, en `src/styles/base/_reset.scss`
+- [X] T023 [P] Definir `:focus-visible` global con outline de 2px `rgb(var(--color-focus))` y `outline-offset: 2px`, y `:focus:not(:focus-visible)` sin outline, en `src/styles/base/_focus.scss`
+- [X] T024 [P] Definir la tipografía base (cuerpo Inter paso 0, encabezados Manrope) en `src/styles/base/_typography.scss`
+- [X] T025 Crear el documento raíz con `lang="es"`, carga de Fontsource, precarga de Inter y `main.scss` en `src/root.tsx`
 
 ### Contenido
 
-- [ ] T026 [P] Escribir pruebas del esquema: falla un caso `published` con `[COMPLETAR`, sin las cuatro secciones, sin `**Decisiones clave:**` o sin `**Lo que no funcionó:**` / `**Lo que haría distinto:**`, o con una imagen sin alt; pasa un `draft` incompleto, en `tests/unit/content/schema.test.ts`
-- [ ] T027 Implementar los esquemas `zod` de caso, perfil y página de módulo con los límites de `contracts/content-schema.md` (`seo.title` 1 a 60, `seo.description` 50 a 160, `title` 1 a 80, `summary.indexLine` 1 a 120) en `src/content/schema.ts`
-- [ ] T028 Implementar la lectura con `gray-matter`, la validación y el filtro de `published`, leyendo desde `CONTENT_DIR` (por defecto `src/content/`, en pruebas `tests/fixtures/content/`); el build falla si no hay exactamente 3 casos `product` y 1 `meta` publicados cuando `REQUIRE_COMPLETE_CONTENT=true`, en `src/content/load.ts`
-- [ ] T029 [P] Migrar los borradores `specs/001-ux-portfolio-platform/content/case-01.md`, `case-02.md`, `case-03.md` y `case-meta.md` a `src/content/cases/` con frontmatter y `status: draft`; `case-meta.md` pasa a `este-portafolio.md`
-- [ ] T030 [P] Crear `src/content/profile.md` y `src/content/pages/inicio.md`, `sobre-mi.md` y `contacto.md` desde `specs/001-ux-portfolio-platform/content/modules.md`, con `[COMPLETAR]` donde falten datos
+- [X] T026 [P] Escribir pruebas del esquema: falla un caso `published` con `[COMPLETAR`, sin las cuatro secciones, sin `**Decisiones clave:**` o sin `**Lo que no funcionó:**` / `**Lo que haría distinto:**`, o con una imagen sin alt; pasa un `draft` incompleto, en `tests/unit/content/schema.test.ts`
+- [X] T027 Implementar los esquemas `zod` de caso, perfil y página de módulo con los límites de `contracts/content-schema.md` (`seo.title` 1 a 60, `seo.description` 50 a 160, `title` 1 a 80, `summary.indexLine` 1 a 120) en `src/content/schema.ts`
+- [X] T028 Implementar la lectura con `gray-matter`, la validación y el filtro de `published`, leyendo desde `CONTENT_DIR` (por defecto `src/content/`, en pruebas `tests/fixtures/content/`); el build falla si no hay exactamente 3 casos `product` y 1 `meta` publicados cuando `REQUIRE_COMPLETE_CONTENT=true`, en `src/content/load.server.ts` (sufijo `.server` para que nunca llegue al navegador)
+- [X] T029 [P] Migrar los borradores `specs/001-ux-portfolio-platform/content/case-01.md`, `case-02.md`, `case-03.md` y `case-meta.md` a `src/content/cases/` con frontmatter y `status: draft`; `case-meta.md` pasa a `este-portafolio.md`
+- [X] T030 [P] Crear `src/content/profile.md` y `src/content/pages/inicio.md`, `sobre-mi.md` y `contacto.md` desde `specs/001-ux-portfolio-platform/content/modules.md`, con `[COMPLETAR]` donde falten datos
 
 ### SEO e infraestructura de rutas
 
-- [ ] T031 [P] Implementar el helper de título, descripción y URL canónica con `SITE_URL` y `BASE_PATH` en `src/lib/seo.ts`
-- [ ] T032 Declarar el mapa de rutas de `contracts/routes.md` sin componentes visuales (cada ruta exporta `meta` y `loader`) en `src/routes.ts`; las rutas `/prototipos/*` solo existen en desarrollo, nunca se prerenderizan ni entran en el sitemap
-- [ ] T033 [P] Implementar la generación de `sitemap.xml` desde las rutas publicadas en `scripts/generate-sitemap.ts`, y `public/robots.txt`
-- [ ] T034 [P] Configurar CI (lint, test:unit, build) en `.github/workflows/ci.yml`
+- [X] T031 [P] Implementar el helper de título, descripción y URL canónica con `SITE_URL` y `BASE_PATH` en `src/lib/seo.ts`
+- [X] T032 Declarar el mapa de rutas de `contracts/routes.md` sin componentes visuales (cada ruta exporta `meta` y `loader`) en `src/routes.ts`; las rutas `/prototipos/*` solo existen en desarrollo, nunca se prerenderizan ni entran en el sitemap
+- [X] T033 [P] Implementar la generación de `sitemap.xml` desde las rutas publicadas en `scripts/generate-sitemap.ts`, que también genera `robots.txt` (con `SITE_URL`) y `404.html` en `build/client/`
+- [X] T034 [P] Configurar CI (lint, test:unit, build) en `.github/workflows/ci.yml`
 
 **Checkpoint**: tokens, foco, contenido y SEO listos. Todavía no existe ninguna pantalla.
 

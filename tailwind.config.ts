@@ -1,0 +1,75 @@
+import type { Config } from "tailwindcss";
+
+const color = (name: string) => `rgb(var(--color-${name}) / <alpha-value>)`;
+
+const spaceKeys = ["0", "0.5", "1", "2", "3", "4", "5", "6", "8", "10", "12", "16"];
+const spacing = Object.fromEntries(
+  spaceKeys.map((key) => [key, `var(--space-${key.replace(".", "-")})`]),
+);
+
+export default {
+  content: ["./src/**/*.{ts,tsx}"],
+  theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+    },
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      background: color("background"),
+      surface: color("surface"),
+      text: {
+        DEFAULT: color("text"),
+        muted: color("text-muted"),
+      },
+      primary: {
+        DEFAULT: color("primary"),
+        hover: color("primary-hover"),
+        active: color("primary-active"),
+      },
+      "on-primary": color("on-primary"),
+      focus: color("focus"),
+      error: color("error"),
+      success: color("success"),
+      border: {
+        DEFAULT: color("border"),
+        strong: color("border-strong"),
+      },
+    },
+    fontFamily: {
+      heading: "var(--font-heading)",
+      body: "var(--font-body)",
+    },
+    fontSize: {
+      sm: ["var(--text-step--1)", { lineHeight: "var(--leading-body)" }],
+      base: ["var(--text-step-0)", { lineHeight: "var(--leading-body)" }],
+      lg: ["var(--text-step-1)", { lineHeight: "var(--leading-body)" }],
+      xl: ["var(--text-step-2)", { lineHeight: "var(--leading-heading)" }],
+      "2xl": ["var(--text-step-3)", { lineHeight: "var(--leading-heading)" }],
+      "3xl": ["var(--text-step-4)", { lineHeight: "var(--leading-heading)" }],
+      "4xl": ["var(--text-step-5)", { lineHeight: "var(--leading-heading)" }],
+    },
+    fontWeight: {
+      normal: "var(--weight-body)",
+      semibold: "var(--weight-body-strong)",
+      bold: "var(--weight-heading)",
+    },
+    lineHeight: {
+      body: "var(--leading-body)",
+      heading: "var(--leading-heading)",
+    },
+    spacing,
+    transitionDuration: {
+      DEFAULT: "var(--duration-state)",
+      state: "var(--duration-state)",
+    },
+    extend: {
+      minWidth: { target: "var(--target-min)" },
+      minHeight: { target: "var(--target-min)" },
+    },
+  },
+  plugins: [],
+} satisfies Config;

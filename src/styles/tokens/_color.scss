@@ -1,0 +1,23 @@
+@use "sass:map";
+
+$color-overrides: () !default;
+
+// Canales RGB separados para que Tailwind pueda aplicar opacidad.
+$colors: map.merge(
+  (
+    "background": 250 250 249,
+    "surface": 255 255 255,
+    "text": 28 25 23,
+    "text-muted": 87 83 78,
+    "primary": 67 56 202,
+    "primary-hover": 55 48 163,
+    "primary-active": 49 46 129,
+    "on-primary": 255 255 255,
+    "focus": 14 116 144,
+    "error": 185 28 28,
+    "success": 21 128 61,
+    "border": 214 211 209,
+    "border-strong": 120 113 108,
+  ),
+  $color-overrides
+);

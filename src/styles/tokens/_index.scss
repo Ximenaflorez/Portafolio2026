@@ -1,0 +1,43 @@
+@forward "color" show $color-overrides;
+@use "sass:list";
+@use "color" as *;
+@use "typography" as *;
+@use "spacing" as *;
+@use "interaction" as *;
+
+:root {
+  @each $name, $channels in $colors {
+    --color-#{$name}: #{$channels};
+  }
+
+  @each $name, $stack in $font-families {
+    --font-#{$name}: #{list.join($stack, (), $separator: comma)};
+  }
+
+  @each $step, $size in $text-steps {
+    --text-step-#{$step}: #{$size};
+  }
+
+  @each $name, $weight in $font-weights {
+    --weight-#{$name}: #{$weight};
+  }
+
+  @each $name, $leading in $line-heights {
+    --leading-#{$name}: #{$leading};
+  }
+
+  @each $name, $space in $spaces {
+    --space-#{$name}: #{$space};
+  }
+
+  --duration-state: #{$duration-state};
+  --target-min: #{$target-min};
+  --focus-ring-width: #{$focus-ring-width};
+  --focus-ring-offset: #{$focus-ring-offset};
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-state: 0ms;
+  }
+}
