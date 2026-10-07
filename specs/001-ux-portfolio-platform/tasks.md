@@ -26,7 +26,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 **Purpose**: Proyecto vacío y herramientas, sin ninguna pantalla
 
 - [ ] T001 Crear el proyecto React Router 7 en modo framework sobre Vite con TypeScript, con `appDirectory: "src"` y `prerender` activado, en `react-router.config.ts`, `vite.config.ts` y `package.json`
-- [ ] T002 Fijar Node.js 22 LTS en `.nvmrc` y en `engines` de `package.json`
+- [ ] T002 Fijar Node.js 24 LTS en `.nvmrc` y en `engines` de `package.json`
 - [ ] T003 [P] Instalar SASS y Tailwind CSS 3.4 con PostCSS en `postcss.config.js`
 - [ ] T004 [P] Instalar `@fontsource/manrope` y `@fontsource/inter`, solo los pesos 400 y 600 de Inter y 600 y 700 de Manrope, en `package.json`
 - [ ] T005 [P] Configurar ESLint y Prettier para TypeScript y React en `eslint.config.js` y `.prettierrc`
@@ -58,7 +58,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T017 [P] Definir familias (Manrope titulares, Inter texto) y los 7 pasos de la escala 1.25 en `rem` en `src/styles/tokens/_typography.scss`
 - [ ] T018 [P] Definir el espaciado (4px medio paso y múltiplos de 8px: 0, 4, 8, 16, 24, 32, 40, 48, 64, 80, 96, 128) en `src/styles/tokens/_spacing.scss`
 - [ ] T019 Emitir todos los tokens como variables CSS en `:root`, incluidos `--duration-state: 200ms` y `--target-min: 44px`, desde `src/styles/tokens/_index.scss` y `src/styles/main.scss`
-- [ ] T020 Configurar `tailwind.config.ts` para **reemplazar** `colors`, `fontFamily`, `fontSize` y `spacing` con `rgb(var(--color-*) / <alpha-value>)` y `var(--*)`, según `contracts/tokens.md`
+- [ ] T020 Configurar `tailwind.config.ts` para **reemplazar** `colors`, `fontFamily`, `fontSize`, `spacing` y `transitionDuration` (solo `state: var(--duration-state)`) con `rgb(var(--color-*) / <alpha-value>)` y `var(--*)`, y extender `minWidth` y `minHeight` con `target: var(--target-min)`, según `contracts/tokens.md`
 - [ ] T021 Ejecutar T012 a T014 y confirmar que pasan
 
 ### Accesibilidad global
@@ -72,14 +72,14 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 - [ ] T026 [P] Escribir pruebas del esquema: falla un caso `published` con `[COMPLETAR`, sin las cuatro secciones, sin `**Decisiones clave:**` o sin `**Lo que no funcionó:**` / `**Lo que haría distinto:**`, o con una imagen sin alt; pasa un `draft` incompleto, en `tests/unit/content/schema.test.ts`
 - [ ] T027 Implementar los esquemas `zod` de caso, perfil y página de módulo con los límites de `contracts/content-schema.md` (`seo.title` 1 a 60, `seo.description` 50 a 160, `title` 1 a 80, `summary.indexLine` 1 a 120) en `src/content/schema.ts`
-- [ ] T028 Implementar la lectura con `gray-matter`, la validación y el filtro de `published`; el build falla si no hay exactamente 3 casos `product` y 1 `meta` publicados cuando `REQUIRE_COMPLETE_CONTENT=true`, en `src/content/load.ts`
+- [ ] T028 Implementar la lectura con `gray-matter`, la validación y el filtro de `published`, leyendo desde `CONTENT_DIR` (por defecto `src/content/`, en pruebas `tests/fixtures/content/`); el build falla si no hay exactamente 3 casos `product` y 1 `meta` publicados cuando `REQUIRE_COMPLETE_CONTENT=true`, en `src/content/load.ts`
 - [ ] T029 [P] Migrar los borradores `specs/001-ux-portfolio-platform/content/case-01.md`, `case-02.md`, `case-03.md` y `case-meta.md` a `src/content/cases/` con frontmatter y `status: draft`; `case-meta.md` pasa a `este-portafolio.md`
 - [ ] T030 [P] Crear `src/content/profile.md` y `src/content/pages/inicio.md`, `sobre-mi.md` y `contacto.md` desde `specs/001-ux-portfolio-platform/content/modules.md`, con `[COMPLETAR]` donde falten datos
 
 ### SEO e infraestructura de rutas
 
 - [ ] T031 [P] Implementar el helper de título, descripción y URL canónica con `SITE_URL` y `BASE_PATH` en `src/lib/seo.ts`
-- [ ] T032 Declarar el mapa de rutas de `contracts/routes.md` sin componentes visuales (cada ruta exporta `meta` y `loader`) en `src/routes.ts`
+- [ ] T032 Declarar el mapa de rutas de `contracts/routes.md` sin componentes visuales (cada ruta exporta `meta` y `loader`) en `src/routes.ts`; las rutas `/prototipos/*` solo existen en desarrollo, nunca se prerenderizan ni entran en el sitemap
 - [ ] T033 [P] Implementar la generación de `sitemap.xml` desde las rutas publicadas en `scripts/generate-sitemap.ts`, y `public/robots.txt`
 - [ ] T034 [P] Configurar CI (lint, test:unit, build) en `.github/workflows/ci.yml`
 
@@ -91,7 +91,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 **Goal**: Encabezado, navegación, enlace para saltar al contenido y pie, presentes en todas las rutas (FR-017)
 
-- [ ] T035 ⛔ APROBACIÓN: presentar la propuesta de encabezado no fijo, navegación (incluido el comportamiento en teléfono), enlace para saltar al contenido y pie, y obtener aprobación explícita
+- [ ] T035 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/globales.tsx` un prototipo con contenido de prueba del encabezado no fijo, la navegación (incluido el comportamiento en teléfono), el enlace para saltar al contenido y el pie; obtener aprobación explícita y borrar el prototipo
 - [ ] T036 [P] Escribir prueba axe y de teclado para `SkipLink`, `NavLink` y `TextLink` en `tests/unit/components/atoms.test.tsx`
 - [ ] T037 [P] Crear el átomo `SkipLink` hacia `#contenido` en `src/components/atoms/SkipLink.tsx`
 - [ ] T038 [P] Crear el átomo `TextLink` con estados de puntero, presión y foco desde tokens en `src/components/atoms/TextLink.tsx`
@@ -118,7 +118,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Implementation for User Story 1
 
-- [ ] T046 [US1] ⛔ APROBACIÓN: presentar la propuesta de la página de caso (resumen, cuatro secciones, apoyo visual) y del índice de Trabajos, y obtener aprobación explícita
+- [ ] T046 [US1] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y del índice de Trabajos; obtener aprobación explícita y borrar el prototipo
 - [ ] T047 [P] [US1] Crear los átomos `Heading` (niveles 1 a 4 con la escala) y `Text` en `src/components/atoms/Heading.tsx` y `Text.tsx`
 - [ ] T048 [P] [US1] Crear el átomo `Figure` con alt obligatorio y pie de imagen en `src/components/atoms/Figure.tsx`
 - [ ] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en `src/components/molecules/CaseSummary.tsx`
@@ -142,7 +142,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Tests for User Story 2
 
-- [ ] T057 [P] [US2] Escribir prueba e2e de teclado: orden de Tab, foco visible (outline presente y sin ningún elemento fijo encima, FR-028), sin trampas, y cada control con área de al menos 44×44 px (FR-027), en todas las rutas, en `tests/e2e/keyboard.spec.ts`
+- [ ] T057 [P] [US2] Escribir prueba e2e de teclado: orden de Tab, foco visible (outline presente y sin ningún elemento fijo encima, FR-028), sin trampas, y cada control con área de al menos 44×44 px salvo los enlaces dentro de un párrafo (FR-027), en todas las rutas, en `tests/e2e/keyboard.spec.ts`
 - [ ] T058 [P] [US2] Escribir prueba e2e de responsive: sin desborde horizontal en 320, 360, 768 y 1280px y con texto al 200%, en `tests/e2e/responsive.spec.ts`
 - [ ] T059 [P] [US2] Escribir prueba e2e de estados: el estilo al pasar el puntero, al presionar y con foco difiere del de reposo en `TextLink`, `NavLink` y `CaseCard`; ninguna transición dura más de 200 ms y ninguna existe con movimiento reducido (FR-029), en `tests/e2e/states.spec.ts`
 
@@ -170,7 +170,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Implementation for User Story 3
 
-- [ ] T066 [US3] ⛔ APROBACIÓN: presentar las propuestas de Inicio, Sobre mí y proceso, Contacto y 404, y obtener aprobación explícita de cada una
+- [ ] T066 [US3] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/` un prototipo con contenido de prueba de Inicio, Sobre mí y proceso, Contacto y 404; obtener aprobación explícita de cada uno y borrar los prototipos
 - [ ] T067 [P] [US3] Crear la molécula `ContactList` (correo, perfil profesional, CV) en `src/components/molecules/ContactList.tsx`
 - [ ] T068 [P] [US3] Crear el organismo `ProfileIntro` (nombre, rol, propuesta de valor, llamado a contacto) en `src/components/organisms/ProfileIntro.tsx`
 - [ ] T069 [P] [US3] Crear el organismo `HomeCases` con los 3 casos de producto ordenados por `order` en `src/components/organisms/HomeCases.tsx`

@@ -74,7 +74,7 @@ Las decisiones marcadas como "aprobada" las eligió el responsable el 2026-10-07
 ## 8. Breakpoints
 
 - **Decision**: usar los de Tailwind 3.4: `sm` 640px, `md` 768px, `lg` 1024px y `xl` 1280px,
-  diseñando primero para teléfono. **Pendiente de confirmar por el responsable.**
+  diseñando primero para teléfono (aprobada).
 - **Rationale**: Cubren teléfono, tableta y escritorio (FR-013), y son conocidos por el equipo de
   ingeniería que evalúa el código.
 - **Alternatives considered**: breakpoints propios definidos por el contenido.

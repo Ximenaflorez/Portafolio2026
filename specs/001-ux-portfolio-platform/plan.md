@@ -13,7 +13,7 @@ construyen solo después, una por una y con aprobación previa (principio V).
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x sobre Node.js 22 LTS
+**Language/Version**: TypeScript 5.x sobre Node.js 24 LTS
 
 **Primary Dependencies**: React 19, Vite, React Router 7 en modo framework con prerender,
 SASS (`sass`), Tailwind CSS 3.4, `gray-matter` y `zod` para el contenido, `react-markdown`,
@@ -49,7 +49,7 @@ más 404
 | II. Tokens | Origen único en `src/styles/tokens/`. Tailwind reemplaza (no extiende) color, tipografía y espaciado, así que no hay valores por defecto disponibles. Prueba de propagación y prueba anti valores sueltos. | Pasa |
 | III. Atomic Design | Cinco capas en `src/components/`. Las rutas solo montan pages. Prueba de dependencias entre capas. | Pasa |
 | IV. Accesibilidad | Foco global con el token Focus (2px, separado). axe en componentes y páginas. Prueba de contraste de tokens. Recorridos de teclado en Playwright. | Pasa |
-| V. Aprobación previa | Las tareas de pantalla quedan bloqueadas por una compuerta de aprobación. Las decisiones no entregadas se preguntaron antes de este plan. | Pasa |
+| V. Aprobación previa | Cada pantalla se propone como prototipo en `/prototipos/`, sin publicar ni entrar en el sitemap, y se borra al aprobarse. Las tareas definitivas quedan bloqueadas por esa compuerta. | Pasa |
 
 Re-check post-design (Phase 1): Pasa. Ningún artefacto de diseño introduce una pantalla ni un valor
 visual nuevo.

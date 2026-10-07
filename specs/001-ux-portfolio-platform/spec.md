@@ -12,7 +12,7 @@
 
 ### Session 2026-10-07
 
-- Q: ¿Qué tamaño mínimo deben tener los controles que se tocan o se cliquean? → A: 44×44 px como mínimo para todos los controles.
+- Q: ¿Qué tamaño mínimo deben tener los controles que se tocan o se cliquean? → A: 44×44 px como mínimo para todos los controles; los enlaces dentro de un párrafo quedan exentos.
 - Q: ¿El encabezado se queda fijo arriba al hacer scroll o se desplaza con la página? → A: Se desplaza con la página.
 - Q: ¿Cómo se comporta el portafolio con animaciones y transiciones? → A: Solo transiciones breves de estado, de hasta 200 ms, desactivadas si el sistema pide reducir movimiento.
 - Q: ¿Cuántos casos destacados muestra Inicio y cómo se eligen? → A: Los 3 casos de producto, en el orden que fija el responsable.
@@ -96,20 +96,6 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-003**: Un evaluador MUST poder ir de la entrada del portafolio a cada caso y regresar al conjunto de trabajos.
 - **FR-004**: La entrada MUST identificar el perfil como UX/UI y product design, más allá de una galería de pantallas finales.
 - **FR-005**: La plataforma MUST ofrecer un medio de contacto visible: correo, perfil profesional y enlace al CV.
-- **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
-- **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los 3 casos de producto y el acceso a contacto.
-- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado. Inicio y Trabajos MUST usar el mismo orden de casos, fijado por el responsable.
-- **FR-020**: Cada caso MUST abrir con un resumen de producto, rol, equipo, duración y resultado clave.
-- **FR-021**: Cada caso MUST seguir el arco narrativo: tensión, descubrimiento, decisión, prueba, impacto y reflexión.
-- **FR-022**: En la arquitectura de la solución, cada caso MUST documentar al menos una decisión clave con su motivo y la alternativa descartada.
-- **FR-023**: En resultados y aprendizajes, cada caso MUST incluir lo que no funcionó o lo que se haría distinto.
-- **FR-024**: El caso meta MUST explicar el sistema de diseño, la estructura de componentes, el enfoque de accesibilidad y el uso de IA en el desarrollo del portafolio.
-- **FR-025**: Sobre mí y proceso MUST describir la forma de trabajar, los métodos dominados y el tipo de problemas que busca el perfil.
-- **FR-026**: Ningún caso MUST publicarse con espacios de plantilla sin completar.
-- **FR-027**: Todo control interactivo MUST tener un área de toque o clic de al menos 44×44 px, incluidos los enlaces de la navegación, los llamados a contacto y los enlaces de "ver caso". Un enlace dentro de un párrafo cumple si su área de toque, aunque no se vea, alcanza ese tamaño sin solaparse con otro control.
-- **FR-028**: El encabezado MUST desplazarse con la página, sin quedar fijo. Ningún elemento fijo MUST tapar, ni en parte, el control que tiene el foco del teclado.
-- **FR-029**: El movimiento MUST limitarse a transiciones de cambio de estado (puntero, presión, foco) de 200 ms como máximo. No hay animaciones de aparición, de scroll ni en bucle. Si el sistema pide reducir movimiento, MUST no haber ninguna transición.
-- **FR-030**: Todo caso MUST estar anonimizado: sin nombre de empresa ni de clientes, sin nombres de personas, con citas sin atribución y con métricas en porcentajes o rangos. Las imágenes MUST no mostrar logos, nombres ni datos reales. La empresa se describe solo por sector y tamaño.
 - **FR-006**: Todo control interactivo MUST poder alcanzarse y activarse solo con teclado, sin trampas de foco.
 - **FR-007**: Todo control interactivo MUST mostrar un foco de teclado visible. Si el control admite puntero o presión, MUST distinguir el estado al pasar el puntero y el estado al presionar.
 - **FR-008**: La información necesaria para entender un caso MUST estar disponible sin depender del estado al pasar el puntero.
@@ -121,6 +107,20 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-014**: Cada página pública MUST tener título propio, descripción breve y una jerarquía de encabezados comprensible.
 - **FR-015**: El conjunto de páginas públicas MUST poder descubrirse mediante una lista de esas páginas.
 - **FR-016**: El contenido principal de un caso MUST poder leerse aunque fallen las imágenes de apoyo.
+- **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
+- **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los 3 casos de producto y el acceso a contacto.
+- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado. Inicio y Trabajos MUST usar el mismo orden de casos, fijado por el responsable.
+- **FR-020**: Cada caso MUST abrir con un resumen de producto, rol, equipo, duración y resultado clave.
+- **FR-021**: Cada caso MUST seguir el arco narrativo: tensión, descubrimiento, decisión, prueba, impacto y reflexión.
+- **FR-022**: En la arquitectura de la solución, cada caso MUST documentar al menos una decisión clave con su motivo y la alternativa descartada.
+- **FR-023**: En resultados y aprendizajes, cada caso MUST incluir lo que no funcionó o lo que se haría distinto.
+- **FR-024**: El caso meta MUST explicar el sistema de diseño, la estructura de componentes, el enfoque de accesibilidad y el uso de IA en el desarrollo del portafolio.
+- **FR-025**: Sobre mí y proceso MUST describir la forma de trabajar, los métodos dominados y el tipo de problemas que busca el perfil.
+- **FR-026**: Ningún caso MUST publicarse con espacios de plantilla sin completar.
+- **FR-027**: Todo control interactivo MUST tener un área de toque o clic de al menos 44×44 px, incluidos los enlaces de la navegación, los llamados a contacto y los enlaces de "ver caso". Los enlaces dentro de un párrafo de texto quedan exentos, como permite WCAG 2.2 AA.
+- **FR-028**: El encabezado MUST desplazarse con la página, sin quedar fijo. Ningún elemento fijo MUST tapar, ni en parte, el control que tiene el foco del teclado.
+- **FR-029**: El movimiento MUST limitarse a transiciones de cambio de estado (puntero, presión, foco) de 200 ms como máximo. No hay animaciones de aparición, de scroll ni en bucle. Si el sistema pide reducir movimiento, MUST no haber ninguna transición.
+- **FR-030**: Todo caso MUST estar anonimizado: sin nombre de empresa ni de clientes, sin nombres de personas, con citas sin atribución y con métricas en porcentajes o rangos. Las imágenes MUST no mostrar logos, nombres ni datos reales. La empresa se describe solo por sector y tamaño.
 
 ### Key Entities
 
@@ -136,14 +136,14 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 
 - **SC-001**: En al menos 4 de 5 recorridos de prueba, un evaluador identifica las cuatro partes de un caso (problema, evidencia de usuario, arquitectura de la solución, resultados o aprendizajes) en menos de 3 minutos.
 - **SC-002**: La plataforma publica 3 casos de producto que cumplen SC-001, más el caso meta. Cero casos incompletos cuentan para ese mínimo.
-- **SC-009**: En al menos 4 de 5 recorridos de prueba, un reclutador que lee solo el resumen de un caso nombra el rol y el resultado clave en menos de 30 segundos.
-- **SC-010**: En al menos 4 de 5 recorridos de prueba, un visitante llega desde cualquier módulo a Contacto en no más de 2 acciones.
 - **SC-003**: El 100% de los controles de la navegación principal y de los casos se alcanza y se activa solo con teclado, con foco visible y sin trampas de foco.
 - **SC-004**: Una auditoría automatizada de la versión pública supera 95 sobre 100 en accesibilidad, en rendimiento y en buenas prácticas, tanto en una vista de teléfono como en una de escritorio.
 - **SC-005**: En vistas de teléfono, tableta y escritorio, el contenido principal no se solapa ni se corta, incluido el texto ampliado al 200%.
 - **SC-006**: Al cambiar una decisión central de color, de tipografía o de espaciado, el 100% de las vistas que la usan reflejan el cambio y no conservan un valor visual suelto de esa decisión.
 - **SC-007**: El 100% de las páginas públicas tiene título propio y descripción breve, y existe una lista que enumera exactamente esas páginas.
 - **SC-008**: Las combinaciones de texto y de controles publicadas no presentan fallos de contraste respecto de WCAG 2.2 AA.
+- **SC-009**: En al menos 4 de 5 recorridos de prueba, un reclutador que lee solo el resumen de un caso nombra el rol y el resultado clave en menos de 30 segundos.
+- **SC-010**: En al menos 4 de 5 recorridos de prueba, un visitante llega desde cualquier módulo a Contacto en no más de 2 acciones.
 
 ## Assumptions
 

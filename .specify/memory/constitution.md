@@ -1,19 +1,12 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 → 1.1.0
+Version change: 1.1.0 → 1.2.0
 Modified principles:
-- I. Stack Tecnológico: reparto de responsabilidades entre SASS y Tailwind
-- II. Sistema de Diseño (Design Tokens): valores concretos de color, tipografía y espaciado
-- III. Arquitectura Atomic Design: amplía de tres a cinco capas (templates y pages)
-- IV. Accesibilidad WCAG 2.2 AA: anillo de foco con color propio y separación
+- V. Aprobación previa de interfaz: permite prototipos no publicados para aprobar pantallas
 Added sections: none
 Modified sections:
-- Contrato de tokens: valores vigentes en lugar de TODOs
-- Compuertas de calidad: nueva compuerta de pruebas automatizadas
+- Contrato de tokens: el tamaño mínimo de los controles es una dimensión, no un espacio
 Removed sections: none
-Resolved TODOs:
-- COLOR_VALUES, TYPE_FAMILIES, TYPE_SCALE_RATIO, SPACING_BASE,
-  STYLE_RESPONSIBILITY, ATOMIC_EXTRA_LAYERS
 Follow-up TODOs: none
 -->
 
@@ -84,9 +77,15 @@ Implementar una pantalla, página o layout visual MUST contar con
 aprobación explícita previa del responsable del proyecto.
 Si un parámetro de esta constitución no fue entregado, MUST preguntarse
 antes de fijarlo en especificación, plan o código.
+La propuesta de una pantalla MAY presentarse como prototipo navegable.
+Un prototipo MUST vivir bajo la ruta `/prototipos/`, MUST usar solo
+contenido de prueba y MUST NOT publicarse ni entrar en el sitemap.
+Al aprobarse la pantalla, su prototipo MUST borrarse antes de construir
+la versión definitiva.
 
 Rationale: esta constitución fija reglas. Las pantallas se cierran con
-el responsable antes de construir.
+el responsable antes de construir; el prototipo sirve para decidir, no
+para publicar.
 
 ## Contrato de tokens
 
@@ -123,7 +122,10 @@ Tipografía:
 Espaciado:
 
 - Unidad base de 8px. 4px está permitido solo como medio paso.
-- Todo espacio MUST ser 4px o un múltiplo de 8px.
+- Todo espacio (margen, relleno y separación) MUST ser 4px o un múltiplo
+  de 8px.
+- El tamaño mínimo de un control interactivo es una dimensión, no un
+  espacio: MUST ser al menos 44×44 px.
 
 ## Compuertas de calidad
 
@@ -153,4 +155,4 @@ El versionado MUST seguir SemVer:
 Cada especificación, plan e implementación MUST revisarse contra estos
 principios. La guía de desarrollo es `.specify/memory/constitution.md`.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-07
+**Version**: 1.2.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-07

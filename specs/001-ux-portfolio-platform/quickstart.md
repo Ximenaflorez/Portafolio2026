@@ -5,7 +5,7 @@ implementación.
 
 ## Requisitos
 
-- Node.js 22 LTS y npm.
+- Node.js 24 LTS y npm.
 - Navegadores de Playwright instalados (`npx playwright install`).
 
 ## Puesta en marcha
