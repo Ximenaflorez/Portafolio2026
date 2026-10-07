@@ -69,6 +69,8 @@ export default {
     extend: {
       minWidth: { target: "var(--target-min)" },
       minHeight: { target: "var(--target-min)" },
+      maxWidth: { content: "var(--content-max)" },
+      borderWidth: { indicator: "var(--indicator-width)" },
     },
   },
   plugins: [],

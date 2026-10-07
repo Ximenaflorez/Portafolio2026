@@ -19,6 +19,8 @@ describe("propagación de tokens (SC-006)", () => {
       "font-heading",
       "duration-state",
       "min-h-target",
+      "max-w-content",
+      "border-b-indicator",
     ]);
 
     expect(css).toMatch(/\.bg-primary\s*{[^}]*rgb\(var\(--color-primary\)/);
@@ -28,6 +30,10 @@ describe("propagación de tokens (SC-006)", () => {
     expect(css).toMatch(/\.font-heading\s*{[^}]*font-family:\s*var\(--font-heading\)/);
     expect(css).toMatch(/\.duration-state\s*{[^}]*transition-duration:\s*var\(--duration-state\)/);
     expect(css).toMatch(/\.min-h-target\s*{[^}]*min-height:\s*var\(--target-min\)/);
+    expect(css).toMatch(/\.max-w-content\s*{[^}]*max-width:\s*var\(--content-max\)/);
+    expect(css).toMatch(
+      /\.border-b-indicator\s*{[^}]*border-bottom-width:\s*var\(--indicator-width\)/,
+    );
   });
 
   it("Tailwind no ofrece los valores por defecto de color, espaciado ni duración", async () => {

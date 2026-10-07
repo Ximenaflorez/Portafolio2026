@@ -4,6 +4,7 @@
 @use "typography" as *;
 @use "spacing" as *;
 @use "interaction" as *;
+@use "layout" as *;
 
 :root {
   @each $name, $channels in $colors {
@@ -34,6 +35,8 @@
   --target-min: #{$target-min};
   --focus-ring-width: #{$focus-ring-width};
   --focus-ring-offset: #{$focus-ring-offset};
+  --indicator-width: #{$indicator-width};
+  --content-max: #{$content-max};
 }
 
 @media (prefers-reduced-motion: reduce) {

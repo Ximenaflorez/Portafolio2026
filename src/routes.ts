@@ -11,7 +11,7 @@ const casos: RouteConfig = [
 ];
 
 // Prototipos de aprobación (Constitución, principio V): nunca entran en el build de producción.
-const prototipos: RouteConfig = [];
+const prototipos: RouteConfig = [route("prototipos/globales", "routes/prototipos/globales.tsx")];
 
 export default [
   index("routes/inicio.tsx"),

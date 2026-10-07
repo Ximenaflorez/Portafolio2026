@@ -93,6 +93,13 @@ de scroll ni en bucle (FR-029).
 | Token | Variable CSS | Valor |
 |---|---|---|
 | Objetivo mínimo | `--target-min` | `44px` (FR-027) |
+| Indicador de página actual | `--indicator-width` | `3px`, subrayado en Primary con texto semibold |
+
+## Layout
+
+| Token | Variable CSS | Valor |
+|---|---|---|
+| Ancho máximo del contenido | `--content-max` | `64rem` (1024px), centrado |
 
 ## Foco
 
