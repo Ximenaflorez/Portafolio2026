@@ -47,7 +47,7 @@ aprobación; HTML prerenderizado por ruta; fuentes alojadas en el propio sitio
 | Principio | Cómo lo cumple el plan | Estado |
 |---|---|---|
 | I. Stack | React y Vite (React Router 7 corre sobre Vite). SASS define tokens y estilos globales. Tailwind 3.4 consume esos tokens. Git. | Pasa |
-| II. Tokens | Origen único en `src/styles/tokens/`. Tailwind reemplaza (no extiende) color, tipografía y espaciado, así que no hay valores por defecto disponibles. Cada token de color tiene un valor por tema (claro y oscuro) con el mismo nombre; los componentes no conocen el tema. Prueba de propagación y prueba anti valores sueltos. | Pasa; valores del tema oscuro pendientes del prototipo T086 |
+| II. Tokens | Origen único en `src/styles/tokens/`. Tailwind reemplaza (no extiende) color, tipografía y espaciado, así que no hay valores por defecto disponibles. Cada token de color tiene un valor por tema (claro y oscuro) con el mismo nombre; los componentes no conocen el tema. Prueba de propagación y prueba anti valores sueltos. | Pasa; valores del tema oscuro aprobados en T086 el 2026-10-08 |
 | III. Atomic Design | Cinco capas en `src/components/`. Las rutas solo montan pages. Prueba de dependencias entre capas. | Pasa |
 | IV. Accesibilidad | Foco global con el token Focus (2px, separado). axe en componentes y páginas, en los dos temas y los dos idiomas. Prueba de contraste de tokens en cada tema. Recorridos de teclado en Playwright. | Pasa |
 | V. Aprobación previa | Cada pantalla se propone como prototipo en `/prototipos/`, sin publicar ni entrar en el sitemap, y se borra al aprobarse. Las tareas definitivas quedan bloqueadas por esa compuerta. | Pasa |

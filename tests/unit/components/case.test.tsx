@@ -474,3 +474,78 @@ describe("CasePage", () => {
     expect(await axe(container)).toHaveNoViolations();
   });
 });
+
+describe("CasePage en inglés (FR-042)", () => {
+  const caso: CaseStudy = {
+    slug: "analytics",
+    type: "product",
+    status: "published",
+    order: 1,
+    title: "Analytics redesign",
+    seo: {
+      title: "Analytics",
+      description: "A case study about redesigning an analytics product.",
+    },
+    summary: {
+      product: "B2B platform",
+      role: "Lead Product Designer",
+      team: "1 PM, 4 devs",
+      duration: "6 months",
+      keyResult: "20% less abandonment",
+      productType: "B2B SaaS",
+    },
+    body: "## 1. Initial problem\n\nText.\n\n## 2. Research\n\nText.\n\n## 3. Solution architecture\n\nText.\n\n## 4. Results and learnings\n\nText.\n",
+  };
+  const perfil = {
+    name: "Nombre Apellido",
+    email: "nombre@ejemplo.com",
+    linkedin: "https://www.linkedin.com/in/ejemplo",
+    cv: "/cv.pdf",
+  };
+
+  function pagina() {
+    return render(
+      <MemoryRouter initialEntries={["/en/work/analytics/"]}>
+        <CasePage profile={perfil} cvAvailable caseStudy={caso} />
+      </MemoryRouter>,
+    );
+  }
+
+  it("usa los textos del idioma de la ruta sin que se los pasen", () => {
+    pagina();
+
+    expect(screen.getByRole("link", { name: /Back to Work/ })).toHaveAttribute(
+      "href",
+      "/en/#trabajos",
+    );
+    expect(screen.getByText("Product case · B2B SaaS")).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "In this case" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "30-second summary" })).toBeInTheDocument();
+    expect(screen.getByText("Key result")).toBeInTheDocument();
+  });
+
+  it("el selector de idioma lleva al mismo caso en español", () => {
+    render(
+      <MemoryRouter initialEntries={["/en/work/analytics/"]}>
+        <CasePage
+          profile={perfil}
+          cvAvailable
+          caseStudy={caso}
+          casePairs={[
+            { file: "caso-01.md", type: "product", slugs: { es: "analitica", en: "analytics" } },
+          ]}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("link", { name: "ES Español" })).toHaveAttribute(
+      "href",
+      "/trabajos/analitica/",
+    );
+  });
+
+  it("no tiene violaciones de accesibilidad", async () => {
+    const { container } = pagina();
+    expect(await axe(container)).toHaveNoViolations();
+  });
+});

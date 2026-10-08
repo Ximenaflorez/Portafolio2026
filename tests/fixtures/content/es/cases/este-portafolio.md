@@ -1,0 +1,32 @@
+---
+slug: este-portafolio
+type: meta
+status: published
+order: 1
+title: Cómo construí este portafolio
+seo:
+  title: Cómo construí este portafolio
+  description: "Caso de estudio de prueba: Cómo construí este portafolio, con contexto, investigación, solución y resultados."
+summary:
+  product: Este portafolio, como caso de estudio de sí mismo.
+  role: Diseño, sistema de diseño y desarrollo frontend
+  duration: 6 meses
+  keyResult: Cumple WCAG 2.2 AA
+---
+
+## 1. Problema inicial
+
+- **Contexto de negocio:** Plataforma de prueba con un problema claro y medible.
+
+## 2. Investigación y datos de usuario
+
+- **Hallazgos:** El 60% de las tareas se abandonaba en el segundo paso.
+
+## 3. Arquitectura de la solución
+
+- **Decisiones clave:** Unificar dos flujos en uno, porque reducía pasos; se descartó un asistente guiado.
+
+## 4. Resultados y aprendizajes
+
+- **Resultados:** Entre 20% y 30% menos abandono.
+- **Lo que no funcionó:** La primera versión del filtro confundía a las personas nuevas.

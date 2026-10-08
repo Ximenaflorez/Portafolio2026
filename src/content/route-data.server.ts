@@ -1,5 +1,5 @@
 import { data } from "react-router";
-import type { Language } from "../lib/i18n";
+import { metaCasePath, type Language } from "../lib/i18n";
 import {
   casePairs,
   cvAvailable,
@@ -14,7 +14,13 @@ import {
 
 function siteData(language: Language) {
   const profile = loadProfile(language);
-  return { profile, cvAvailable: cvAvailable(profile.cv), casePairs: casePairs() };
+  return {
+    profile,
+    cvAvailable: cvAvailable(profile.cv),
+    casePairs: casePairs(),
+    // El crédito del pie enlaza al caso meta solo si ya está publicado.
+    metaCaseHref: publishedCases(language, "meta").length > 0 ? metaCasePath(language) : undefined,
+  };
 }
 
 export function homeData(language: Language) {

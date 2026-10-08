@@ -119,22 +119,22 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Pruebas (escribir primero, deben fallar)
 
-- [ ] T087 [P] Extender la prueba de contraste para medir cada pareja de `contracts/tokens.md` en el tema claro y en el oscuro (4.5:1 texto, 3:1 foco y bordes de control), en `tests/unit/tokens/contrast.test.ts`
-- [ ] T088 [P] Probar que los selectores de `contracts/tokens.md` emiten los 13 tokens en `:root`, en `prefers-color-scheme: dark` sobre `:root:not([data-theme="light"])`, y en `[data-theme="dark"]` y `[data-theme="light"]`; que cambiar un token oscuro se propaga a la utilidad de Tailwind; y que `src/components/` no usa variantes `dark:` ni lee el tema, en `tests/unit/tokens/propagation.test.ts` y `no-hardcoded.test.ts`
-- [ ] T089 [P] Escribir la prueba de `src/lib/i18n.ts`: ruta de cada página en cada idioma (`/` y `/en/`, `/trabajos/:slug/` y `/en/work/:slug/`), página equivalente (caso, sección y principal), alternativas `hreflang` y que `/trabajos/`, `/sobre-mi/` y `/contacto/` no existen en inglés, en `tests/unit/lib/i18n.test.ts`
-- [ ] T090 [P] Escribir la prueba de paridad de contenido: falla un archivo sin su par en el otro idioma, un par con `type`, `status` u `order` distintos, un caso `published` sin su par `published`, claves de `ui/es.json` y `ui/en.json` distintas o vacías, y encabezados o etiquetas en el idioma equivocado; pasa un par completo, en `tests/unit/content/parity.test.ts`
-- [ ] T091 [P] Escribir prueba axe, de teclado y de estado para `ThemeToggle` (`aria-pressed`, nombre accesible por idioma, 44×44 px) y `LanguageSwitch` (enlace con `hreflang` y `lang`, 44×44 px, lleva al par), en `tests/unit/components/controls.test.tsx`
+- [X] T087 [P] Extender la prueba de contraste para medir cada pareja de `contracts/tokens.md` en el tema claro y en el oscuro (4.5:1 texto, 3:1 foco y bordes de control), en `tests/unit/tokens/contrast.test.ts`
+- [X] T088 [P] Probar que los selectores de `contracts/tokens.md` emiten los 13 tokens en `:root`, en `prefers-color-scheme: dark` sobre `:root:not([data-theme="light"])`, y en `[data-theme="dark"]` y `[data-theme="light"]`; que cambiar un token oscuro se propaga a la utilidad de Tailwind; y que `src/components/` no usa variantes `dark:` ni lee el tema, en `tests/unit/tokens/propagation.test.ts` y `no-hardcoded.test.ts`
+- [X] T089 [P] Escribir la prueba de `src/lib/i18n.ts`: ruta de cada página en cada idioma (`/` y `/en/`, `/trabajos/:slug/` y `/en/work/:slug/`), página equivalente (caso, sección y principal), alternativas `hreflang` y que `/trabajos/`, `/sobre-mi/` y `/contacto/` no existen en inglés, en `tests/unit/lib/i18n.test.ts`
+- [X] T090 [P] Escribir la prueba de paridad de contenido: falla un archivo sin su par en el otro idioma, un par con `type`, `status` u `order` distintos, un caso `published` sin su par `published`, claves de `ui/es.json` y `ui/en.json` distintas o vacías, y encabezados o etiquetas en el idioma equivocado; pasa un par completo, en `tests/unit/content/parity.test.ts`
+- [X] T091 [P] Escribir prueba axe, de teclado y de estado para `ThemeToggle` (`aria-pressed`, nombre accesible por idioma, 44×44 px) y `LanguageSwitch` (enlace con `hreflang` y `lang`, 44×44 px, lleva al par), en `tests/unit/components/controls.test.tsx`
 
 ### Implementación
 
-- [ ] T092 Definir el tema oscuro de los 13 tokens con los valores aprobados en T086 y emitir los cuatro selectores, con `color-scheme: light dark`, en `src/styles/tokens/_color.scss` y `_index.scss`; confirmar que pasan T087 y T088
-- [ ] T093 Crear `src/lib/theme.ts` (leer y guardar la elección en `localStorage`, clave `theme`) y el script mínimo en línea en `<head>` que aplica `data-theme` antes de pintar; fijar transiciones de color en 0ms al cambiar de tema, en `src/lib/theme.ts` y `src/root.tsx`
-- [ ] T094 [P] Crear `src/lib/i18n.ts` (idiomas, rutas por idioma, página equivalente) y los textos de interfaz `src/content/ui/es.json` y `en.json`, con un helper para leerlos; confirmar que pasa T089
-- [ ] T095 Reorganizar el contenido en `src/content/es/` y `src/content/en/` (mover `profile.md`, `pages/` y `cases/` a `es/`; crear los pares en `en/` con `status: draft` y `[COMPLETAR]`), cargar por idioma, validar paridad y aceptar los encabezados y etiquetas en inglés, en `src/content/schema.ts` y `load.server.ts`; actualizar `tests/unit/content/schema.test.ts`; confirmar que pasa T090
-- [ ] T096 Declarar las rutas `/en/`, `/en/work/:slug/` y `/en/work/this-portfolio/`, el `lang` por documento en `root.tsx`, canónica y alternativas `hreflang` en `src/lib/seo.ts`, sitemap con los dos idiomas y alternativas, y la 404 con los dos idiomas, en `src/routes.ts`, `src/root.tsx` y `scripts/generate-sitemap.ts`
-- [ ] T097 Crear el átomo `ThemeToggle` y el átomo `LanguageSwitch`, incorporarlos en `SiteHeader` en la posición aprobada en T086, y pasar los textos de `SkipLink`, `SiteNav`, `SiteHeader` y `SiteFooter` por el helper de interfaz; adaptar `tests/unit/components/site.test.tsx`; confirmar que pasa T091, en `src/components/atoms/`, `organisms/SiteHeader.tsx` y `organisms/SiteFooter.tsx`
-- [ ] T098 [P] Escribir prueba e2e de tema (sigue al sistema, el botón cambia y recuerda, sin destello al cargar, sin JavaScript sigue al sistema) y de idioma (el selector lleva a la página equivalente, `lang`, canónica y `hreflang` correctos, el sitemap lista los dos idiomas), con axe en los dos temas y los dos idiomas, y comprobar FR-043 en 360, 768 y 1280px, en `tests/e2e/theme.spec.ts` y `i18n.spec.ts`
-- [ ] T099 Ejecutar T087 a T091 y T098 y confirmar que pasan
+- [X] T092 Definir el tema oscuro de los 13 tokens con los valores aprobados en T086 y emitir los cuatro selectores, con `color-scheme: light dark`, en `src/styles/tokens/_color.scss` y `_index.scss`; confirmar que pasan T087 y T088
+- [X] T093 Crear `src/lib/theme.ts` (leer y guardar la elección en `localStorage`, clave `theme`) y el script mínimo en línea en `<head>` que aplica `data-theme` antes de pintar; fijar transiciones de color en 0ms al cambiar de tema, en `src/lib/theme.ts` y `src/root.tsx`
+- [X] T094 [P] Crear `src/lib/i18n.ts` (idiomas, rutas por idioma, página equivalente) y los textos de interfaz `src/content/ui/es.json` y `en.json`, con un helper para leerlos; confirmar que pasa T089
+- [X] T095 Reorganizar el contenido en `src/content/es/` y `src/content/en/` (mover `profile.md`, `pages/` y `cases/` a `es/`; crear los pares en `en/` con `status: draft` y `[COMPLETAR]`), cargar por idioma, validar paridad y aceptar los encabezados y etiquetas en inglés, en `src/content/schema.ts` y `load.server.ts`; actualizar `tests/unit/content/schema.test.ts`; confirmar que pasa T090
+- [X] T096 Declarar las rutas `/en/`, `/en/work/:slug/` y `/en/work/this-portfolio/`, el `lang` por documento en `root.tsx`, canónica y alternativas `hreflang` en `src/lib/seo.ts`, sitemap con los dos idiomas y alternativas, y la 404 con los dos idiomas, en `src/routes.ts`, `src/root.tsx` y `scripts/generate-sitemap.ts`
+- [X] T097 Crear el átomo `ThemeToggle` y el átomo `LanguageSwitch`, incorporarlos en `SiteHeader` en la posición aprobada en T086, y pasar los textos de `SkipLink`, `SiteNav`, `SiteHeader` y `SiteFooter` por el helper de interfaz; adaptar `tests/unit/components/site.test.tsx`; confirmar que pasa T091, en `src/components/atoms/`, `organisms/SiteHeader.tsx` y `organisms/SiteFooter.tsx`
+- [X] T098 [P] Escribir prueba e2e de tema (sigue al sistema, el botón cambia y recuerda, sin destello al cargar, sin JavaScript sigue al sistema) y de idioma (el selector lleva a la página equivalente, `lang`, canónica y `hreflang` correctos, el sitemap lista los dos idiomas), con axe en los dos temas y los dos idiomas, y comprobar FR-043 en 360, 768 y 1280px, en `tests/e2e/theme.spec.ts` y `i18n.spec.ts`
+- [X] T099 Ejecutar T087 a T091 y T098 y confirmar que pasan
 
 **Checkpoint**: temas e idiomas funcionan en los elementos globales. Las pantallas de las historias nacen ya con los dos temas y los dos idiomas.
 
@@ -150,7 +150,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 - [ ] T043 [P] [US1] Escribir prueba e2e: desde la sección `/#trabajos` se llega a cada caso y se vuelve a ella; cada caso muestra resumen y las cuatro secciones en orden, en `tests/e2e/cases.spec.ts`
 - [ ] T044 [P] [US1] Escribir prueba e2e con axe sobre `/` y `/en/` (todas sus secciones) y cada caso, en los dos temas, en `tests/e2e/a11y-cases.spec.ts`
-- [ ] T045 [P] [US1] Crear contenido de prueba publicado (3 casos y meta) en español y en inglés, con la estructura de `es/` y `en/`, en `tests/fixtures/content/`
+- [X] T045 [P] [US1] Crear contenido de prueba publicado (3 casos y meta) en español y en inglés, con la estructura de `es/` y `en/`, en `tests/fixtures/content/`
 
 ### Implementation for User Story 1
 
@@ -163,7 +163,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [X] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
 - [X] T053 [US1] Crear el template `CaseTemplate` (enlace «Volver a Trabajos» a `/#trabajos` antes del título, CaseSummary, índice con las cuatro secciones, CaseBody con texto de `max-w-prose` e imágenes de ancho completo; FR-035) en `src/components/templates/CaseTemplate.tsx`
 - [X] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
-- [ ] T055 [US1] (depende de T096) Conectar `/trabajos/:slug/`, `/trabajos/este-portafolio/` y sus pares `/en/work/:slug/` y `/en/work/this-portfolio/` con loader y meta en `src/routes/`
+- [X] T055 [US1] (depende de T096) Conectar `/trabajos/:slug/`, `/trabajos/este-portafolio/` y sus pares `/en/work/:slug/` y `/en/work/this-portfolio/` con loader y meta en `src/routes/`
 - [ ] T056 [US1] Ejecutar T043 y T044 y confirmar que pasan
 
 **Checkpoint**: US1 funciona y se valida sola.

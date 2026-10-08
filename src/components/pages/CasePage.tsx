@@ -1,5 +1,8 @@
 import type { CaseStudy } from "~/content/schema";
 import { extractSections } from "~/lib/case-sections";
+import { homePath as languageHome } from "~/lib/i18n";
+import { caseLabels } from "~/lib/ui";
+import { useUi } from "~/lib/use-ui";
 import { CaseSummary, type CaseSummaryLabels } from "../molecules/CaseSummary";
 import { SectionIndex } from "../molecules/SectionIndex";
 import { CaseBody } from "../organisms/CaseBody";
@@ -16,10 +19,11 @@ export type CasePageLabels = {
 
 type SiteProps = Parameters<typeof SiteTemplate>[0];
 
-type Props = Pick<SiteProps, "profile" | "cvAvailable" | "metaCaseHref" | "year"> & {
+type Props = Pick<SiteProps, "profile" | "cvAvailable" | "metaCaseHref" | "year" | "casePairs"> & {
   caseStudy: CaseStudy;
-  labels: CasePageLabels;
-  /** Ruta de la página principal del idioma: `/` o `/en/`. */
+  /** Textos de la página; por defecto, los de interfaz del idioma de la ruta. */
+  labels?: CasePageLabels;
+  /** Ruta de la página principal del idioma: `/` o `/en/`; por defecto, la del idioma de la ruta. */
   homePath?: string;
 };
 
@@ -28,15 +32,19 @@ export function CasePage({
   cvAvailable,
   metaCaseHref,
   year,
+  casePairs,
   caseStudy,
   labels,
-  homePath = "/",
+  homePath,
 }: Props) {
+  const { language, t } = useUi();
+  const text = labels ?? caseLabels(t);
+  const home = homePath ?? languageHome(language);
   const { type, title, summary, body } = caseStudy;
   const eyebrow =
     type === "meta"
-      ? labels.eyebrowMeta
-      : [labels.eyebrowProduct, summary.productType].filter(Boolean).join(" · ");
+      ? text.eyebrowMeta
+      : [text.eyebrowProduct, summary.productType].filter(Boolean).join(" · ");
 
   return (
     <SiteTemplate
@@ -44,14 +52,15 @@ export function CasePage({
       cvAvailable={cvAvailable}
       metaCaseHref={metaCaseHref}
       year={year}
+      casePairs={casePairs}
     >
       <CaseTemplate
-        backHref={`${homePath}#trabajos`}
-        backLabel={labels.back}
+        backHref={`${home}#trabajos`}
+        backLabel={text.back}
         eyebrow={eyebrow}
         title={title}
-        summary={<CaseSummary summary={summary} labels={labels.summary} />}
-        index={<SectionIndex label={labels.index} items={extractSections(body)} />}
+        summary={<CaseSummary summary={summary} labels={text.summary} />}
+        index={<SectionIndex label={text.index} items={extractSections(body)} />}
       >
         <CaseBody markdown={body} />
       </CaseTemplate>

@@ -1,7 +1,8 @@
 import { metaCaseData } from "~/content/route-data.server";
 import { alternateLinks, metaCasePath } from "~/lib/i18n";
 import { pageMeta } from "~/lib/seo";
-import type { MetaFunction } from "react-router";
+import { CaseRouteView } from "./case-view";
+import { useLoaderData, type MetaFunction } from "react-router";
 
 export function loader() {
   return metaCaseData("es");
@@ -18,5 +19,5 @@ export const meta: MetaFunction<typeof loader> = ({ loaderData }) => {
 };
 
 export default function CasoMeta() {
-  return null;
+  return <CaseRouteView data={useLoaderData<typeof loader>()} />;
 }
