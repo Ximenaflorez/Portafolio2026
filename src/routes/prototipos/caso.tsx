@@ -1,18 +1,10 @@
 import type { ReactNode } from "react";
-import { useSearchParams } from "react-router";
 import { TextLink } from "~/components/atoms/TextLink";
-import { SiteTemplate } from "~/components/templates/SiteTemplate";
+import { Anexar, Campo, PlantillaPrototipo } from "./piezas";
 
-// Prototipo de aprobación T046: página de caso y sección Trabajos con contenido INVENTADO
+// Prototipo de aprobación T046: página de un caso de estudio largo, con contenido INVENTADO
 // (anonimizado, FR-030). Solo en desarrollo; se borra al aprobarse.
 // Las cajas «Qué anexar» y los recuadros de imagen son andamios del prototipo: no existirán.
-
-const perfil = {
-  name: "Nombre Apellido",
-  email: "nombre@ejemplo.com",
-  linkedin: "https://www.linkedin.com/in/ejemplo",
-  cv: "/cv.pdf",
-};
 
 const caso = {
   titulo: "Rediseño del flujo de despacho en una plataforma logística B2B",
@@ -28,53 +20,12 @@ const caso = {
   },
 };
 
-const casosIndice = [
-  {
-    titulo: caso.titulo,
-    tipo: "B2B SaaS",
-    rol: "Product Designer líder",
-    linea: "Entre 20% y 30% menos abandono en el flujo de despacho.",
-  },
-  {
-    titulo: "Panel de seguimiento para equipos de campo",
-    tipo: "App móvil interna",
-    rol: "Product Designer",
-    linea: "El tiempo de registro de una visita bajó a la mitad.",
-  },
-  {
-    titulo: "Sistema de diseño para tres productos de una fintech",
-    tipo: "Sistema de diseño",
-    rol: "Diseñador de sistemas",
-    linea: "Un 40% menos de componentes duplicados entre productos.",
-  },
-];
-
 const indice = [
   { id: "problema-inicial", label: "1. Problema inicial" },
   { id: "investigacion", label: "2. Investigación" },
   { id: "arquitectura", label: "3. Arquitectura de la solución" },
   { id: "resultados", label: "4. Resultados y aprendizajes" },
 ];
-
-function Anexar({ children }: { children: ReactNode }) {
-  return (
-    <aside
-      aria-label="Guía del prototipo"
-      className="mt-2 border border-dashed border-border-strong bg-surface p-2 text-sm text-text"
-    >
-      <strong>Qué anexar aquí (solo prototipo):</strong> {children}
-    </aside>
-  );
-}
-
-function Campo({ etiqueta, children }: { etiqueta: string; children: ReactNode }) {
-  return (
-    <div>
-      <dt className="font-semibold">{etiqueta}</dt>
-      <dd className="mt-0.5">{children}</dd>
-    </div>
-  );
-}
 
 function Figura({ alt, pie, pista }: { alt: string; pie: string; pista: string }) {
   return (
@@ -312,89 +263,14 @@ function PaginaCaso() {
   );
 }
 
-function SeccionTrabajos() {
-  return (
-    <section id="trabajos" aria-labelledby="titulo-trabajos" className="py-16">
-      <h2 id="titulo-trabajos" className="text-3xl">
-        Trabajos
-      </h2>
-      <p className="mt-1 text-text-muted">
-        Tres casos de producto, con el problema, la evidencia, las decisiones y el resultado de cada
-        uno.
-      </p>
-      <ul className="mt-6 grid gap-4 md:grid-cols-3">
-        {casosIndice.map((item) => (
-          <li key={item.titulo} className="flex flex-col border border-border bg-surface p-4">
-            <p className="text-sm text-text-muted">{item.tipo}</p>
-            <h3 className="mt-0.5 text-xl">{item.titulo}</h3>
-            <p className="mt-1 text-sm text-text-muted">{item.rol}</p>
-            <p className="mt-2 flex-1">{item.linea}</p>
-            <div className="mt-2">
-              <TextLink href="#trabajos" variant="standalone" className="font-semibold">
-                Leer el caso<span className="sr-only">: {item.titulo}</span>
-              </TextLink>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <Anexar>
-        por cada caso: título, tipo de producto, tu rol y una línea de resultado (máximo 120
-        caracteres). El orden lo defines tú.
-      </Anexar>
-
-      <div className="mt-4 border border-border-strong bg-surface p-4">
-        <p className="text-sm text-text-muted">El caso de este portafolio</p>
-        <h3 className="mt-0.5 text-xl">Cómo construí este portafolio</h3>
-        <p className="mt-1">
-          El sistema de diseño, la estructura de componentes, el enfoque de accesibilidad y el uso
-          de IA en el desarrollo.
-        </p>
-        <div className="mt-2">
-          <TextLink href="#trabajos" variant="standalone" className="font-semibold">
-            Leer el caso<span className="sr-only">: Cómo construí este portafolio</span>
-          </TextLink>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function meta() {
-  return [{ title: "Prototipo: casos de estudio" }, { name: "robots", content: "noindex" }];
+  return [{ title: "Prototipo: página de caso" }, { name: "robots", content: "noindex" }];
 }
 
-export default function PrototipoCasos() {
-  const [params] = useSearchParams();
-  const vista = params.get("vista") === "trabajos" ? "trabajos" : "caso";
-
+export default function PrototipoCaso() {
   return (
-    <>
-      <nav
-        aria-label="Vista del prototipo"
-        className="border-b border-dashed border-border-strong bg-surface"
-      >
-        <ul className="mx-auto flex max-w-content flex-wrap items-center gap-x-3 px-3 md:px-4">
-          <li className="text-sm text-text-muted">Solo prototipo, vista:</li>
-          <li>
-            <TextLink to="?vista=caso" variant="standalone">
-              Página de caso
-            </TextLink>
-          </li>
-          <li>
-            <TextLink to="?vista=trabajos" variant="standalone">
-              Sección Trabajos
-            </TextLink>
-          </li>
-        </ul>
-      </nav>
-      <SiteTemplate
-        profile={perfil}
-        cvAvailable
-        metaCaseHref="/trabajos/este-portafolio"
-        year={2026}
-      >
-        {vista === "caso" ? <PaginaCaso /> : <SeccionTrabajos />}
-      </SiteTemplate>
-    </>
+    <PlantillaPrototipo>
+      <PaginaCaso />
+    </PlantillaPrototipo>
   );
 }
