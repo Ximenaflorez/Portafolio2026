@@ -107,6 +107,39 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ---
 
+## Phase 3B: Temas claro y oscuro, e idiomas español e inglés (FR-036 a FR-043)
+
+**Goal**: Dos temas con los mismos tokens, dos idiomas con direcciones y contenido propios, selector de idioma y botón de tema en el encabezado
+
+**Orden**: primero la compuerta T086 (puede ir en paralelo con T046); luego pruebas (deben fallar); luego implementación.
+
+### Aprobación
+
+- [ ] T086 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/temas.tsx` un prototipo con contenido de prueba que muestre (a) la propuesta de los 13 tokens de color del tema oscuro, adaptando el índigo y el teal, con la razón de contraste medida de cada pareja de `contracts/tokens.md`; (b) los botones, enlaces, tarjetas y el foco en los dos temas; (c) el encabezado con el selector de idioma y el botón de tema en 360, 768 y 1280px, con la colocación en teléfono dentro de FR-028 y FR-043. Obtener aprobación explícita, fijar los valores del tema oscuro en `.specify/memory/constitution.md` y `contracts/tokens.md`, y borrar el prototipo
+
+### Pruebas (escribir primero, deben fallar)
+
+- [ ] T087 [P] Extender la prueba de contraste para medir cada pareja de `contracts/tokens.md` en el tema claro y en el oscuro (4.5:1 texto, 3:1 foco y bordes de control), en `tests/unit/tokens/contrast.test.ts`
+- [ ] T088 [P] Probar que los selectores de `contracts/tokens.md` emiten los 13 tokens en `:root`, en `prefers-color-scheme: dark` sobre `:root:not([data-theme="light"])`, y en `[data-theme="dark"]` y `[data-theme="light"]`; que cambiar un token oscuro se propaga a la utilidad de Tailwind; y que `src/components/` no usa variantes `dark:` ni lee el tema, en `tests/unit/tokens/propagation.test.ts` y `no-hardcoded.test.ts`
+- [ ] T089 [P] Escribir la prueba de `src/lib/i18n.ts`: ruta de cada página en cada idioma (`/` y `/en/`, `/trabajos/:slug/` y `/en/work/:slug/`), página equivalente (caso, sección y principal), alternativas `hreflang` y que `/trabajos/`, `/sobre-mi/` y `/contacto/` no existen en inglés, en `tests/unit/lib/i18n.test.ts`
+- [ ] T090 [P] Escribir la prueba de paridad de contenido: falla un archivo sin su par en el otro idioma, un par con `type`, `status` u `order` distintos, un caso `published` sin su par `published`, claves de `ui/es.json` y `ui/en.json` distintas o vacías, y encabezados o etiquetas en el idioma equivocado; pasa un par completo, en `tests/unit/content/parity.test.ts`
+- [ ] T091 [P] Escribir prueba axe, de teclado y de estado para `ThemeToggle` (`aria-pressed`, nombre accesible por idioma, 44×44 px) y `LanguageSwitch` (enlace con `hreflang` y `lang`, 44×44 px, lleva al par), en `tests/unit/components/controls.test.tsx`
+
+### Implementación
+
+- [ ] T092 Definir el tema oscuro de los 13 tokens con los valores aprobados en T086 y emitir los cuatro selectores, con `color-scheme: light dark`, en `src/styles/tokens/_color.scss` y `_index.scss`; confirmar que pasan T087 y T088
+- [ ] T093 Crear `src/lib/theme.ts` (leer y guardar la elección en `localStorage`, clave `theme`) y el script mínimo en línea en `<head>` que aplica `data-theme` antes de pintar; fijar transiciones de color en 0ms al cambiar de tema, en `src/lib/theme.ts` y `src/root.tsx`
+- [ ] T094 [P] Crear `src/lib/i18n.ts` (idiomas, rutas por idioma, página equivalente) y los textos de interfaz `src/content/ui/es.json` y `en.json`, con un helper para leerlos; confirmar que pasa T089
+- [ ] T095 Reorganizar el contenido en `src/content/es/` y `src/content/en/` (mover `profile.md`, `pages/` y `cases/` a `es/`; crear los pares en `en/` con `status: draft` y `[COMPLETAR]`), cargar por idioma, validar paridad y aceptar los encabezados y etiquetas en inglés, en `src/content/schema.ts` y `load.server.ts`; actualizar `tests/unit/content/schema.test.ts`; confirmar que pasa T090
+- [ ] T096 Declarar las rutas `/en/`, `/en/work/:slug/` y `/en/work/this-portfolio/`, el `lang` por documento en `root.tsx`, canónica y alternativas `hreflang` en `src/lib/seo.ts`, sitemap con los dos idiomas y alternativas, y la 404 con los dos idiomas, en `src/routes.ts`, `src/root.tsx` y `scripts/generate-sitemap.ts`
+- [ ] T097 Crear el átomo `ThemeToggle` y el átomo `LanguageSwitch`, incorporarlos en `SiteHeader` en la posición aprobada en T086, y pasar los textos de `SkipLink`, `SiteNav`, `SiteHeader` y `SiteFooter` por el helper de interfaz; adaptar `tests/unit/components/site.test.tsx`; confirmar que pasa T091, en `src/components/atoms/`, `organisms/SiteHeader.tsx` y `organisms/SiteFooter.tsx`
+- [ ] T098 [P] Escribir prueba e2e de tema (sigue al sistema, el botón cambia y recuerda, sin destello al cargar, sin JavaScript sigue al sistema) y de idioma (el selector lleva a la página equivalente, `lang`, canónica y `hreflang` correctos, el sitemap lista los dos idiomas), con axe en los dos temas y los dos idiomas, y comprobar FR-043 en 360, 768 y 1280px, en `tests/e2e/theme.spec.ts` y `i18n.spec.ts`
+- [ ] T099 Ejecutar T087 a T091 y T098 y confirmar que pasan
+
+**Checkpoint**: temas e idiomas funcionan en los elementos globales. Las pantallas de las historias nacen ya con los dos temas y los dos idiomas.
+
+---
+
 ## Phase 4: User Story 1 - Evaluar el pensamiento de producto (Priority: P1) 🎯 MVP
 
 **Goal**: Trabajos, los tres casos de producto y el caso meta, con resumen y arco narrativo
@@ -116,8 +149,8 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 ### Tests for User Story 1
 
 - [ ] T043 [P] [US1] Escribir prueba e2e: desde la sección `/#trabajos` se llega a cada caso y se vuelve a ella; cada caso muestra resumen y las cuatro secciones en orden, en `tests/e2e/cases.spec.ts`
-- [ ] T044 [P] [US1] Escribir prueba e2e con axe sobre `/` (todas sus secciones) y cada caso en `tests/e2e/a11y-cases.spec.ts`
-- [ ] T045 [P] [US1] Crear contenido de prueba publicado (3 casos y meta) en `tests/fixtures/content/`
+- [ ] T044 [P] [US1] Escribir prueba e2e con axe sobre `/` y `/en/` (todas sus secciones) y cada caso, en los dos temas, en `tests/e2e/a11y-cases.spec.ts`
+- [ ] T045 [P] [US1] Crear contenido de prueba publicado (3 casos y meta) en español y en inglés, con la estructura de `es/` y `en/`, en `tests/fixtures/content/`
 
 ### Implementation for User Story 1
 
@@ -130,7 +163,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
 - [ ] T053 [US1] Crear el template `CaseTemplate` (enlace «Volver a Trabajos» a `/#trabajos` antes del título, CaseSummary, índice con las cuatro secciones, CaseBody con texto de `max-w-prose` e imágenes de ancho completo; FR-035) en `src/components/templates/CaseTemplate.tsx`
 - [ ] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
-- [ ] T055 [US1] Conectar `/trabajos/:slug/` y `/trabajos/este-portafolio/` con loader y meta en `src/routes/`
+- [ ] T055 [US1] (depende de T096) Conectar `/trabajos/:slug/`, `/trabajos/este-portafolio/` y sus pares `/en/work/:slug/` y `/en/work/this-portfolio/` con loader y meta en `src/routes/`
 - [ ] T056 [US1] Ejecutar T043 y T044 y confirmar que pasan
 
 **Checkpoint**: US1 funciona y se valida sola.
@@ -167,9 +200,9 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Tests for User Story 3
 
-- [ ] T063 [P] [US3] Escribir prueba e2e de SEO: título, descripción, canónica, un solo `h1` y `lang="es"` por ruta; el sitemap coincide con las rutas publicadas, en `tests/e2e/seo.spec.ts`
+- [ ] T063 [P] [US3] Escribir prueba e2e de SEO: título, descripción, canónica, alternativas `hreflang`, un solo `h1` y el `lang` correcto (`es` o `en`) por ruta; el sitemap coincide con las rutas publicadas de los dos idiomas, en `tests/e2e/seo.spec.ts`
 - [ ] T064 [P] [US3] Escribir prueba e2e: desde cualquier ruta, Contacto queda a una acción, y muestra correo, perfil profesional y CV (el enlace al CV se oculta si falta el archivo), en `tests/e2e/contact.spec.ts`
-- [ ] T065 [P] [US3] Escribir prueba e2e con axe sobre `/`, las redirecciones y la 404 en `tests/e2e/a11y-pages.spec.ts`
+- [ ] T065 [P] [US3] Escribir prueba e2e con axe sobre `/`, `/en/`, las redirecciones y la 404, en los dos temas, en `tests/e2e/a11y-pages.spec.ts`
 
 ### Implementation for User Story 3
 
@@ -181,7 +214,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T071 [US3] Crear las pages `HomePage` (compone las secciones Inicio, Trabajos, Sobre mí y Contacto) y `NotFoundPage` en `src/components/pages/`
 - [ ] T072 [US3] Conectar `/` y la 404 con loader y meta en `src/routes/`
 - [ ] T081 [US3] Reemplazar las rutas `/trabajos/`, `/sobre-mi/` y `/contacto/` por redirecciones prerenderizadas a `/#trabajos`, `/#sobre-mi` y `/#contacto` (canónica `/`, `noindex`, fuera del sitemap; FR-032), y escribir su prueba e2e en `tests/e2e/redirects.spec.ts`
-- [ ] T082 [US3] Adaptar lo ya construido al modelo de página única: `validatePage` exige `seo` solo en `inicio.md`; `loadPage` y los módulos de ruta actuales de `trabajos`, `sobre-mi` y `contacto` pasan a ser redirecciones; `src/content/pages/` y su prueba en `tests/unit/content/schema.test.ts` se actualizan
+- [ ] T082 [US3] Adaptar lo ya construido al modelo de página única: `validatePage` exige `seo` solo en `inicio.md`; `loadPage` y los módulos de ruta actuales de `trabajos`, `sobre-mi` y `contacto` pasan a ser redirecciones; `src/content/es/pages/` y `en/pages/` y su prueba en `tests/unit/content/schema.test.ts` se actualizan
 - [ ] T073 [US3] Encadenar `scripts/generate-sitemap.ts` al final de `npm run build` en `package.json`
 - [ ] T074 [US3] Ejecutar T063 a T065 y confirmar que pasan
 
@@ -194,7 +227,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T075 [P] Configurar el despliegue en GitHub Pages con `BASE_PATH` y `SITE_URL` como variables y `REQUIRE_COMPLETE_CONTENT=true`, en `.github/workflows/deploy.yml`
 - [ ] T076 [P] Optimizar imágenes (dimensiones declaradas, carga diferida, formatos modernos) en `src/components/atoms/Figure.tsx`
 - [ ] T077 Ejecutar `npm run lighthouse` y corregir hasta superar 95 en las tres categorías, en teléfono y escritorio
-- [ ] T078 Completar el contenido real: ningún `[COMPLETAR]` en `src/content/`, revisar a mano el anonimato de cada caso (FR-030), y pasar los 4 casos a `status: published`
+- [ ] T078 Completar el contenido real en español y en inglés: ningún `[COMPLETAR]` en `src/content/es/` ni `en/`, revisar a mano el anonimato de cada caso en los dos idiomas (FR-030), y pasar los 4 casos a `status: published` en ambos
 - [ ] T079 Ejecutar todos los escenarios de `quickstart.md`
 - [ ] T080 Realizar los recorridos con evaluadores de SC-001, SC-009 y SC-010 (al menos 4 de 5) y una revisión con NVDA
 
@@ -207,7 +240,8 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - **Setup (Phase 1)**: sin dependencias
 - **Foundational (Phase 2)**: depende de Setup; bloquea todo lo demás
 - **Elementos globales (Phase 3)**: depende de Foundational y de la aprobación T035
-- **US1 (Phase 4)**: depende de Phase 3 y de la aprobación T046
+- **Temas e idiomas (Phase 3B)**: depende de Phase 3; la aprobación T086 puede ir en paralelo con T046; bloquea T055 y la conexión de rutas de US3 (T072, T081, T082)
+- **US1 (Phase 4)**: depende de Phase 3 y de la aprobación T046; T055 depende además de T096
 - **US2 (Phase 5)**: depende de Phase 4, porque prueba las rutas que ya existen
 - **US3 (Phase 6)**: depende de Phase 3 y de la aprobación T066; puede ir en paralelo con US1
 - **Polish (Phase 7)**: depende de las historias que se quieran publicar; T078 depende del contenido del responsable
@@ -223,6 +257,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - Setup: T003 a T009
 - Foundational: T012 a T015 juntas; T016 a T018 juntas; T022 a T024 juntas; T029 a T031 y T033 a T034
 - Phase 3: T036 a T039
+- Phase 3B: T087 a T091 juntas; T094 y T098
 - US1: T043 a T045; T047 a T050
 - US3: T063 a T065; T067 a T069
 

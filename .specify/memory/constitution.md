@@ -1,13 +1,17 @@
 <!--
 Sync Impact Report
-Version change: 1.1.0 → 1.2.0
+Version change: 1.2.0 → 1.3.0
 Modified principles:
-- V. Aprobación previa de interfaz: permite prototipos no publicados para aprobar pantallas
+- II. Sistema de Diseño: los tokens de color tienen un valor por tema (claro y oscuro)
+- IV. Accesibilidad WCAG 2.2 AA: el contraste MUST cumplirse en ambos temas
 Added sections: none
 Modified sections:
-- Contrato de tokens: el tamaño mínimo de los controles es una dimensión, no un espacio
+- Contrato de tokens: de "tema claro único" a dos temas; los valores del tema oscuro quedan
+  pendientes de la aprobación de su prototipo (principio V)
 Removed sections: none
-Follow-up TODOs: none
+Follow-up TODOs: fijar los valores del tema oscuro tras aprobar el prototipo (tarea T086)
+(1.2.0: V. Aprobación previa de interfaz permite prototipos no publicados; el tamaño mínimo de
+los controles es una dimensión, no un espacio)
 -->
 
 # Portafolio UX/UI Constitution
@@ -32,6 +36,8 @@ locales que rompan el sistema visual.
 
 Los colores, la tipografía y el espaciado MUST definirse una sola vez
 como variables CSS y MUST exponerse a Tailwind desde ese mismo origen.
+Cada token de color MUST tener un valor para el tema claro y otro para el
+tema oscuro, con el mismo nombre; los componentes MUST NOT conocer el tema.
 Los valores vigentes están en Contrato de tokens.
 El código MUST NOT introducir color, tipo o espacio fuera de esos tokens.
 Cambiar un valor del contrato MUST hacerse en el origen central.
@@ -64,8 +70,8 @@ El foco MUST usar el token Focus como anillo de 2px separado del
 elemento, para quedar siempre contra el fondo.
 ARIA MUST usarse cuando el HTML semántico no baste, y MUST NOT repetir
 semántica que el elemento nativo ya expone.
-El contraste MUST cumplir WCAG 2.2 nivel AA y MUST validarse antes de
-aprobar una pantalla.
+El contraste MUST cumplir WCAG 2.2 nivel AA en el tema claro y en el
+tema oscuro, y MUST validarse antes de aprobar una pantalla.
 Texto, nombre accesible y estado MUST quedar disponibles para tecnología
 de asistencia.
 
@@ -89,9 +95,9 @@ para publicar.
 
 ## Contrato de tokens
 
-Tema claro único. Contraste medido con la fórmula de WCAG 2.2.
+Dos temas: claro y oscuro. Contraste medido con la fórmula de WCAG 2.2.
 
-Color:
+Color, tema claro:
 
 | Token | Valor | Uso y contraste |
 |---|---|---|
@@ -111,6 +117,10 @@ Color:
 El texto blanco sobre Primary, Primary hover y Primary active MUST
 mantener al menos 4.5:1 (7.9:1, 9.9:1 y 11.4:1).
 Border MUST NOT usarse como único indicador de un control.
+
+Color, tema oscuro: PENDIENTE. Los 13 tokens llevan los mismos nombres. Sus
+valores se proponen en un prototipo y se fijan aquí solo tras la aprobación
+del responsable (principio V). Mientras tanto no hay valores vigentes.
 
 Tipografía:
 
@@ -155,4 +165,4 @@ El versionado MUST seguir SemVer:
 Cada especificación, plan e implementación MUST revisarse contra estos
 principios. La guía de desarrollo es `.specify/memory/constitution.md`.
 
-**Version**: 1.2.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-07
+**Version**: 1.3.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-08

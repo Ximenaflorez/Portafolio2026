@@ -1,10 +1,13 @@
 # Contract: Tokens de diseño
 
-Fuente de verdad: Contrato de tokens de `.specify/memory/constitution.md` (v1.1.0).
+Fuente de verdad: Contrato de tokens de `.specify/memory/constitution.md` (v1.3.0).
 SASS los emite como variables CSS en `:root`. Tailwind los lee y **reemplaza** su tema por defecto
 para color, tipografía y espaciado, así que esas utilidades no existen fuera de estos tokens.
 
 ## Color
+
+La tabla da los valores del **tema claro**. Los 13 tokens existen también en el **tema oscuro**, con
+el mismo nombre, la misma variable y la misma clase de Tailwind; solo cambia el valor (ver Temas).
 
 | Token | Variable CSS | Canales RGB | Clase Tailwind |
 |---|---|---|---|
@@ -31,6 +34,28 @@ Valor en Tailwind: `rgb(var(--color-<token>) / <alpha-value>)`.
 | Text, Text muted, Primary, Error, Success | Background y Surface | 4.5:1 |
 | On primary | Primary, Primary hover, Primary active | 4.5:1 |
 | Focus, Border strong | Background y Surface | 3:1 |
+
+Las mismas parejas se miden **en cada tema** (FR-037, SC-008).
+
+## Temas (FR-036, FR-037)
+
+SASS emite cada token de color dos veces; los componentes nunca conocen el tema.
+
+| Selector | Tema |
+|---|---|
+| `:root` | Claro (valores de la tabla de Color) |
+| `@media (prefers-color-scheme: dark)` sobre `:root:not([data-theme="light"])` | Oscuro, si la persona no eligió tema |
+| `:root[data-theme="dark"]` | Oscuro, elegido con el botón |
+| `:root[data-theme="light"]` | Claro, elegido con el botón |
+
+- `color-scheme: light dark` en `:root` para que los controles nativos y las barras sigan el tema.
+- La elección con el botón se guarda en `localStorage` (clave `theme`) y se aplica con un script
+  mínimo en línea en `<head>`, antes de pintar, para que no haya destello del tema equivocado.
+  Sin JavaScript manda la preferencia del sistema.
+- Cambiar de tema no se anima: `transition` de color queda en `0ms` al cambiar de tema.
+- **Valores del tema oscuro: PENDIENTES.** Se proponen en un prototipo (tarea T086), se miden contra
+  la tabla de contraste y se fijan aquí y en la constitución solo tras la aprobación del
+  responsable.
 
 ## Tipografía
 
@@ -146,4 +171,7 @@ Ningún componente MUST anular este estilo sin reemplazarlo por uno equivalente.
 1. Cambiar una variable en `src/styles/tokens/` cambia todas las utilidades que la usan (SC-006).
 2. `src/components/` no contiene colores, tamaños ni espacios literales, ni clases arbitrarias de
    Tailwind.
-3. Todas las parejas de la tabla de contraste cumplen su mínimo (SC-008).
+3. Todas las parejas de la tabla de contraste cumplen su mínimo en el tema claro y en el oscuro
+   (SC-008).
+4. Cambiar de tema solo cambia valores de variables CSS: ningún componente tiene estilos propios
+   por tema.

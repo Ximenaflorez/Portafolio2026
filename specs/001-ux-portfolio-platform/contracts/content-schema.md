@@ -3,6 +3,33 @@
 Los archivos viven en `src/content/`. El build valida cada archivo con `zod` y falla ante cualquier
 violación. Los borradores de redacción viven en `specs/001-ux-portfolio-platform/content/`.
 
+## Idiomas (FR-039, FR-042)
+
+El contenido está en dos carpetas con la misma estructura y los mismos nombres de archivo. El
+responsable redacta ambas; no hay traducción automática.
+
+```text
+src/content/
+├── es/
+│   ├── profile.md
+│   ├── pages/{inicio,trabajos,sobre-mi,contacto}.md
+│   └── cases/{caso-01,caso-02,caso-03,este-portafolio}.md
+├── en/
+│   ├── profile.md
+│   ├── pages/{inicio,trabajos,sobre-mi,contacto}.md
+│   └── cases/{caso-01,caso-02,caso-03,este-portafolio}.md
+└── ui/{es,en}.json        # textos de la interfaz: menú, botones, pie, etiquetas accesibles
+```
+
+Reglas de paridad (el build falla si se incumplen):
+
+- Cada archivo de `es/` tiene su par con el mismo nombre en `en/`, y al revés. El nombre de archivo
+  es el vínculo entre los dos idiomas: el selector de idioma lleva al par (FR-040).
+- Un par comparte `type`, `status` y `order`. `slug`, `title`, `seo` y `summary` son de cada idioma.
+- Un caso `published` en un idioma exige su par `published` en el otro.
+- `ui/es.json` y `ui/en.json` tienen exactamente las mismas claves, sin valores vacíos.
+- Los encabezados `##` y las etiquetas de cada caso van en el idioma de su carpeta (ver abajo).
+
 ## Caso (`src/content/cases/*.md`)
 
 Frontmatter:
@@ -28,10 +55,17 @@ Cuerpo: es el cuerpo de `content/case-template.md` sin el bloque de resumen, que
 frontmatter. MUST contener estos encabezados `##`, en este orden. Se acepta un prefijo numérico
 como `1.`:
 
-1. `Problema inicial`
-2. `Investigación y datos de usuario`
-3. `Arquitectura de la solución`
-4. `Resultados y aprendizajes`
+| # | Español (`es/`) | Inglés (`en/`) |
+|---|---|---|
+| 1 | `Problema inicial` | `Initial problem` |
+| 2 | `Investigación y datos de usuario` | `Research and user data` |
+| 3 | `Arquitectura de la solución` | `Solution architecture` |
+| 4 | `Resultados y aprendizajes` | `Results and learnings` |
+
+Las etiquetas obligatorias de las reglas de publicación también tienen su versión en inglés:
+`**Decisiones clave:**` = `**Key decisions:**`, `**Lo que no funcionó:**` = `**What didn't work:**`
+y `**Lo que haría distinto:**` = `**What I would do differently:**`. El espacio de plantilla sin
+completar en inglés es `[COMPLETAR` también (el marcador no cambia de idioma).
 
 Reglas de publicación (`status: published`):
 
@@ -45,9 +79,9 @@ Reglas de publicación (`status: published`):
   pasar un caso a `published`.
 - Toda imagen tiene texto alternativo no vacío (FR-016).
 - Para publicar el sitio MUST haber exactamente 3 casos `product` publicados y 1 caso `meta`
-  publicado (FR-001).
+  publicado (FR-001), en cada idioma.
 
-## Perfil (`src/content/profile.md`)
+## Perfil (`src/content/<lang>/profile.md`)
 
 | Campo | Tipo | Regla |
 |---|---|---|
@@ -58,10 +92,10 @@ Reglas de publicación (`status: published`):
 | `linkedin` | URL | Obligatorio |
 | `cv` | ruta o URL | Obligatorio; si falta el archivo, el build avisa y Contacto oculta solo ese enlace |
 
-## Páginas de módulo (`src/content/pages/*.md`)
+## Páginas de módulo (`src/content/<lang>/pages/*.md`)
 
 `inicio.md`, `trabajos.md`, `sobre-mi.md` y `contacto.md` son las cuatro secciones de `/` (cuerpo
 Markdown; `trabajos.md` puede no tener cuerpo). Solo `inicio.md` lleva `seo.title` y
 `seo.description`, que son los de la página `/`; las demás secciones no tienen SEO propio.
 `sobre-mi.md` MUST contener `## Forma de trabajar`, `## Métodos` y `## Problemas que busco`
-(FR-025).
+(FR-025); en `en/`: `## How I work`, `## Methods` y `## Problems I look for`.

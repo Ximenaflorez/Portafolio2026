@@ -32,6 +32,9 @@ npm run preview    # sirve el build estático
 | 9 | Responsive y zoom | `npm run test:e2e -- responsive` | Sin desborde horizontal en 360, 768 y 1280px, ni con texto al 200% | SC-005 |
 | 10 | SEO | `npm run test:e2e -- seo` | Cada ruta tiene título, descripción, canónica y un solo `h1`; el sitemap coincide con las rutas | SC-007 |
 | 11 | Auditoría | `npm run lighthouse` | Más de 95 en Rendimiento, Accesibilidad y Buenas prácticas, en teléfono y escritorio | SC-004 |
+| 12 | Tema claro y oscuro | `npm run test:e2e -- theme` | Sin elección sigue al sistema; el botón cambia y recuerda el tema; sin destello al cargar; axe sin violaciones en ambos | FR-036, FR-037 |
+| 13 | Idiomas | `npm run test:e2e -- i18n` | `/` en español y `/en/` en inglés; el selector lleva a la página equivalente; `lang`, canónica y `hreflang` correctos; el sitemap lista los dos idiomas | FR-039 a FR-041 |
+| 14 | Paridad de contenido | `npm run build` | Un caso o una clave de interfaz sin su par en el otro idioma rompe el build | FR-042 |
 
 ## Revisión manual
 

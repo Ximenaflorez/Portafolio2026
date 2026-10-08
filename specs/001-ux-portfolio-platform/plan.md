@@ -19,7 +19,9 @@ construyen solo después, una por una y con aprobación previa (principio V).
 SASS (`sass`), Tailwind CSS 3.4, `gray-matter` y `zod` para el contenido, `react-markdown`,
 Fontsource (Manrope e Inter)
 
-**Storage**: Archivos Markdown con frontmatter en `src/content/`. Sin base de datos.
+**Storage**: Archivos Markdown con frontmatter en `src/content/es/` y `src/content/en/` (misma
+estructura y mismos nombres de archivo) y textos de interfaz en `src/content/ui/{es,en}.json`. Sin
+base de datos.
 
 **Testing**: Vitest, Testing Library y `vitest-axe` para componentes; Playwright con
 `@axe-core/playwright` para páginas y teclado; Lighthouse CI para el umbral de 95; prueba de
@@ -36,8 +38,7 @@ teléfono y de escritorio (SC-004)
 **Constraints**: WCAG 2.2 AA; sin valores visuales fuera de los tokens; sin pantallas sin
 aprobación; HTML prerenderizado por ruta; fuentes alojadas en el propio sitio
 
-**Scale/Scope**: 5 páginas públicas: `/` (con las secciones Inicio, Trabajos, Sobre mí y Contacto), 3 casos y el caso meta; más 3 redirecciones y la 404
-más 404
+**Scale/Scope**: 5 páginas públicas por idioma: `/` y `/en/` (con las secciones Inicio, Trabajos, Sobre mí y Contacto), 3 casos y el caso meta en cada idioma (10 páginas); más 3 redirecciones solo en español y la 404
 
 ## Constitution Check
 
@@ -46,9 +47,9 @@ más 404
 | Principio | Cómo lo cumple el plan | Estado |
 |---|---|---|
 | I. Stack | React y Vite (React Router 7 corre sobre Vite). SASS define tokens y estilos globales. Tailwind 3.4 consume esos tokens. Git. | Pasa |
-| II. Tokens | Origen único en `src/styles/tokens/`. Tailwind reemplaza (no extiende) color, tipografía y espaciado, así que no hay valores por defecto disponibles. Prueba de propagación y prueba anti valores sueltos. | Pasa |
+| II. Tokens | Origen único en `src/styles/tokens/`. Tailwind reemplaza (no extiende) color, tipografía y espaciado, así que no hay valores por defecto disponibles. Cada token de color tiene un valor por tema (claro y oscuro) con el mismo nombre; los componentes no conocen el tema. Prueba de propagación y prueba anti valores sueltos. | Pasa; valores del tema oscuro pendientes del prototipo T086 |
 | III. Atomic Design | Cinco capas en `src/components/`. Las rutas solo montan pages. Prueba de dependencias entre capas. | Pasa |
-| IV. Accesibilidad | Foco global con el token Focus (2px, separado). axe en componentes y páginas. Prueba de contraste de tokens. Recorridos de teclado en Playwright. | Pasa |
+| IV. Accesibilidad | Foco global con el token Focus (2px, separado). axe en componentes y páginas, en los dos temas y los dos idiomas. Prueba de contraste de tokens en cada tema. Recorridos de teclado en Playwright. | Pasa |
 | V. Aprobación previa | Cada pantalla se propone como prototipo en `/prototipos/`, sin publicar ni entrar en el sitemap, y se borra al aprobarse. Las tareas definitivas quedan bloqueadas por esa compuerta. | Pasa |
 
 Re-check post-design (Phase 1): Pasa. Ningún artefacto de diseño introduce una pantalla ni un valor
@@ -78,7 +79,7 @@ specs/001-ux-portfolio-platform/
 
 ```text
 src/
-├── root.tsx                    # Documento HTML, idioma, fuentes, estilos globales
+├── root.tsx                    # Documento HTML, idioma, tema (script en línea), fuentes, estilos globales
 ├── routes.ts                   # Mapa de rutas (contracts/routes.md)
 ├── routes/                     # Módulos de ruta: loader + meta, montan una page
 ├── styles/
@@ -92,13 +93,17 @@ src/
 │   ├── templates/
 │   └── pages/
 ├── content/
-│   ├── cases/                  # case-01.md, case-02.md, case-03.md, este-portafolio.md
-│   ├── pages/                  # inicio.md, sobre-mi.md, contacto.md
-│   ├── profile.md
+│   ├── es/ y en/               # Misma estructura y mismos nombres de archivo en cada idioma:
+│   │   ├── cases/              #   caso-01.md, caso-02.md, caso-03.md, este-portafolio.md
+│   │   ├── pages/              #   inicio.md, trabajos.md, sobre-mi.md, contacto.md
+│   │   └── profile.md
+│   ├── ui/                     # es.json y en.json: textos de la interfaz
 │   ├── schema.ts               # Esquemas zod (contracts/content-schema.md)
-│   └── load.ts                 # Lectura, validación y filtro de publicados
+│   └── load.server.ts          # Lectura por idioma, validación, paridad y filtro de publicados
 └── lib/
-    └── seo.ts                  # Título, descripción, URL canónica
+    ├── seo.ts                  # Título, descripción, URL canónica y alternativas hreflang
+    ├── i18n.ts                 # Idiomas, rutas por idioma y página equivalente
+    └── theme.ts                # Lectura y guardado del tema elegido
 
 public/
 ├── robots.txt
