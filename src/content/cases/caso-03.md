@@ -16,6 +16,7 @@ summary:
   indexLine: "[COMPLETAR: resultado en una frase, máximo 120 caracteres]"
   productType: "[COMPLETAR: p. ej. B2B SaaS]"
 ---
+
 ## 1. Problema inicial
 
 - **Contexto de negocio:** [COMPLETAR: qué pasaba y por qué le importaba a la empresa]

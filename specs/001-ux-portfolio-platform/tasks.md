@@ -115,7 +115,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Aprobación
 
-- [ ] T086 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/temas.tsx` un prototipo con contenido de prueba que muestre (a) la propuesta de los 13 tokens de color del tema oscuro, adaptando el índigo y el teal, con la razón de contraste medida de cada pareja de `contracts/tokens.md`; (b) los botones, enlaces, tarjetas y el foco en los dos temas; (c) el encabezado con el selector de idioma y el botón de tema en 360, 768 y 1280px, con la colocación en teléfono dentro de FR-028 y FR-043. Obtener aprobación explícita, fijar los valores del tema oscuro en `.specify/memory/constitution.md` y `contracts/tokens.md`, y borrar el prototipo
+- [ ] T086 ⛔ APROBACIÓN (prototipo presentado el 2026-10-08, pendiente de tu respuesta): presentar en `src/routes/prototipos/temas.tsx` un prototipo con contenido de prueba que muestre (a) la propuesta de los 13 tokens de color del tema oscuro, adaptando el índigo y el teal, con la razón de contraste medida de cada pareja de `contracts/tokens.md`; (b) los botones, enlaces, tarjetas y el foco en los dos temas; (c) el encabezado con el selector de idioma y el botón de tema en 360, 768 y 1280px, con la colocación en teléfono dentro de FR-028 y FR-043. Obtener aprobación explícita, fijar los valores del tema oscuro en `.specify/memory/constitution.md` y `contracts/tokens.md`, y borrar el prototipo
 
 ### Pruebas (escribir primero, deben fallar)
 
@@ -154,15 +154,15 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Implementation for User Story 1
 
-- [ ] T046 [US1] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y de la sección Trabajos dentro de `/`; obtener aprobación explícita y borrar el prototipo
-- [ ] T047 [P] [US1] Crear los átomos `Heading` (niveles 1 a 4 con la escala) y `Text` en `src/components/atoms/Heading.tsx` y `Text.tsx`
-- [ ] T048 [P] [US1] Crear el átomo `Figure` con alt obligatorio y pie de imagen en `src/components/atoms/Figure.tsx`
-- [ ] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en una cuadrícula dentro de una tarjeta con borde, con el resultado clave destacado (FR-035), en `src/components/molecules/CaseSummary.tsx`
-- [ ] T050 [P] [US1] Crear la molécula `CaseCard` (título, rol, tipo de producto, línea de resultado, enlace con texto descriptivo) en `src/components/molecules/CaseCard.tsx`
-- [ ] T051 [US1] Crear el organismo `CaseBody` que renderiza Markdown con `react-markdown` mapeado a `Heading`, `Text`, `TextLink` y `Figure` en `src/components/organisms/CaseBody.tsx`
-- [ ] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
-- [ ] T053 [US1] Crear el template `CaseTemplate` (enlace «Volver a Trabajos» a `/#trabajos` antes del título, CaseSummary, índice con las cuatro secciones, CaseBody con texto de `max-w-prose` e imágenes de ancho completo; FR-035) en `src/components/templates/CaseTemplate.tsx`
-- [ ] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
+- [X] T046 [US1] ⛔ APROBADO el 2026-10-08: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y de la sección Trabajos dentro de `/`; obtener aprobación explícita y borrar el prototipo
+- [X] T047 [P] [US1] Crear los átomos `Heading` (niveles 1 a 4 con la escala) y `Text` en `src/components/atoms/Heading.tsx` y `Text.tsx`
+- [X] T048 [P] [US1] Crear el átomo `Figure` con alt obligatorio y pie de imagen en `src/components/atoms/Figure.tsx`
+- [X] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en una cuadrícula dentro de una tarjeta con borde, con el resultado clave destacado (FR-035), en `src/components/molecules/CaseSummary.tsx`
+- [X] T050 [P] [US1] Crear la molécula `CaseCard` (título, rol, tipo de producto, línea de resultado, enlace con texto descriptivo) en `src/components/molecules/CaseCard.tsx`
+- [X] T051 [US1] Crear el organismo `CaseBody` que renderiza Markdown con `react-markdown` mapeado a `Heading`, `Text`, `TextLink` y `Figure` en `src/components/organisms/CaseBody.tsx`
+- [X] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
+- [X] T053 [US1] Crear el template `CaseTemplate` (enlace «Volver a Trabajos» a `/#trabajos` antes del título, CaseSummary, índice con las cuatro secciones, CaseBody con texto de `max-w-prose` e imágenes de ancho completo; FR-035) en `src/components/templates/CaseTemplate.tsx`
+- [X] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
 - [ ] T055 [US1] (depende de T096) Conectar `/trabajos/:slug/`, `/trabajos/este-portafolio/` y sus pares `/en/work/:slug/` y `/en/work/this-portfolio/` con loader y meta en `src/routes/`
 - [ ] T056 [US1] Ejecutar T043 y T044 y confirmar que pasan
 

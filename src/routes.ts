@@ -11,16 +11,14 @@ const casos: RouteConfig = [
 ];
 
 // Prototipos de aprobación (Constitución, principio V): nunca entran en el build de producción.
-// En desarrollo, `/` muestra el prototipo de la página principal (T046) en lugar de Inicio.
-const enProduccion = process.env.NODE_ENV === "production";
-const prototipos: RouteConfig = [route("prototipos/caso", "routes/prototipos/caso.tsx")];
+const prototipos: RouteConfig = [route("prototipos/temas", "routes/prototipos/temas.tsx")];
 
 export default [
-  index(enProduccion ? "routes/inicio.tsx" : "routes/prototipos/portada.tsx"),
+  index("routes/inicio.tsx"),
   route("trabajos", "routes/trabajos.tsx"),
   ...casos,
   route("sobre-mi", "routes/sobre-mi.tsx"),
   route("contacto", "routes/contacto.tsx"),
-  ...(enProduccion ? [] : prototipos),
+  ...(process.env.NODE_ENV === "production" ? [] : prototipos),
   route("*", "routes/no-encontrada.tsx"),
 ] satisfies RouteConfig;
