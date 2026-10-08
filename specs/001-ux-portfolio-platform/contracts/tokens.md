@@ -94,6 +94,22 @@ de scroll ni en bucle (FR-029).
 |---|---|---|
 | Objetivo mínimo | `--target-min` | `44px` (FR-027) |
 | Indicador de página actual | `--indicator-width` | `3px`, subrayado en Primary con texto semibold |
+| Borde de botón | `--control-border-width` | `2px` |
+
+## Botones (FR-033)
+
+Los dos botones comparten tamaño (mínimo `--target-min`), borde `--control-border-width`, relleno
+horizontal de espacio 4 (32px), texto semibold y transición `--duration-state`.
+
+| Estado | Primario | Secundario |
+|---|---|---|
+| Reposo | fondo y borde `primary`, texto `on-primary` | sin fondo, borde y texto `primary` |
+| Puntero encima | fondo y borde `primary-hover` | borde y texto `primary-hover` |
+| Presionado | fondo y borde `primary-active` | borde y texto `primary-active` |
+| Foco de teclado | anillo `focus` (ver Foco) | anillo `focus` (ver Foco) |
+
+El contraste de `primary`, `primary-hover` y `primary-active` sobre `background` y `surface` es de
+4.5:1 o más (prueba en `tests/unit/tokens/contrast.test.ts`).
 
 ## Layout
 

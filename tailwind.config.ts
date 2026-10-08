@@ -70,7 +70,11 @@ export default {
       minWidth: { target: "var(--target-min)" },
       minHeight: { target: "var(--target-min)" },
       maxWidth: { content: "var(--content-max)" },
-      borderWidth: { DEFAULT: "var(--border-width)", indicator: "var(--indicator-width)" },
+      borderWidth: {
+        DEFAULT: "var(--border-width)",
+        indicator: "var(--indicator-width)",
+        control: "var(--control-border-width)",
+      },
       inset: { "header-collapse": "var(--header-collapse)" },
       scrollPadding: { header: "var(--header-height)" },
     },

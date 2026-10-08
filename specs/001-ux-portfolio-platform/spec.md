@@ -26,6 +26,8 @@ Tras comparar dos prototipos con contenido de prueba (una página por módulo fr
 - Q: ¿El encabezado sigue sin ser fijo? → A: Pasa a ser fijo, porque en una página larga el menú debe estar siempre a mano. Esto sustituye la decisión del 2026-10-07.
 - Q: ¿Cómo se comporta el encabezado fijo en teléfono? → A: Solo queda fija la fila del menú; el nombre se desplaza con la página.
 - Q: ¿Qué pasa con las URLs `/trabajos/`, `/sobre-mi/` y `/contacto/`? → A: Se mantienen y redirigen a su sección de `/`.
+- Q: ¿Cuántos estilos de botón hay? → A: Dos: primario (relleno) y secundario (con borde y sin relleno), con el mismo tamaño y los mismos estados.
+- Q: ¿Hay formulario de contacto? → A: No. Contacto se mantiene como enlaces: correo, perfil profesional y CV.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -132,6 +134,8 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-030**: Todo caso MUST estar anonimizado: sin nombre de empresa ni de clientes, sin nombres de personas, con citas sin atribución y con métricas en porcentajes o rangos. Las imágenes MUST no mostrar logos, nombres ni datos reales. La empresa se describe solo por sector y tamaño.
 - **FR-031**: La navegación MUST marcar la sección que se está viendo (con `aria-current="location"`), también al llegar al final de la página, y MUST llevar a cada sección sin JavaScript (enlaces con ancla). Desde la página de un caso, los enlaces de la navegación MUST llevar a la sección correspondiente de `/`.
 - **FR-032**: `/trabajos/`, `/sobre-mi/` y `/contacto/` MUST redirigir a su sección de `/` y no aparecer en el sitemap.
+- **FR-033**: Los llamados a la acción MUST usar una de dos variantes de botón: primaria (acción principal de un bloque) o secundaria (acción alternativa). Ambas MUST tener el mismo tamaño y los mismos estados de reposo, puntero, presión y foco. Un bloque MUST tener una sola acción primaria.
+- **FR-034**: El módulo Contacto MUST limitarse a enlaces (correo, perfil profesional y CV); no hay formulario.
 
 ### Key Entities
 

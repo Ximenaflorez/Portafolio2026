@@ -38,6 +38,25 @@ const casos = [
 
 const enlace =
   "inline-flex min-h-target min-w-target items-center text-text transition-colors duration-state hover:text-primary-hover active:text-primary-active";
+
+// Botones: mismo tamaño y borde en las dos variantes para que midan lo mismo.
+const botonBase =
+  "inline-flex min-h-target min-w-target items-center justify-center border-control px-4 font-semibold transition-colors duration-state";
+const botonPrimario = `${botonBase} border-primary bg-primary text-on-primary hover:border-primary-hover hover:bg-primary-hover active:border-primary-active active:bg-primary-active`;
+const botonSecundario = `${botonBase} border-primary bg-transparent text-primary hover:border-primary-hover hover:text-primary-hover active:border-primary-active active:text-primary-active`;
+
+// Muestrario: los mismos botones con el estado fijado (no son controles).
+const estadosPrimario = [
+  { estado: "Reposo", clases: "border-primary bg-primary text-on-primary" },
+  { estado: "Puntero encima", clases: "border-primary-hover bg-primary-hover text-on-primary" },
+  { estado: "Presionado", clases: "border-primary-active bg-primary-active text-on-primary" },
+];
+const estadosSecundario = [
+  { estado: "Reposo", clases: "border-primary bg-transparent text-primary" },
+  { estado: "Puntero encima", clases: "border-primary-hover bg-transparent text-primary-hover" },
+  { estado: "Presionado", clases: "border-primary-active bg-transparent text-primary-active" },
+];
+
 const enlaceTexto =
   "text-primary underline transition-colors duration-state hover:text-primary-hover active:text-primary-active";
 
@@ -143,12 +162,14 @@ export default function PrototipoGlobales() {
           <p className="mt-2 text-lg text-text-muted">
             Texto de prueba: qué haces y para quién. Aquí iría el resumen que hoy vive en Inicio.
           </p>
-          <a
-            href="#trabajos"
-            className="mt-4 inline-flex min-h-target items-center bg-primary px-4 font-semibold text-on-primary transition-colors duration-state hover:bg-primary-hover active:bg-primary-active"
-          >
-            Ver mis trabajos
-          </a>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a href="#trabajos" className={botonPrimario}>
+              Ver mis trabajos
+            </a>
+            <a href={`mailto:${persona.correo}`} className={botonSecundario}>
+              Escríbeme
+            </a>
+          </div>
         </section>
 
         <section
@@ -230,6 +251,32 @@ export default function PrototipoGlobales() {
               </a>
             </li>
           </ul>
+        </section>
+
+        <section aria-labelledby="titulo-estados" className="border-t border-border py-16">
+          <h2 id="titulo-estados" className="text-3xl">
+            Estados de los botones (solo prototipo)
+          </h2>
+          <p className="mt-1 text-text-muted">
+            Esta sección no existe en el sitio real. El foco de teclado se ve con Tab sobre los
+            botones de Inicio: anillo Teal de 2px.
+          </p>
+          {[
+            { nombre: "Primario", estados: estadosPrimario },
+            { nombre: "Secundario", estados: estadosSecundario },
+          ].map((grupo) => (
+            <div key={grupo.nombre} className="mt-4">
+              <h3 className="text-xl">{grupo.nombre}</h3>
+              <ul className="mt-1 flex flex-wrap gap-2">
+                {grupo.estados.map((item) => (
+                  <li key={item.estado} className="flex flex-col gap-1">
+                    <span className={`${botonBase} ${item.clases}`}>Escríbeme</span>
+                    <span className="text-sm text-text-muted">{item.estado}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
       </main>
 

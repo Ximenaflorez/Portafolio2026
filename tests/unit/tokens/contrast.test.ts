@@ -6,7 +6,10 @@ const surfaces = ["background", "surface"];
 const pairs: Array<{ foreground: string; backgrounds: string[]; minimum: number }> = [
   { foreground: "text", backgrounds: surfaces, minimum: 4.5 },
   { foreground: "text-muted", backgrounds: surfaces, minimum: 4.5 },
+  // Botón secundario: texto y borde en Primary en reposo, con el puntero y al presionar.
   { foreground: "primary", backgrounds: surfaces, minimum: 4.5 },
+  { foreground: "primary-hover", backgrounds: surfaces, minimum: 4.5 },
+  { foreground: "primary-active", backgrounds: surfaces, minimum: 4.5 },
   { foreground: "error", backgrounds: surfaces, minimum: 4.5 },
   { foreground: "success", backgrounds: surfaces, minimum: 4.5 },
   {
