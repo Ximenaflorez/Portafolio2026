@@ -3,6 +3,7 @@
 @use "interaction";
 
 $content-max: 64rem;
+$prose-max: 65ch;
 $border-width: 1px;
 
 // Encabezado fijo: una fila con padding vertical de 8px, un control de 44px y el borde inferior.

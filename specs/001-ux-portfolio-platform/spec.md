@@ -28,6 +28,10 @@ Tras comparar dos prototipos con contenido de prueba (una página por módulo fr
 - Q: ¿Qué pasa con las URLs `/trabajos/`, `/sobre-mi/` y `/contacto/`? → A: Se mantienen y redirigen a su sección de `/`.
 - Q: ¿Cuántos estilos de botón hay? → A: Dos: primario (relleno) y secundario (con borde y sin relleno), con el mismo tamaño y los mismos estados.
 - Q: ¿Hay formulario de contacto? → A: No. Contacto se mantiene como enlaces: correo, perfil profesional y CV.
+- Q: ¿Cómo se presenta el resumen de un caso? → A: Como cuadrícula de datos dentro de una tarjeta con borde (2 columnas en escritorio, 1 en teléfono), con el resultado clave destacado.
+- Q: ¿Qué ancho tiene el texto de un caso y sus imágenes? → A: El texto en una columna de lectura de unos 65 caracteres; las imágenes de apoyo, más anchas, hasta el ancho del contenido.
+- Q: ¿Qué navegación hay dentro de un caso? → A: Enlace «Volver a Trabajos» antes del título e índice con las cuatro secciones. Sin enlace de volver al final ni caso siguiente.
+- Q: ¿Cómo se muestra la sección Trabajos? → A: Tres tarjetas en fila en escritorio, y el caso de este portafolio como tarjeta aparte y destacada debajo.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -136,6 +140,7 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-032**: `/trabajos/`, `/sobre-mi/` y `/contacto/` MUST redirigir a su sección de `/` y no aparecer en el sitemap.
 - **FR-033**: Los llamados a la acción MUST usar una de dos variantes de botón: primaria (acción principal de un bloque) o secundaria (acción alternativa). Ambas MUST tener el mismo tamaño y los mismos estados de reposo, puntero, presión y foco. Un bloque MUST tener una sola acción primaria.
 - **FR-034**: El módulo Contacto MUST limitarse a enlaces (correo, perfil profesional y CV); no hay formulario.
+- **FR-035**: La página de un caso MUST empezar con el enlace «Volver a Trabajos» antes del título, y MUST ofrecer un índice con enlaces a sus cuatro secciones. El resumen MUST presentarse como cuadrícula de datos con el resultado clave destacado. El texto MUST tener un ancho de lectura de unos 65 caracteres por línea.
 
 ### Key Entities
 

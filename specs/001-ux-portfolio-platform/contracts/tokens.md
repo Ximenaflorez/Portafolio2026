@@ -116,6 +116,7 @@ El contraste de `primary`, `primary-hover` y `primary-active` sobre `background`
 | Token | Variable CSS | Valor |
 |---|---|---|
 | Ancho máximo del contenido | `--content-max` | `64rem` (1024px), centrado |
+| Ancho de lectura del texto de un caso | `--prose-max` | `65ch`, unos 65 caracteres por línea; las imágenes de apoyo usan todo `--content-max` |
 | Grosor de borde | `--border-width` | `1px` |
 | Altura visible del encabezado fijo | `--header-height` | `61px` = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1) |
 | Parte del encabezado que sale en teléfono | `--header-collapse` | `-52px` = −(objetivo mínimo + espacio 1); posición `top` del encabezado en teléfono, `0` desde el punto de corte `sm` |

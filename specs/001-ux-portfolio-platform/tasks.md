@@ -124,11 +124,11 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 - [ ] T046 [US1] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y de la sección Trabajos dentro de `/`; obtener aprobación explícita y borrar el prototipo
 - [ ] T047 [P] [US1] Crear los átomos `Heading` (niveles 1 a 4 con la escala) y `Text` en `src/components/atoms/Heading.tsx` y `Text.tsx`
 - [ ] T048 [P] [US1] Crear el átomo `Figure` con alt obligatorio y pie de imagen en `src/components/atoms/Figure.tsx`
-- [ ] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en `src/components/molecules/CaseSummary.tsx`
+- [ ] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en una cuadrícula dentro de una tarjeta con borde, con el resultado clave destacado (FR-035), en `src/components/molecules/CaseSummary.tsx`
 - [ ] T050 [P] [US1] Crear la molécula `CaseCard` (título, rol, tipo de producto, línea de resultado, enlace con texto descriptivo) en `src/components/molecules/CaseCard.tsx`
 - [ ] T051 [US1] Crear el organismo `CaseBody` que renderiza Markdown con `react-markdown` mapeado a `Heading`, `Text`, `TextLink` y `Figure` en `src/components/organisms/CaseBody.tsx`
 - [ ] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
-- [ ] T053 [US1] Crear el template `CaseTemplate` (CaseSummary, CaseBody, regreso a `/#trabajos`) en `src/components/templates/CaseTemplate.tsx`
+- [ ] T053 [US1] Crear el template `CaseTemplate` (enlace «Volver a Trabajos» a `/#trabajos` antes del título, CaseSummary, índice con las cuatro secciones, CaseBody con texto de `max-w-prose` e imágenes de ancho completo; FR-035) en `src/components/templates/CaseTemplate.tsx`
 - [ ] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
 - [ ] T055 [US1] Conectar `/trabajos/:slug/` y `/trabajos/este-portafolio/` con loader y meta en `src/routes/`
 - [ ] T056 [US1] Ejecutar T043 y T044 y confirmar que pasan

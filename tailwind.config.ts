@@ -69,7 +69,7 @@ export default {
     extend: {
       minWidth: { target: "var(--target-min)" },
       minHeight: { target: "var(--target-min)" },
-      maxWidth: { content: "var(--content-max)" },
+      maxWidth: { content: "var(--content-max)", prose: "var(--prose-max)" },
       borderWidth: {
         DEFAULT: "var(--border-width)",
         indicator: "var(--indicator-width)",

@@ -22,6 +22,7 @@ describe("propagación de tokens (SC-006)", () => {
       "max-w-content",
       "border-b-indicator",
       "border-control",
+      "max-w-prose",
     ]);
 
     expect(css).toMatch(/\.bg-primary\s*{[^}]*rgb\(var\(--color-primary\)/);
@@ -36,6 +37,7 @@ describe("propagación de tokens (SC-006)", () => {
       /\.border-b-indicator\s*{[^}]*border-bottom-width:\s*var\(--indicator-width\)/,
     );
     expect(css).toMatch(/\.border-control\s*{[^}]*border-width:\s*var\(--control-border-width\)/);
+    expect(css).toMatch(/\.max-w-prose\s*{[^}]*max-width:\s*var\(--prose-max\)/);
   });
 
   it("Tailwind no ofrece los valores por defecto de color, espaciado ni duración", async () => {
