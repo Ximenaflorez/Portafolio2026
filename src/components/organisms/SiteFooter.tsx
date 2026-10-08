@@ -1,4 +1,5 @@
 import type { Profile } from "~/content/schema";
+import { useUi } from "~/lib/use-ui";
 import { TextLink } from "../atoms/TextLink";
 type Props = {
   profile: Pick<Profile, "name" | "email" | "linkedin" | "cv">;
@@ -15,10 +16,12 @@ export function SiteFooter({
   metaCaseHref,
   year = new Date().getFullYear(),
 }: Props) {
+  const { t } = useUi();
+
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto flex max-w-content flex-col gap-4 px-3 py-6 md:px-4">
-        <ul className="flex flex-wrap gap-x-3" aria-label="Contacto">
+        <ul className="flex flex-wrap gap-x-3" aria-label={t("footer.contact")}>
           <li>
             <TextLink variant="standalone" href={`mailto:${profile.email}`}>
               {profile.email}
@@ -32,24 +35,22 @@ export function SiteFooter({
           {cvAvailable && (
             <li>
               <TextLink variant="standalone" href={profile.cv} download>
-                Descargar CV (PDF)
+                {t("footer.cv")}
               </TextLink>
             </li>
           )}
         </ul>
         <div className="flex flex-col gap-1 text-sm text-text-muted sm:flex-row sm:justify-between">
           <p>
-            Diseñado y construido por {profile.name}.
+            {t("footer.credit", { name: profile.name })}
             {metaCaseHref && (
               <>
                 {" "}
-                <TextLink to={metaCaseHref}>Cómo hice este portafolio</TextLink>
+                <TextLink to={metaCaseHref}>{t("footer.metaCase")}</TextLink>
               </>
             )}
           </p>
-          <p>
-            © {year} {profile.name}
-          </p>
+          <p>{t("footer.rights", { year, name: profile.name })}</p>
         </div>
       </div>
     </footer>

@@ -1,17 +1,19 @@
-import { loadPage, loadProfile, publishedCases } from "~/content/load.server";
+import { homeData } from "~/content/route-data.server";
+import { alternateLinks, homePath } from "~/lib/i18n";
 import { pageMeta } from "~/lib/seo";
 import type { Route } from "./+types/inicio";
 
 export function loader() {
-  return {
-    page: loadPage("inicio"),
-    profile: loadProfile(),
-    cases: publishedCases("product"),
-  };
+  return homeData("es");
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return pageMeta({ ...loaderData.page.seo, path: "/" });
+  const path = homePath("es");
+  return pageMeta({
+    ...loaderData.page.seo,
+    path,
+    alternates: alternateLinks(path, loaderData.casePairs),
+  });
 }
 
 export default function Inicio() {

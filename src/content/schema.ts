@@ -1,5 +1,6 @@
 import matter from "gray-matter";
 import { z } from "zod";
+import type { Language } from "../lib/i18n";
 
 export const PLACEHOLDER = "[COMPLETAR";
 
@@ -92,14 +93,39 @@ export type ModulePage = {
 
 export type Validation<T> = { data?: T; errors: string[] };
 
-const caseSections = [
-  "Problema inicial",
-  "Investigación",
-  "Arquitectura de la solución",
-  "Resultados y aprendizajes",
-];
+// Encabezados y etiquetas que exige cada idioma (FR-042): el contenido en inglés usa los suyos.
+type Wording = {
+  caseSections: string[];
+  aboutSections: string[];
+  keyDecisions: RegExp;
+  keyDecisionsName: string;
+  lessons: RegExp;
+  lessonsName: string;
+};
 
-const aboutSections = ["Forma de trabajar", "Métodos", "Problemas que busco"];
+const wording: Record<Language, Wording> = {
+  es: {
+    caseSections: [
+      "Problema inicial",
+      "Investigación",
+      "Arquitectura de la solución",
+      "Resultados y aprendizajes",
+    ],
+    aboutSections: ["Forma de trabajar", "Métodos", "Problemas que busco"],
+    keyDecisions: /Decisi(?:ón|ones) clave/,
+    keyDecisionsName: "**Decisiones clave:**",
+    lessons: /Lo que (?:no funcionó|haría distinto)/,
+    lessonsName: "**Lo que no funcionó:** o **Lo que haría distinto:**",
+  },
+  en: {
+    caseSections: ["Initial problem", "Research", "Solution architecture", "Results and learnings"],
+    aboutSections: ["Way of working", "Methods", "Problems I look for"],
+    keyDecisions: /Key decisions?/,
+    keyDecisionsName: "**Key decisions:**",
+    lessons: /What (?:didn['’]t work|I would do differently)/,
+    lessonsName: "**What didn't work:** or **What I would do differently:**",
+  },
+};
 
 function zodErrors(error: z.ZodError): string[] {
   return error.issues.map((issue) => `${issue.path.join(".") || "frontmatter"}: ${issue.message}`);
@@ -132,7 +158,8 @@ function contentErrors(raw: string): string[] {
   return errors;
 }
 
-export function validateCase(raw: string): Validation<CaseStudy> {
+export function validateCase(raw: string, language: Language = "es"): Validation<CaseStudy> {
+  const words = wording[language];
   const { data, content } = matter(raw);
 
   if (data.status !== "published") {
@@ -157,14 +184,14 @@ export function validateCase(raw: string): Validation<CaseStudy> {
   const errors = parsed.success ? [] : zodErrors(parsed.error);
   errors.push(...contentErrors(raw));
 
-  for (const section of missingSectionsInOrder(content, caseSections)) {
+  for (const section of missingSectionsInOrder(content, words.caseSections)) {
     errors.push(`falta la sección "${section}" o no está en orden`);
   }
-  if (!hasFilledLabel(content, /Decisi(?:ón|ones) clave/)) {
-    errors.push("falta **Decisiones clave:** con al menos una decisión");
+  if (!hasFilledLabel(content, words.keyDecisions)) {
+    errors.push(`falta ${words.keyDecisionsName} con al menos una decisión`);
   }
-  if (!hasFilledLabel(content, /Lo que (?:no funcionó|haría distinto)/)) {
-    errors.push("falta **Lo que no funcionó:** o **Lo que haría distinto:**");
+  if (!hasFilledLabel(content, words.lessons)) {
+    errors.push(`falta ${words.lessonsName}`);
   }
 
   if (!parsed.success || errors.length > 0) return { errors };
@@ -184,7 +211,7 @@ export function validateProfile(raw: string, { strict }: { strict: boolean }): V
 export function validatePage(
   raw: string,
   id: PageId,
-  { strict }: { strict: boolean },
+  { strict, language = "es" }: { strict: boolean; language?: Language },
 ): Validation<ModulePage> {
   const { data, content } = matter(raw);
   const page = { id, seo: data.seo ?? { title: "", description: "" }, body: content };
@@ -194,9 +221,63 @@ export function validatePage(
   const errors = parsed.success ? [] : zodErrors(parsed.error);
   errors.push(...contentErrors(raw));
   if (id === "sobre-mi") {
-    for (const section of missingSectionsInOrder(content, aboutSections)) {
+    for (const section of missingSectionsInOrder(content, wording[language].aboutSections)) {
       errors.push(`falta la sección "${section}"`);
     }
   }
   return errors.length > 0 ? { errors } : { data: page, errors };
+}
+
+// --- Paridad entre idiomas (FR-042) ---
+
+/** Los archivos del mismo nombre deben existir en español y en inglés. */
+export function fileParityErrors(kind: string, es: string[], en: string[]): string[] {
+  return [
+    ...es
+      .filter((name) => !en.includes(name))
+      .map((name) => `${kind}/${name} no tiene su par en en/`),
+    ...en
+      .filter((name) => !es.includes(name))
+      .map((name) => `${kind}/${name} no tiene su par en es/`),
+  ];
+}
+
+/** Cada caso y su par tienen el mismo tipo, estado y orden; uno publicado exige el par publicado. */
+export function caseParityErrors(
+  es: Record<string, CaseStudy>,
+  en: Record<string, CaseStudy>,
+): string[] {
+  const errors = fileParityErrors("cases", Object.keys(es), Object.keys(en));
+  for (const [name, spanish] of Object.entries(es)) {
+    const english = en[name];
+    if (!english) continue;
+    for (const field of ["type", "status", "order"] as const) {
+      if (spanish[field] !== english[field]) {
+        errors.push(
+          `cases/${name}: ${field} distinto (es: ${spanish[field]}, en: ${english[field]})`,
+        );
+      }
+    }
+  }
+  return errors;
+}
+
+/** Los textos de interfaz tienen las mismas claves en los dos idiomas y ninguno está vacío. */
+export function uiParityErrors(es: Record<string, string>, en: Record<string, string>): string[] {
+  const errors: string[] = [];
+  for (const key of Object.keys(es)) {
+    if (!(key in en)) errors.push(`ui/en.json: falta la clave "${key}"`);
+  }
+  for (const key of Object.keys(en)) {
+    if (!(key in es)) errors.push(`ui/es.json: falta la clave "${key}"`);
+  }
+  for (const [language, texts] of [
+    ["es", es],
+    ["en", en],
+  ] as const) {
+    for (const [key, value] of Object.entries(texts)) {
+      if (value.trim() === "") errors.push(`ui/${language}.json: la clave "${key}" está vacía`);
+    }
+  }
+  return errors;
 }

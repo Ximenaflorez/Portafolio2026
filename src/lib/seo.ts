@@ -1,4 +1,5 @@
 import type { MetaDescriptor } from "react-router";
+import type { AlternateLink } from "./i18n";
 
 type Env = { SITE_URL?: string; BASE_PATH?: string };
 
@@ -17,14 +18,23 @@ export function pageMeta({
   title,
   description,
   path,
+  alternates = [],
 }: {
   title: string;
   description: string;
   path: string;
+  /** Versiones de la página en cada idioma, para `<link rel="alternate" hreflang>`. */
+  alternates?: AlternateLink[];
 }): MetaDescriptor[] {
   return [
     { title },
     { name: "description", content: description },
     { tagName: "link", rel: "canonical", href: canonicalUrl(path) },
+    ...alternates.map(({ hreflang, path: alternatePath }) => ({
+      tagName: "link" as const,
+      rel: "alternate",
+      hrefLang: hreflang,
+      href: canonicalUrl(alternatePath),
+    })),
   ];
 }

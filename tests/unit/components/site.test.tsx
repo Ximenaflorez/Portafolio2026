@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SiteFooter } from "~/components/organisms/SiteFooter";
 import { SiteHeader } from "~/components/organisms/SiteHeader";
 import { SiteTemplate } from "~/components/templates/SiteTemplate";
+import type { CasePair } from "~/lib/i18n";
 
 const perfil = {
   name: "Nombre Apellido",
@@ -255,5 +256,150 @@ describe("SiteTemplate (FR-017)", () => {
       </SiteTemplate>,
     );
     expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+describe("Encabezado con selector de idioma y botón de tema (FR-017, FR-043)", () => {
+  const pares: CasePair[] = [
+    { file: "caso-01", type: "product", slugs: { es: "analitica", en: "analytics" } },
+  ];
+
+  it("lleva el selector de idioma y el botón de tema en la misma fila fija que la navegación", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    const nav = screen.getByRole("navigation", { name: "Principal" });
+    const fila = nav.parentElement!;
+    const nombre = screen.getByRole("link", { name: perfil.name });
+
+    expect(fila.contains(screen.getByRole("link", { name: "EN English" }))).toBe(true);
+    expect(fila.contains(screen.getByRole("button", { name: "Tema oscuro" }))).toBe(true);
+    expect(fila.contains(nombre)).toBe(false);
+  });
+
+  it("en teléfono los controles ocupan su propia línea; desde `sm` van junto a la navegación", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    const controles = screen.getByRole("link", { name: "EN English" }).parentElement!;
+    expect(controles.className).toContain("w-full");
+    expect(controles.className).toContain("sm:w-auto");
+    expect(controles.className).toContain("justify-end");
+  });
+
+  it("en español ofrece pasar a inglés: la misma página principal", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    const idioma = screen.getByRole("link", { name: "EN English" });
+    expect(idioma).toHaveAttribute("href", "/en/");
+    expect(idioma).toHaveAttribute("hreflang", "en");
+  });
+
+  it("conserva la sección que se está viendo al cambiar de idioma", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    verSeccion("trabajos");
+
+    expect(screen.getByRole("link", { name: "EN English" })).toHaveAttribute(
+      "href",
+      "/en/#trabajos",
+    );
+  });
+
+  it("desde un caso lleva al mismo caso en el otro idioma", () => {
+    enRuta(<SiteHeader name={perfil.name} casePairs={pares} />, "/trabajos/analitica");
+
+    expect(screen.getByRole("link", { name: "EN English" })).toHaveAttribute(
+      "href",
+      "/en/work/analytics/",
+    );
+  });
+
+  it("en inglés todo el encabezado está en inglés y los enlaces llevan a `/en/`", () => {
+    enRuta(<SiteHeader name={perfil.name} />, "/en/");
+
+    const nav = screen.getByRole("navigation", { name: "Main" });
+    expect(
+      within(nav)
+        .getAllByRole("link")
+        .map((a) => [a.textContent, a.getAttribute("href")]),
+    ).toEqual([
+      ["Home", "/en/#inicio"],
+      ["Work", "/en/#trabajos"],
+      ["About", "/en/#sobre-mi"],
+      ["Contact", "/en/#contacto"],
+    ]);
+    expect(screen.getByRole("link", { name: perfil.name })).toHaveAttribute("href", "/en/#inicio");
+    expect(screen.getByRole("link", { name: "ES Español" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("button", { name: "Dark theme" })).toBeInTheDocument();
+  });
+
+  it("en inglés marca la sección actual igual que en español", () => {
+    enRuta(<SiteHeader name={perfil.name} />, "/en/");
+
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "location");
+
+    verSeccion("contacto");
+
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+  });
+
+  it("no tiene violaciones de accesibilidad en inglés", async () => {
+    const { container } = enRuta(<SiteHeader name={perfil.name} />, "/en/");
+    expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+describe("Pie y plantilla en inglés (FR-042)", () => {
+  const props = { profile: perfil, cvAvailable: true, metaCaseHref: "/en/work/this-portfolio/" };
+
+  it("el pie muestra sus textos en inglés", () => {
+    enRuta(<SiteFooter {...props} year={2026} />, "/en/");
+
+    expect(screen.getByRole("list", { name: "Contact" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Download CV (PDF)" })).toHaveAttribute("download");
+    expect(screen.getByText(/Designed and built by Nombre Apellido/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "How I built this portfolio" })).toHaveAttribute(
+      "href",
+      "/en/work/this-portfolio/",
+    );
+    expect(screen.getByText(/© 2026/)).toBeInTheDocument();
+  });
+
+  it("el enlace para saltar al contenido está en el idioma de la página", async () => {
+    enRuta(
+      <SiteTemplate {...props}>
+        <h1>Title</h1>
+      </SiteTemplate>,
+      "/en/",
+    );
+
+    await userEvent.tab();
+
+    expect(screen.getByRole("link", { name: "Skip to content" })).toHaveFocus();
+  });
+
+  it("el orden de tabulación es: saltar, nombre, navegación, idioma, tema", async () => {
+    enRuta(
+      <SiteTemplate {...props}>
+        <h1>Título</h1>
+      </SiteTemplate>,
+    );
+
+    const esperados: Array<["link" | "button", string]> = [
+      ["link", "Saltar al contenido"],
+      ["link", perfil.name],
+      ["link", "Inicio"],
+      ["link", "Trabajos"],
+      ["link", "Sobre mí"],
+      ["link", "Contacto"],
+      ["link", "EN English"],
+      ["button", "Tema oscuro"],
+    ];
+    for (const [rol, nombre] of esperados) {
+      await userEvent.tab();
+      expect(document.activeElement).toBe(screen.getByRole(rol, { name: nombre }));
+    }
   });
 });

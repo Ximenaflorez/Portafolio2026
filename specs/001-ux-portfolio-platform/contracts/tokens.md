@@ -43,19 +43,34 @@ SASS emite cada token de color dos veces; los componentes nunca conocen el tema.
 
 | Selector | Tema |
 |---|---|
-| `:root` | Claro (valores de la tabla de Color) |
+| `:root` | Claro (valores de la tabla de Color); también cuando se elige claro con el botón, con `data-theme="light"` |
 | `@media (prefers-color-scheme: dark)` sobre `:root:not([data-theme="light"])` | Oscuro, si la persona no eligió tema |
 | `:root[data-theme="dark"]` | Oscuro, elegido con el botón |
-| `:root[data-theme="light"]` | Claro, elegido con el botón |
 
-- `color-scheme: light dark` en `:root` para que los controles nativos y las barras sigan el tema.
+- `color-scheme` vale `light` en `:root` y `dark` en los dos selectores oscuros, para que los
+  controles nativos y las barras sigan el tema que se ve (no el del sistema cuando se eligió otro).
 - La elección con el botón se guarda en `localStorage` (clave `theme`) y se aplica con un script
   mínimo en línea en `<head>`, antes de pintar, para que no haya destello del tema equivocado.
   Sin JavaScript manda la preferencia del sistema.
 - Cambiar de tema no se anima: `transition` de color queda en `0ms` al cambiar de tema.
-- **Valores del tema oscuro: PENDIENTES.** Se proponen en un prototipo (tarea T086), se miden contra
-  la tabla de contraste y se fijan aquí y en la constitución solo tras la aprobación del
-  responsable.
+
+### Valores del tema oscuro (aprobados el 2026-10-08, tarea T086)
+
+| Token | Canales RGB | Hex |
+|---|---|---|
+| Background | `12 10 9` | `#0C0A09` |
+| Surface | `28 25 23` | `#1C1917` |
+| Text | `250 250 249` | `#FAFAF9` |
+| Text muted | `168 162 158` | `#A8A29E` |
+| Primary | `165 180 252` | `#A5B4FC` |
+| Primary hover | `199 210 254` | `#C7D2FE` |
+| Primary active | `224 231 255` | `#E0E7FF` |
+| Sobre Primary | `30 27 75` | `#1E1B4B` |
+| Focus | `34 211 238` | `#22D3EE` |
+| Error | `252 165 165` | `#FCA5A5` |
+| Success | `134 239 172` | `#86EFAC` |
+| Border | `68 64 60` | `#44403C` |
+| Border strong | `120 113 108` | `#78716C` |
 
 ## Tipografía
 
@@ -143,7 +158,7 @@ El contraste de `primary`, `primary-hover` y `primary-active` sobre `background`
 | Ancho máximo del contenido | `--content-max` | `64rem` (1024px), centrado |
 | Ancho de lectura del texto de un caso | `--prose-max` | `65ch`, unos 65 caracteres por línea; las imágenes de apoyo usan todo `--content-max` |
 | Grosor de borde | `--border-width` | `1px` |
-| Altura visible del encabezado fijo | `--header-height` | `61px` = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1) |
+| Altura visible del encabezado fijo | `--header-height` | Desde `sm`: `61px` = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1). En teléfono, la fila fija lleva dos líneas (navegación; idioma y tema): `105px` = 2 × 44 + 2 × 8 + 1 |
 | Parte del encabezado que sale en teléfono | `--header-collapse` | `-52px` = −(objetivo mínimo + espacio 1); posición `top` del encabezado en teléfono, `0` desde el punto de corte `sm` |
 
 ```text

@@ -1,4 +1,4 @@
-@forward "color" show $color-overrides;
+@forward "color" show $color-overrides, $color-overrides-dark;
 @use "sass:list";
 @use "color" as *;
 @use "typography" as *;
@@ -6,10 +6,16 @@
 @use "interaction" as *;
 @use "layout" as *;
 
-:root {
-  @each $name, $channels in $colors {
+@mixin color-variables($palette) {
+  @each $name, $channels in $palette {
     --color-#{$name}: #{$channels};
   }
+}
+
+// Tema claro: valor por defecto, y el que queda al elegir claro con el botón.
+:root {
+  color-scheme: light;
+  @include color-variables($colors);
 
   @each $name, $stack in $font-families {
     --font-#{$name}: #{list.join($stack, (), $separator: comma)};
@@ -40,8 +46,28 @@
   --content-max: #{$content-max};
   --prose-max: #{$prose-max};
   --border-width: #{$border-width};
-  --header-height: #{$header-height};
+  --header-height: #{$header-height-phone};
   --header-collapse: #{$header-collapse};
+}
+
+@media (min-width: $breakpoint-header) {
+  :root {
+    --header-height: #{$header-height};
+  }
+}
+
+// Tema oscuro cuando la persona no eligió: sigue al sistema.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    @include color-variables($colors-dark);
+  }
+}
+
+// Tema oscuro elegido con el botón.
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  @include color-variables($colors-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {

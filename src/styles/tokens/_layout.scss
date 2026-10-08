@@ -6,8 +6,17 @@ $content-max: 64rem;
 $prose-max: 65ch;
 $border-width: 1px;
 
-// Encabezado fijo: una fila con padding vertical de 8px, un control de 44px y el borde inferior.
-$header-height: interaction.$target-min + 2 * map.get(spacing.$spaces, "1") + $border-width;
+// Punto de corte en que el encabezado pasa de dos líneas fijas a una sola fila (Tailwind `sm`).
+$breakpoint-header: 640px;
+
+// Padding vertical de la fila fija: 8px arriba y 8px abajo.
+$header-padding: 2 * map.get(spacing.$spaces, "1");
+
+// Desde `sm`: una fila con un control de 44px, su padding vertical y el borde inferior.
+$header-height: interaction.$target-min + $header-padding + $border-width;
+
+// En teléfono la fila fija lleva dos líneas de 44px (navegación; idioma y tema).
+$header-height-phone: 2 * interaction.$target-min + $header-padding + $border-width;
 
 // En teléfono el nombre se desplaza y solo queda fija la fila del menú: se oculta
 // su padding superior más el control de 44px.

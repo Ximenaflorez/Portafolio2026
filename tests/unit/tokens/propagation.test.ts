@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { compileTokens, compileUtilities, readCssVariables } from "./helpers";
+import { compileTokens, compileUtilities, readThemeColors } from "./helpers";
 
 describe("propagación de tokens (SC-006)", () => {
   it("cambiar --color-primary en el origen cambia el valor que resuelven sus utilidades", () => {
-    const original = readCssVariables(compileTokens()).get("--color-primary");
-    const altered = readCssVariables(compileTokens({ primary: "1 2 3" })).get("--color-primary");
+    const original = readThemeColors(compileTokens(), "light").get("--color-primary");
+    const altered = readThemeColors(compileTokens({ primary: "1 2 3" }), "light").get(
+      "--color-primary",
+    );
 
     expect(original).toBe("67 56 202");
     expect(altered).toBe("1 2 3");

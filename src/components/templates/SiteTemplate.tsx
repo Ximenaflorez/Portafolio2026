@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import type { CasePair } from "~/lib/i18n";
+import { useUi } from "~/lib/use-ui";
 import { SkipLink } from "../atoms/SkipLink";
 import { SiteFooter } from "../organisms/SiteFooter";
 import { SiteHeader } from "../organisms/SiteHeader";
@@ -11,12 +13,15 @@ export function SiteTemplate({
   cvAvailable,
   metaCaseHref,
   year,
+  casePairs,
   children,
-}: FooterProps & { children: ReactNode }) {
+}: FooterProps & { casePairs?: CasePair[]; children: ReactNode }) {
+  const { t } = useUi();
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <SkipLink />
-      <SiteHeader name={profile.name} />
+      <SkipLink>{t("skip")}</SkipLink>
+      <SiteHeader name={profile.name} casePairs={casePairs} />
       <main
         id="contenido"
         tabIndex={-1}

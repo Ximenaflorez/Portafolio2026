@@ -1,15 +1,21 @@
-import { data, type MetaFunction } from "react-router";
-import { publishedCases } from "~/content/load.server";
+import { metaCaseData } from "~/content/route-data.server";
+import { alternateLinks, metaCasePath } from "~/lib/i18n";
 import { pageMeta } from "~/lib/seo";
+import type { MetaFunction } from "react-router";
 
 export function loader() {
-  const found = publishedCases("meta")[0];
-  if (!found) throw data(null, { status: 404 });
-  return { case: found };
+  return metaCaseData("es");
 }
 
-export const meta: MetaFunction<typeof loader> = ({ loaderData }) =>
-  loaderData ? pageMeta({ ...loaderData.case.seo, path: "/trabajos/este-portafolio" }) : [];
+export const meta: MetaFunction<typeof loader> = ({ loaderData }) => {
+  if (!loaderData) return [];
+  const path = metaCasePath("es");
+  return pageMeta({
+    ...loaderData.case.seo,
+    path,
+    alternates: alternateLinks(path, loaderData.casePairs),
+  });
+};
 
 export default function CasoMeta() {
   return null;

@@ -6,10 +6,10 @@ Modified principles:
 - IV. Accesibilidad WCAG 2.2 AA: el contraste MUST cumplirse en ambos temas
 Added sections: none
 Modified sections:
-- Contrato de tokens: de "tema claro único" a dos temas; los valores del tema oscuro quedan
-  pendientes de la aprobación de su prototipo (principio V)
+- Contrato de tokens: de "tema claro único" a dos temas; valores del tema oscuro aprobados
+  el 2026-10-08 tras su prototipo (principio V, tarea T086)
 Removed sections: none
-Follow-up TODOs: fijar los valores del tema oscuro tras aprobar el prototipo (tarea T086)
+Follow-up TODOs: none
 (1.2.0: V. Aprobación previa de interfaz permite prototipos no publicados; el tamaño mínimo de
 los controles es una dimensión, no un espacio)
 -->
@@ -118,9 +118,27 @@ El texto blanco sobre Primary, Primary hover y Primary active MUST
 mantener al menos 4.5:1 (7.9:1, 9.9:1 y 11.4:1).
 Border MUST NOT usarse como único indicador de un control.
 
-Color, tema oscuro: PENDIENTE. Los 13 tokens llevan los mismos nombres. Sus
-valores se proponen en un prototipo y se fijan aquí solo tras la aprobación
-del responsable (principio V). Mientras tanto no hay valores vigentes.
+Color, tema oscuro (aprobado el 2026-10-08): los 13 tokens llevan los mismos
+nombres que en el tema claro.
+
+| Token | Valor | Uso y contraste |
+|---|---|---|
+| Background | `#0C0A09` | Fondo de página |
+| Surface | `#1C1917` | Superficies elevadas |
+| Text | `#FAFAF9` | Texto principal; 18.9:1 sobre Background |
+| Text muted | `#A8A29E` | Texto secundario; 7.8:1 sobre Background |
+| Primary | `#A5B4FC` | Acción principal; 9.9:1 sobre Background |
+| Primary hover | `#C7D2FE` | Estado al pasar el puntero |
+| Primary active | `#E0E7FF` | Estado al presionar |
+| On primary | `#1E1B4B` | Texto sobre Primary; 8.0:1, 10.7:1 y 13.0:1 |
+| Focus | `#22D3EE` | Anillo de foco; 10.9:1 sobre Background |
+| Error | `#FCA5A5` | Feedback de error; 10.4:1 sobre Background |
+| Success | `#86EFAC` | Feedback de éxito; 14.1:1 sobre Background |
+| Border | `#44403C` | Divisor decorativo |
+| Border strong | `#78716C` | Borde de controles; 4.1:1 sobre Background y 3.7:1 sobre Surface |
+
+En el tema oscuro, Primary hover y Primary active son más claros que Primary
+(en el claro son más oscuros) para seguir contrastando con el fondo.
 
 Tipografía:
 

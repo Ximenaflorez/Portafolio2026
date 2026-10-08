@@ -1,0 +1,7 @@
+// Cambiar de tema no se anima (FR-038): mientras `theme.ts` aplica los nuevos valores se suspenden
+// las transiciones de estado, para que los colores no se deslicen de un tema al otro.
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
+}

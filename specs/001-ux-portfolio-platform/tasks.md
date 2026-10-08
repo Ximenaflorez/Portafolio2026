@@ -115,7 +115,7 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Aprobación
 
-- [ ] T086 ⛔ APROBACIÓN (prototipo presentado el 2026-10-08, pendiente de tu respuesta): presentar en `src/routes/prototipos/temas.tsx` un prototipo con contenido de prueba que muestre (a) la propuesta de los 13 tokens de color del tema oscuro, adaptando el índigo y el teal, con la razón de contraste medida de cada pareja de `contracts/tokens.md`; (b) los botones, enlaces, tarjetas y el foco en los dos temas; (c) el encabezado con el selector de idioma y el botón de tema en 360, 768 y 1280px, con la colocación en teléfono dentro de FR-028 y FR-043. Obtener aprobación explícita, fijar los valores del tema oscuro en `.specify/memory/constitution.md` y `contracts/tokens.md`, y borrar el prototipo
+- [X] T086 ⛔ APROBADO el 2026-10-08 (paleta oscura propuesta, variante B del encabezado en teléfono, selector «EN»/«ES» y botón de sol y luna): presentar en `src/routes/prototipos/temas.tsx` un prototipo con contenido de prueba que muestre (a) la propuesta de los 13 tokens de color del tema oscuro, adaptando el índigo y el teal, con la razón de contraste medida de cada pareja de `contracts/tokens.md`; (b) los botones, enlaces, tarjetas y el foco en los dos temas; (c) el encabezado con el selector de idioma y el botón de tema en 360, 768 y 1280px, con la colocación en teléfono dentro de FR-028 y FR-043. Obtener aprobación explícita, fijar los valores del tema oscuro en `.specify/memory/constitution.md` y `contracts/tokens.md`, y borrar el prototipo
 
 ### Pruebas (escribir primero, deben fallar)
 

@@ -71,13 +71,15 @@ Selector de idioma (FR-040):
 - Es un enlace (`<a hreflang lang>`) a la página equivalente en el otro idioma: desde `/#trabajos`
   lleva a `/en/#trabajos`; desde un caso, al mismo caso en el otro idioma (por el nombre de
   archivo).
-- Su texto es el nombre del otro idioma en ese idioma ("English" / "Español"), con `lang` propio.
+- Muestra el código del otro idioma, «EN» o «ES» (aprobado en T086). Su nombre accesible empieza por
+  ese código y añade el nombre del idioma en ese idioma ("EN English" / "ES Español"), con `lang`
+  propio (SC 2.5.3).
 - Funciona sin JavaScript. No hay detección automática del idioma.
 
 Botón de tema (FR-036, FR-038):
 
-- Es un `<button>` con `aria-pressed` (oscuro activo o no) y nombre accesible en el idioma de la
-  página. Sin JavaScript no hace nada y el tema sigue al sistema; por eso se inserta solo con
+- Es un `<button>` con ícono de sol (tema claro activo) o de luna (tema oscuro activo), con
+  `aria-pressed` (oscuro activo o no) y un nombre accesible constante en el idioma de la página. Sin JavaScript no hace nada y el tema sigue al sistema; por eso se inserta solo con
   JavaScript activo.
 
 Navegación y página actual (FR-031):
@@ -90,9 +92,9 @@ Navegación y página actual (FR-031):
 Encabezado fijo (FR-028, FR-043):
 
 - Tableta y escritorio: el encabezado completo queda fijo arriba.
-- Teléfono: el nombre se desplaza y solo queda fija la fila de la navegación. El selector de
-  idioma y el botón de tema MUST caber en esa fila o en la parte que se desplaza; su colocación en
-  teléfono se decide en el prototipo T086.
+- Teléfono (variante B aprobada en T086): el nombre se desplaza y queda fija la fila de la
+  navegación, que ocupa dos líneas: la navegación y, debajo, el selector de idioma y el botón de
+  tema (`--header-height` de `105px`). Desde `sm` todo va en una sola fila (`61px`).
 - El documento reserva espacio arriba (`scroll-padding-top`) para que ni el control enfocado, ni su
   anillo de foco, ni el título de una sección queden tapados.
 

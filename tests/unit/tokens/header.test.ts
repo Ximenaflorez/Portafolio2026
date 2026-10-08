@@ -1,13 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { compileMainScss, compileTokens, compileUtilities, readCssVariables } from "./helpers";
+import {
+  compileMainScss,
+  compileTokens,
+  compileUtilities,
+  readBaseVariable,
+  readBlocks,
+  readCssVariables,
+} from "./helpers";
 
-describe("encabezado fijo (FR-028)", () => {
-  const variables = readCssVariables(compileTokens());
+describe("encabezado fijo (FR-028, FR-043)", () => {
+  const tokens = compileTokens();
+  const variables = readCssVariables(tokens);
 
   it("la altura visible del encabezado se calcula con el objetivo mínimo, el espaciado y el borde", () => {
-    // 44px de control + 2 × 8px de espaciado + 1px de borde
     expect(variables.get("--border-width")).toBe("1px");
-    expect(variables.get("--header-height")).toBe("61px");
+    // Desde `sm` una sola fila: 44px de control + 2 × 8px de espaciado + 1px de borde.
+    const wide = readBlocks(tokens).find(
+      (block) => block.media?.includes("min-width") && block.variables.has("--header-height"),
+    );
+    expect(wide?.variables.get("--header-height")).toBe("61px");
+  });
+
+  it("en teléfono la fila fija lleva dos líneas (navegación; idioma y tema): 2 × 44px + 2 × 8px + 1px", () => {
+    expect(readBaseVariable(tokens, "--header-height")).toBe("105px");
+  });
+
+  it("el cambio de altura ocurre en el mismo punto de corte en que el nombre deja de desplazarse", () => {
+    const wide = readBlocks(tokens).find(
+      (block) => block.media?.includes("min-width") && block.variables.has("--header-height"),
+    );
+
+    expect(wide?.media).toMatch(/min-width:\s*640px/);
   });
 
   it("en teléfono se oculta la fila del nombre: 8px de espaciado + 44px de control", () => {

@@ -1,15 +1,21 @@
-import { data, type LoaderFunctionArgs, type MetaFunction } from "react-router";
-import { findPublishedCase } from "~/content/load.server";
+import { caseData } from "~/content/route-data.server";
+import { alternateLinks, casePath } from "~/lib/i18n";
 import { pageMeta } from "~/lib/seo";
+import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 
 export function loader({ params }: LoaderFunctionArgs) {
-  const found = params.slug ? findPublishedCase(params.slug) : undefined;
-  if (!found || found.type !== "product") throw data(null, { status: 404 });
-  return { case: found };
+  return caseData("es", params.slug);
 }
 
-export const meta: MetaFunction<typeof loader> = ({ loaderData }) =>
-  loaderData ? pageMeta({ ...loaderData.case.seo, path: `/trabajos/${loaderData.case.slug}` }) : [];
+export const meta: MetaFunction<typeof loader> = ({ loaderData }) => {
+  if (!loaderData) return [];
+  const path = casePath("es", loaderData.case.slug);
+  return pageMeta({
+    ...loaderData.case.seo,
+    path,
+    alternates: alternateLinks(path, loaderData.casePairs),
+  });
+};
 
 export default function Caso() {
   return null;

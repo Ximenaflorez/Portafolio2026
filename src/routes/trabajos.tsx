@@ -4,9 +4,9 @@ import type { Route } from "./+types/trabajos";
 
 export function loader() {
   return {
-    page: loadPage("trabajos"),
-    cases: publishedCases("product"),
-    meta: publishedCases("meta")[0] ?? null,
+    page: loadPage("es", "trabajos"),
+    cases: publishedCases("es", "product"),
+    meta: publishedCases("es", "meta")[0] ?? null,
   };
 }
 

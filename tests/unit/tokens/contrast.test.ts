@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { compileMainScss, contrastRatio, readCssVariables } from "./helpers";
+import { compileMainScss, contrastRatio, readThemeColors, type Theme } from "./helpers";
 
 const surfaces = ["background", "surface"];
 
@@ -21,18 +21,30 @@ const pairs: Array<{ foreground: string; backgrounds: string[]; minimum: number 
   { foreground: "border-strong", backgrounds: surfaces, minimum: 3 },
 ];
 
-describe("contraste de tokens (SC-008)", () => {
-  const variables = readCssVariables(compileMainScss());
+const themes: Theme[] = ["light", "dark"];
 
-  for (const { foreground, backgrounds, minimum } of pairs) {
-    for (const background of backgrounds) {
-      it(`${foreground} sobre ${background} cumple ${minimum}:1`, () => {
-        const fg = variables.get(`--color-${foreground}`);
-        const bg = variables.get(`--color-${background}`);
-        expect(fg, `falta --color-${foreground}`).toBeDefined();
-        expect(bg, `falta --color-${background}`).toBeDefined();
-        expect(contrastRatio(fg!, bg!)).toBeGreaterThanOrEqual(minimum);
+describe("contraste de tokens en cada tema (SC-008, FR-037)", () => {
+  const css = compileMainScss();
+
+  for (const theme of themes) {
+    describe(`tema ${theme === "light" ? "claro" : "oscuro"}`, () => {
+      const variables = readThemeColors(css, theme);
+
+      it("define los 13 tokens de color", () => {
+        expect(variables.size).toBe(13);
       });
-    }
+
+      for (const { foreground, backgrounds, minimum } of pairs) {
+        for (const background of backgrounds) {
+          it(`${foreground} sobre ${background} cumple ${minimum}:1`, () => {
+            const fg = variables.get(`--color-${foreground}`);
+            const bg = variables.get(`--color-${background}`);
+            expect(fg, `falta --color-${foreground}`).toBeDefined();
+            expect(bg, `falta --color-${background}`).toBeDefined();
+            expect(contrastRatio(fg!, bg!)).toBeGreaterThanOrEqual(minimum);
+          });
+        }
+      }
+    });
   }
 });
