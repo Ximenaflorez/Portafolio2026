@@ -43,8 +43,8 @@ Presentes en todas las rutas, en este orden de tabulación:
 2. Encabezado con navegación: Inicio, Trabajos, Sobre mí, Contacto. Son enlaces con ancla
    (`/#inicio`, `/#trabajos`, …) que funcionan sin JavaScript (FR-031).
 3. `<main id="contenido">`.
-4. Pie con correo, perfil profesional, CV, la navegación repetida y la línea de crédito con enlace
-   al caso meta.
+4. Pie con correo, perfil profesional, CV y la línea de crédito con enlace al caso meta. No repite
+   la navegación entre secciones.
 
 Navegación y página actual (FR-031):
 

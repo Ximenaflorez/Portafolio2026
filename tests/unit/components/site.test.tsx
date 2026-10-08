@@ -184,11 +184,11 @@ describe("SiteFooter", () => {
     expect(screen.queryByRole("link", { name: /CV/ })).not.toBeInTheDocument();
   });
 
-  it("repite la navegación con otro nombre accesible", () => {
+  it("no repite la navegación entre secciones: eso lo hace solo el encabezado", () => {
     enRuta(<SiteFooter {...props} />);
 
-    const nav = screen.getByRole("navigation", { name: "Pie de página" });
-    expect(within(nav).getAllByRole("link")).toHaveLength(4);
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Sobre mí" })).not.toBeInTheDocument();
   });
 
   it("incluye el crédito con enlace al caso meta, y el año", () => {

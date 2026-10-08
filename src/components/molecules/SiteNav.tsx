@@ -1,7 +1,7 @@
 import { sections, type SectionId } from "~/lib/sections";
 import { NavLink } from "../atoms/NavLink";
 
-// Navegación entre las secciones de `/`. Se usa en el encabezado y en el pie, con nombres distintos.
+// Navegación entre las secciones de `/`. Solo vive en el encabezado: el pie no la repite.
 export function SiteNav({ label, current }: { label: string; current?: SectionId }) {
   return (
     <nav aria-label={label}>
