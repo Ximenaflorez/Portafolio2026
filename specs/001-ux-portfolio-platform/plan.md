@@ -36,7 +36,7 @@ teléfono y de escritorio (SC-004)
 **Constraints**: WCAG 2.2 AA; sin valores visuales fuera de los tokens; sin pantallas sin
 aprobación; HTML prerenderizado por ruta; fuentes alojadas en el propio sitio
 
-**Scale/Scope**: 8 páginas públicas (Inicio, Trabajos, 3 casos, caso meta, Sobre mí, Contacto)
+**Scale/Scope**: 5 páginas públicas: `/` (con las secciones Inicio, Trabajos, Sobre mí y Contacto), 3 casos y el caso meta; más 3 redirecciones y la 404
 más 404
 
 ## Constitution Check

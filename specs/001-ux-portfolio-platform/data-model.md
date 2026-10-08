@@ -8,7 +8,7 @@ cada campo están en [contracts/content-schema.md](./contracts/content-schema.md
 ### CaseStudy
 
 - **Campos**: `slug`, `type` (`product` | `meta`), `status` (`draft` | `published`), `order`,
-  `title`, `seo`, `summary`, `body`. `order` fija el orden en Inicio y en Trabajos (FR-019).
+  `title`, `seo`, `summary`, `body`. `order` fija el orden en la sección Trabajos (FR-019).
 - **Relaciones**: pertenece a un `Profile`. Genera una `PublicPage`.
 - **Validación**: resumen completo (FR-020), cuatro secciones en orden (FR-002), decisión con
   alternativa (FR-022), lo que no funcionó (FR-023), sin `[COMPLETAR]` al publicar (FR-026),
@@ -30,7 +30,8 @@ cada campo están en [contracts/content-schema.md](./contracts/content-schema.md
 ### PublicPage (derivada en el build)
 
 - **Campos**: `path`, `title`, `description`, `canonical`, `inSitemap`.
-- **Origen**: `CaseStudy` publicados, `ModulePage` y la ruta fija de Trabajos.
+- **Origen**: `CaseStudy` publicados y la página `/` (formada por las cuatro `ModulePage`). Las
+  redirecciones `/trabajos/`, `/sobre-mi/` y `/contacto/` no son `PublicPage`.
 - **Validación**: título y descripción no vacíos (FR-014). El sitemap enumera exactamente las
   páginas con `inSitemap` (SC-007).
 
@@ -47,6 +48,6 @@ cada campo están en [contracts/content-schema.md](./contracts/content-schema.md
 CaseStudy: draft ──(sin [COMPLETAR] y validación completa)──▶ published
 ```
 
-- `draft`: no genera ruta, no entra en Trabajos, Inicio ni el sitemap.
+- `draft`: no genera ruta, no entra en la sección Trabajos ni en el sitemap.
 - `published`: el build falla si el caso no pasa la validación completa.
 - Publicar el sitio exige 3 casos `product` y 1 `meta` en `published` (FR-001).

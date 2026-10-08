@@ -1,41 +1,63 @@
-import { Link, useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
 
-// Prototipo de aprobación T035: contenido de prueba, solo en desarrollo; se borra al aprobarse.
+// Prototipo de aprobación T035: una sola página con secciones, encabezado fijo.
+// Contenido de prueba, solo en desarrollo; se borra al aprobarse.
 const persona = {
   nombre: "Nombre Apellido",
+  rol: "Product Designer y UX Engineer",
   correo: "nombre@ejemplo.com",
   linkedin: "https://www.linkedin.com/in/ejemplo",
 };
 
-const paginas = [
+const secciones = [
   { id: "inicio", label: "Inicio" },
   { id: "trabajos", label: "Trabajos" },
   { id: "sobre-mi", label: "Sobre mí" },
   { id: "contacto", label: "Contacto" },
 ] as const;
 
-type PaginaId = (typeof paginas)[number]["id"];
+type SeccionId = (typeof secciones)[number]["id"];
+
+const casos = [
+  {
+    id: "caso-01",
+    titulo: "Caso 1: título del proyecto",
+    linea: "Resultado en una frase, medible.",
+  },
+  {
+    id: "caso-02",
+    titulo: "Caso 2: título del proyecto",
+    linea: "Resultado en una frase, medible.",
+  },
+  {
+    id: "caso-03",
+    titulo: "Caso 3: título del proyecto",
+    linea: "Resultado en una frase, medible.",
+  },
+];
 
 const enlace =
   "inline-flex min-h-target min-w-target items-center text-text transition-colors duration-state hover:text-primary-hover active:text-primary-active";
+const enlaceTexto =
+  "text-primary underline transition-colors duration-state hover:text-primary-hover active:text-primary-active";
 
-function Navegacion({ actual, etiqueta }: { actual: PaginaId; etiqueta: string }) {
+function Navegacion({ actual, etiqueta }: { actual: SeccionId; etiqueta: string }) {
   return (
     <nav aria-label={etiqueta}>
       <ul className="flex flex-wrap gap-x-2">
-        {paginas.map((pagina) => {
-          const esActual = pagina.id === actual;
+        {secciones.map((seccion) => {
+          const esActual = seccion.id === actual;
           return (
-            <li key={pagina.id}>
-              <Link
-                to={`?pagina=${pagina.id}`}
-                aria-current={esActual ? "page" : undefined}
+            <li key={seccion.id}>
+              <a
+                href={`#${seccion.id}`}
+                aria-current={esActual ? "location" : undefined}
                 className={`${enlace} border-b-indicator ${
                   esActual ? "border-primary font-semibold text-primary" : "border-transparent"
                 }`}
               >
-                {pagina.label}
-              </Link>
+                {seccion.label}
+              </a>
             </li>
           );
         })}
@@ -49,85 +71,179 @@ export function meta() {
 }
 
 export default function PrototipoGlobales() {
-  const [params] = useSearchParams();
-  const actual = (paginas.find((p) => p.id === params.get("pagina"))?.id ?? "inicio") as PaginaId;
-  const titulo = paginas.find((p) => p.id === actual)?.label;
+  const [actual, setActual] = useState<SeccionId>("inicio");
+
+  useEffect(() => {
+    // FR-029: el desplazamiento suave solo existe si el sistema no pide reducir movimiento.
+    const raiz = document.documentElement;
+    const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)");
+    raiz.style.scrollBehavior = sinMovimiento.matches ? "auto" : "smooth";
+
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        for (const entrada of entradas) {
+          if (entrada.isIntersecting) setActual(entrada.target.id as SeccionId);
+        }
+      },
+      { rootMargin: "-30% 0px -60% 0px" },
+    );
+    for (const { id } of secciones) {
+      const el = document.getElementById(id);
+      if (el) observador.observe(el);
+    }
+
+    // Al llegar al final, la última sección puede no cruzar la franja de detección.
+    const alFinal = () => {
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+        setActual(secciones[secciones.length - 1].id);
+      }
+    };
+    window.addEventListener("scroll", alFinal, { passive: true });
+
+    return () => {
+      observador.disconnect();
+      window.removeEventListener("scroll", alFinal);
+      raiz.style.scrollBehavior = "";
+    };
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <a
         href="#contenido"
-        className="sr-only bg-primary px-3 text-on-primary focus:not-sr-only focus:fixed focus:z-10 focus:left-2 focus:top-2 focus:inline-flex focus:min-h-target focus:items-center"
+        className="sr-only bg-primary px-3 text-on-primary focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-20 focus:inline-flex focus:min-h-target focus:items-center"
       >
         Saltar al contenido
       </a>
 
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-content flex-col gap-1 px-3 py-2 sm:flex-row sm:items-center sm:justify-between md:px-4">
-          <Link to="?pagina=inicio" className={`${enlace} font-heading text-lg font-bold`}>
-            {persona.nombre}
-          </Link>
-          <Navegacion actual={actual} etiqueta="Principal" />
+      {/* Fijo. En teléfono el nombre sale con el scroll y solo queda la fila del menú. */}
+      <header className="sticky top-header-collapse z-10 border-b border-border bg-background sm:top-0">
+        <div className="mx-auto flex max-w-content flex-col px-3 sm:flex-row sm:items-center sm:justify-between md:px-4">
+          <div className="pt-1 sm:py-1">
+            <a href="#inicio" className={`${enlace} font-heading text-lg font-bold`}>
+              {persona.nombre}
+            </a>
+          </div>
+          <div className="py-1">
+            <Navegacion actual={actual} etiqueta="Principal" />
+          </div>
         </div>
       </header>
 
       <main
         id="contenido"
         tabIndex={-1}
-        className="mx-auto w-full max-w-content flex-1 px-3 py-8 md:px-4"
+        className="mx-auto w-full max-w-content flex-1 px-3 md:px-4"
       >
-        <h1 className="text-3xl">{titulo}</h1>
-        <p className="mt-2 text-text-muted">
-          Página de prueba para revisar el encabezado, la navegación y el pie. Usa Tab para recorrer
-          los enlaces: el primero es «Saltar al contenido».
-        </p>
-        {[1, 2, 3].map((n) => (
-          <section key={n} className="mt-6 border border-border bg-surface p-4">
-            <h2 className="text-xl">Bloque de prueba {n}</h2>
-            <p className="mt-1 text-text-muted">
-              Contenido de relleno para comprobar que el encabezado no es fijo y se va con el
-              scroll.
-            </p>
-          </section>
-        ))}
+        <section id="inicio" aria-labelledby="titulo-inicio" className="py-16">
+          <p className="text-text-muted">{persona.rol}</p>
+          <h1 id="titulo-inicio" className="mt-1 text-4xl">
+            Propuesta de valor en una frase clara
+          </h1>
+          <p className="mt-2 text-lg text-text-muted">
+            Texto de prueba: qué haces y para quién. Aquí iría el resumen que hoy vive en Inicio.
+          </p>
+          <a
+            href="#trabajos"
+            className="mt-4 inline-flex min-h-target items-center bg-primary px-4 font-semibold text-on-primary transition-colors duration-state hover:bg-primary-hover active:bg-primary-active"
+          >
+            Ver mis trabajos
+          </a>
+        </section>
+
+        <section
+          id="trabajos"
+          aria-labelledby="titulo-trabajos"
+          className="border-t border-border py-16"
+        >
+          <h2 id="titulo-trabajos" className="text-3xl">
+            Trabajos
+          </h2>
+          <p className="mt-1 text-text-muted">
+            Tres casos de producto y el caso de este portafolio. En la versión real, cada tarjeta
+            abre su propia página con el caso completo.
+          </p>
+          <ul className="mt-6 grid gap-4 md:grid-cols-3">
+            {casos.map((caso) => (
+              <li key={caso.id} className="border border-border bg-surface p-4">
+                <h3 className="text-xl">{caso.titulo}</h3>
+                <p className="mt-1 text-text-muted">{caso.linea}</p>
+                <a
+                  href="#trabajos"
+                  className={`mt-2 inline-flex min-h-target items-center font-semibold ${enlaceTexto}`}
+                >
+                  Leer el caso
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-text-muted">
+            Aparte:{" "}
+            <a href="#trabajos" className={enlaceTexto}>
+              Cómo hice este portafolio
+            </a>
+            .
+          </p>
+        </section>
+
+        <section
+          id="sobre-mi"
+          aria-labelledby="titulo-sobre-mi"
+          className="border-t border-border py-16"
+        >
+          <h2 id="titulo-sobre-mi" className="text-3xl">
+            Sobre mí
+          </h2>
+          {["Forma de trabajar", "Métodos", "Problemas que busco"].map((tema) => (
+            <div key={tema} className="mt-4">
+              <h3 className="text-xl">{tema}</h3>
+              <p className="mt-1 text-text-muted">
+                Texto de prueba para ver cuánto ocupa esta sección dentro de la página larga.
+              </p>
+            </div>
+          ))}
+        </section>
+
+        <section
+          id="contacto"
+          aria-labelledby="titulo-contacto"
+          className="border-t border-border py-16"
+        >
+          <h2 id="titulo-contacto" className="text-3xl">
+            Contacto
+          </h2>
+          <p className="mt-1 text-text-muted">Texto breve de invitación a contactar.</p>
+          <ul className="mt-2 flex flex-wrap gap-x-3">
+            <li>
+              <a href={`mailto:${persona.correo}`} className={enlace}>
+                {persona.correo}
+              </a>
+            </li>
+            <li>
+              <a href={persona.linkedin} className={enlace}>
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a href="/cv.pdf" download className={enlace}>
+                Descargar CV (PDF)
+              </a>
+            </li>
+          </ul>
+        </section>
       </main>
 
       <footer className="border-t border-border bg-surface">
-        <div className="mx-auto flex max-w-content flex-col gap-4 px-3 py-6 md:px-4">
-          <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-            <ul className="flex flex-wrap gap-x-3" aria-label="Contacto">
-              <li>
-                <a href={`mailto:${persona.correo}`} className={enlace}>
-                  {persona.correo}
-                </a>
-              </li>
-              <li>
-                <a href={persona.linkedin} className={enlace}>
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="/cv.pdf" download className={enlace}>
-                  Descargar CV (PDF)
-                </a>
-              </li>
-            </ul>
-            <Navegacion actual={actual} etiqueta="Pie de página" />
-          </div>
-          <div className="flex flex-col gap-1 text-sm text-text-muted sm:flex-row sm:justify-between">
-            <p>
-              Diseñado y construido por {persona.nombre}.{" "}
-              <a
-                href="/trabajos/este-portafolio"
-                className="text-primary underline transition-colors duration-state hover:text-primary-hover active:text-primary-active"
-              >
-                Cómo hice este portafolio
-              </a>
-            </p>
-            <p>
-              © {new Date().getFullYear()} {persona.nombre}
-            </p>
-          </div>
+        <div className="mx-auto flex max-w-content flex-col gap-1 px-3 py-6 text-sm text-text-muted sm:flex-row sm:justify-between md:px-4">
+          <p>
+            Diseñado y construido por {persona.nombre}.{" "}
+            <a href="#trabajos" className={enlaceTexto}>
+              Cómo hice este portafolio
+            </a>
+          </p>
+          <p>
+            © {new Date().getFullYear()} {persona.nombre}
+          </p>
         </div>
       </footer>
     </div>

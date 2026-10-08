@@ -100,6 +100,15 @@ de scroll ni en bucle (FR-029).
 | Token | Variable CSS | Valor |
 |---|---|---|
 | Ancho máximo del contenido | `--content-max` | `64rem` (1024px), centrado |
+| Grosor de borde | `--border-width` | `1px` |
+| Altura visible del encabezado fijo | `--header-height` | `61px` = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1) |
+| Parte del encabezado que sale en teléfono | `--header-collapse` | `-52px` = −(objetivo mínimo + espacio 1); posición `top` del encabezado en teléfono, `0` desde el punto de corte `sm` |
+
+```text
+html → scroll-padding-top: var(--header-height) + var(--focus-ring-offset) + var(--focus-ring-width)
+```
+
+Evita que el encabezado fijo tape el control enfocado, su anillo o el título de una sección (FR-028).
 
 ## Foco
 

@@ -37,6 +37,9 @@
   --focus-ring-offset: #{$focus-ring-offset};
   --indicator-width: #{$indicator-width};
   --content-max: #{$content-max};
+  --border-width: #{$border-width};
+  --header-height: #{$header-height};
+  --header-collapse: #{$header-collapse};
 }
 
 @media (prefers-reduced-motion: reduce) {

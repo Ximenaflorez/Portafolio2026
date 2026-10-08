@@ -13,10 +13,19 @@
 ### Session 2026-10-07
 
 - Q: ¿Qué tamaño mínimo deben tener los controles que se tocan o se cliquean? → A: 44×44 px como mínimo para todos los controles; los enlaces dentro de un párrafo quedan exentos.
-- Q: ¿El encabezado se queda fijo arriba al hacer scroll o se desplaza con la página? → A: Se desplaza con la página.
+- Q: ¿El encabezado se queda fijo arriba al hacer scroll o se desplaza con la página? → A: Se desplaza con la página. *(Sustituida el 2026-10-08: ver la sesión siguiente.)*
 - Q: ¿Cómo se comporta el portafolio con animaciones y transiciones? → A: Solo transiciones breves de estado, de hasta 200 ms, desactivadas si el sistema pide reducir movimiento.
 - Q: ¿Cuántos casos destacados muestra Inicio y cómo se eligen? → A: Los 3 casos de producto, en el orden que fija el responsable.
 - Q: ¿Qué regla se aplica a citas, datos de usuario e información de empresas en los casos? → A: Todo anonimizado siempre, incluido el nombre de la empresa.
+
+### Session 2026-10-08
+
+Tras comparar dos prototipos con contenido de prueba (una página por módulo frente a una sola página con scroll):
+
+- Q: ¿Cómo se organizan Inicio, Trabajos, Sobre mí y Contacto? → A: Como secciones de una sola página (`/`) a las que se llega por scroll desde el menú. Cada caso de estudio conserva su propia página.
+- Q: ¿El encabezado sigue sin ser fijo? → A: Pasa a ser fijo, porque en una página larga el menú debe estar siempre a mano. Esto sustituye la decisión del 2026-10-07.
+- Q: ¿Cómo se comporta el encabezado fijo en teléfono? → A: Solo queda fija la fila del menú; el nombre se desplaza con la página.
+- Q: ¿Qué pasa con las URLs `/trabajos/`, `/sobre-mi/` y `/contacto/`? → A: Se mantienen y redirigen a su sección de `/`.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -107,9 +116,9 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-014**: Cada página pública MUST tener título propio, descripción breve y una jerarquía de encabezados comprensible.
 - **FR-015**: El conjunto de páginas públicas MUST poder descubrirse mediante una lista de esas páginas.
 - **FR-016**: El contenido principal de un caso MUST poder leerse aunque fallen las imágenes de apoyo.
-- **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
+- **FR-017**: La plataforma MUST organizarse en estos módulos: Inicio, Trabajos (índice), Caso de estudio, Caso meta, Sobre mí y proceso, y Contacto. Inicio, Trabajos, Sobre mí y Contacto MUST ser secciones de una sola página (`/`); cada caso y el caso meta MUST tener su propia página. Además MUST tener elementos globales: encabezado con navegación, enlace para saltar al contenido y pie con contacto.
 - **FR-018**: Inicio MUST mostrar quién es el perfil, qué hace, para quién trabaja, los 3 casos de producto y el acceso a contacto.
-- **FR-019**: Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado. Inicio y Trabajos MUST usar el mismo orden de casos, fijado por el responsable.
+- **FR-019**: La sección Trabajos MUST listar cada caso de producto con rol, tipo de producto y una línea de resultado, en el orden fijado por el responsable.
 - **FR-020**: Cada caso MUST abrir con un resumen de producto, rol, equipo, duración y resultado clave.
 - **FR-021**: Cada caso MUST seguir el arco narrativo: tensión, descubrimiento, decisión, prueba, impacto y reflexión.
 - **FR-022**: En la arquitectura de la solución, cada caso MUST documentar al menos una decisión clave con su motivo y la alternativa descartada.
@@ -118,9 +127,11 @@ Un reclutador encuentra la plataforma, entiende de qué perfil se trata y sabe c
 - **FR-025**: Sobre mí y proceso MUST describir la forma de trabajar, los métodos dominados y el tipo de problemas que busca el perfil.
 - **FR-026**: Ningún caso MUST publicarse con espacios de plantilla sin completar.
 - **FR-027**: Todo control interactivo MUST tener un área de toque o clic de al menos 44×44 px, incluidos los enlaces de la navegación, los llamados a contacto y los enlaces de "ver caso". Los enlaces dentro de un párrafo de texto quedan exentos, como permite WCAG 2.2 AA.
-- **FR-028**: El encabezado MUST desplazarse con la página, sin quedar fijo. Ningún elemento fijo MUST tapar, ni en parte, el control que tiene el foco del teclado.
-- **FR-029**: El movimiento MUST limitarse a transiciones de cambio de estado (puntero, presión, foco) de 200 ms como máximo. No hay animaciones de aparición, de scroll ni en bucle. Si el sistema pide reducir movimiento, MUST no haber ninguna transición.
+- **FR-028**: El encabezado MUST permanecer visible al hacer scroll. En tableta y escritorio queda fijo completo (nombre y navegación); en teléfono solo queda fija la fila de la navegación y el nombre se desplaza. Ningún elemento fijo MUST tapar, ni en parte, el control que tiene el foco del teclado, ni el título de la sección a la que se salta: el documento reserva espacio igual a la altura visible del encabezado más el anillo de foco.
+- **FR-029**: El movimiento MUST limitarse a transiciones de cambio de estado (puntero, presión, foco) de 200 ms como máximo y al desplazamiento suave al saltar a una sección. No hay animaciones de aparición, de scroll ni en bucle. Si el sistema pide reducir movimiento, MUST no haber ninguna transición y el salto a una sección MUST ser instantáneo.
 - **FR-030**: Todo caso MUST estar anonimizado: sin nombre de empresa ni de clientes, sin nombres de personas, con citas sin atribución y con métricas en porcentajes o rangos. Las imágenes MUST no mostrar logos, nombres ni datos reales. La empresa se describe solo por sector y tamaño.
+- **FR-031**: La navegación MUST marcar la sección que se está viendo (con `aria-current="location"`), también al llegar al final de la página, y MUST llevar a cada sección sin JavaScript (enlaces con ancla). Desde la página de un caso, los enlaces de la navegación MUST llevar a la sección correspondiente de `/`.
+- **FR-032**: `/trabajos/`, `/sobre-mi/` y `/contacto/` MUST redirigir a su sección de `/` y no aparecer en el sitemap.
 
 ### Key Entities
 

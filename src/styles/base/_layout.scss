@@ -1,0 +1,7 @@
+// Con un encabezado fijo, saltar a una sección o enfocar un control no debe dejarlo debajo
+// del encabezado ni tapar su anillo de foco (WCAG 2.4.11).
+html {
+  scroll-padding-top: calc(
+    var(--header-height) + var(--focus-ring-offset) + var(--focus-ring-width)
+  );
+}

@@ -12,7 +12,7 @@ Frontmatter:
 | `slug` | string | Obligatorio, minúsculas y guiones, único |
 | `type` | `product` \| `meta` | Obligatorio |
 | `status` | `draft` \| `published` | Obligatorio |
-| `order` | entero ≥ 1 | Obligatorio y único por tipo; orden en Inicio y en Trabajos |
+| `order` | entero ≥ 1 | Obligatorio y único por tipo; orden en la sección Trabajos |
 | `title` | string | Obligatorio, 1 a 80 caracteres |
 | `seo.title` | string | Obligatorio, 1 a 60 caracteres |
 | `seo.description` | string | Obligatorio, 50 a 160 caracteres |
@@ -60,7 +60,8 @@ Reglas de publicación (`status: published`):
 
 ## Páginas de módulo (`src/content/pages/*.md`)
 
-`inicio.md`, `trabajos.md`, `sobre-mi.md` y `contacto.md` llevan `seo.title`, `seo.description` y
-cuerpo Markdown (`trabajos.md` puede no tener cuerpo).
+`inicio.md`, `trabajos.md`, `sobre-mi.md` y `contacto.md` son las cuatro secciones de `/` (cuerpo
+Markdown; `trabajos.md` puede no tener cuerpo). Solo `inicio.md` lleva `seo.title` y
+`seo.description`, que son los de la página `/`; las demás secciones no tienen SEO propio.
 `sobre-mi.md` MUST contener `## Forma de trabajar`, `## Métodos` y `## Problemas que busco`
 (FR-025).

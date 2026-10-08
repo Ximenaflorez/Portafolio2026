@@ -91,13 +91,14 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 **Goal**: Encabezado, navegación, enlace para saltar al contenido y pie, presentes en todas las rutas (FR-017)
 
-- [ ] T035 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/globales.tsx` un prototipo con contenido de prueba del encabezado no fijo, la navegación (incluido el comportamiento en teléfono), el enlace para saltar al contenido y el pie; obtener aprobación explícita y borrar el prototipo
+- [ ] T035 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/globales.tsx` un prototipo con contenido de prueba de la página única con secciones: el encabezado fijo (en teléfono solo la fila del menú), la navegación con la sección actual marcada, el enlace para saltar al contenido y el pie; obtener aprobación explícita y borrar el prototipo
 - [ ] T036 [P] Escribir prueba axe y de teclado para `SkipLink`, `NavLink` y `TextLink` en `tests/unit/components/atoms.test.tsx`
 - [ ] T037 [P] Crear el átomo `SkipLink` hacia `#contenido` en `src/components/atoms/SkipLink.tsx`
 - [ ] T038 [P] Crear el átomo `TextLink` con estados de puntero, presión y foco desde tokens en `src/components/atoms/TextLink.tsx`
-- [ ] T039 [P] Crear el átomo `NavLink` con `aria-current="page"` en `src/components/atoms/NavLink.tsx`
-- [ ] T040 Crear el organismo `SiteHeader` con la navegación Inicio, Trabajos, Sobre mí y Contacto en `src/components/organisms/SiteHeader.tsx`
-- [ ] T041 Crear el organismo `SiteFooter` con correo y perfil profesional en `src/components/organisms/SiteFooter.tsx`
+- [ ] T039 [P] Crear el átomo `NavLink` (enlace con ancla, `aria-current="location"` y subrayado de `--indicator-width`) en `src/components/atoms/NavLink.tsx`
+- [ ] T040 Crear el organismo `SiteHeader` fijo (en teléfono solo la fila del menú, con `top-header-collapse sm:top-0`) con la navegación Inicio, Trabajos, Sobre mí y Contacto, y el hook que marca la sección visible, incluida la última al llegar al final y salto instantáneo con movimiento reducido, en `src/components/organisms/SiteHeader.tsx`
+- [ ] T041 Crear el organismo `SiteFooter` con correo, LinkedIn, CV, navegación repetida, crédito con enlace al caso meta y © con año, en `src/components/organisms/SiteFooter.tsx`
+- [ ] T083 [P] Escribir prueba e2e del encabezado fijo en 360, 768 y 1280px: queda visible tras el scroll (en teléfono sin el nombre); al tabular, ningún control enfocado queda bajo él; al ir a una sección su título queda libre; al final de la página el menú marca Contacto; con movimiento reducido el salto es instantáneo (FR-028, FR-029, FR-031), en `tests/e2e/header.spec.ts`
 - [ ] T042 Crear el template `SiteTemplate` (SkipLink, SiteHeader, `<main id="contenido">`, SiteFooter) en `src/components/templates/SiteTemplate.tsx`
 
 **Checkpoint**: estructura global aprobada y probada.
@@ -112,22 +113,22 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 ### Tests for User Story 1
 
-- [ ] T043 [P] [US1] Escribir prueba e2e: desde `/trabajos/` se llega a cada caso y se vuelve; cada caso muestra resumen y las cuatro secciones en orden, en `tests/e2e/cases.spec.ts`
-- [ ] T044 [P] [US1] Escribir prueba e2e con axe sobre `/trabajos/` y cada caso en `tests/e2e/a11y-cases.spec.ts`
+- [ ] T043 [P] [US1] Escribir prueba e2e: desde la sección `/#trabajos` se llega a cada caso y se vuelve a ella; cada caso muestra resumen y las cuatro secciones en orden, en `tests/e2e/cases.spec.ts`
+- [ ] T044 [P] [US1] Escribir prueba e2e con axe sobre `/` (todas sus secciones) y cada caso en `tests/e2e/a11y-cases.spec.ts`
 - [ ] T045 [P] [US1] Crear contenido de prueba publicado (3 casos y meta) en `tests/fixtures/content/`
 
 ### Implementation for User Story 1
 
-- [ ] T046 [US1] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y del índice de Trabajos; obtener aprobación explícita y borrar el prototipo
+- [ ] T046 [US1] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/casos.tsx` un prototipo con contenido de prueba de la página de caso (resumen, cuatro secciones, apoyo visual) y de la sección Trabajos dentro de `/`; obtener aprobación explícita y borrar el prototipo
 - [ ] T047 [P] [US1] Crear los átomos `Heading` (niveles 1 a 4 con la escala) y `Text` en `src/components/atoms/Heading.tsx` y `Text.tsx`
 - [ ] T048 [P] [US1] Crear el átomo `Figure` con alt obligatorio y pie de imagen en `src/components/atoms/Figure.tsx`
 - [ ] T049 [P] [US1] Crear la molécula `CaseSummary` (producto, rol, equipo, duración, resultado clave) como lista de definiciones en `src/components/molecules/CaseSummary.tsx`
 - [ ] T050 [P] [US1] Crear la molécula `CaseCard` (título, rol, tipo de producto, línea de resultado, enlace con texto descriptivo) en `src/components/molecules/CaseCard.tsx`
 - [ ] T051 [US1] Crear el organismo `CaseBody` que renderiza Markdown con `react-markdown` mapeado a `Heading`, `Text`, `TextLink` y `Figure` en `src/components/organisms/CaseBody.tsx`
 - [ ] T052 [US1] Crear el organismo `CaseIndex` con la lista de `CaseCard` y el acceso al caso meta en `src/components/organisms/CaseIndex.tsx`
-- [ ] T053 [US1] Crear el template `CaseTemplate` (CaseSummary, CaseBody, regreso a Trabajos) en `src/components/templates/CaseTemplate.tsx`
-- [ ] T054 [US1] Crear las pages `WorksPage` y `CasePage` en `src/components/pages/WorksPage.tsx` y `CasePage.tsx`
-- [ ] T055 [US1] Conectar `/trabajos/`, `/trabajos/:slug/` y `/trabajos/este-portafolio/` con loader y meta en `src/routes/`
+- [ ] T053 [US1] Crear el template `CaseTemplate` (CaseSummary, CaseBody, regreso a `/#trabajos`) en `src/components/templates/CaseTemplate.tsx`
+- [ ] T054 [US1] Crear la page `CasePage` en `src/components/pages/CasePage.tsx`
+- [ ] T055 [US1] Conectar `/trabajos/:slug/` y `/trabajos/este-portafolio/` con loader y meta en `src/routes/`
 - [ ] T056 [US1] Ejecutar T043 y T044 y confirmar que pasan
 
 **Checkpoint**: US1 funciona y se valida sola.
@@ -166,17 +167,19 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 - [ ] T063 [P] [US3] Escribir prueba e2e de SEO: título, descripción, canónica, un solo `h1` y `lang="es"` por ruta; el sitemap coincide con las rutas publicadas, en `tests/e2e/seo.spec.ts`
 - [ ] T064 [P] [US3] Escribir prueba e2e: desde cualquier ruta, Contacto queda a una acción, y muestra correo, perfil profesional y CV (el enlace al CV se oculta si falta el archivo), en `tests/e2e/contact.spec.ts`
-- [ ] T065 [P] [US3] Escribir prueba e2e con axe sobre `/`, `/sobre-mi/`, `/contacto/` y la 404 en `tests/e2e/a11y-pages.spec.ts`
+- [ ] T065 [P] [US3] Escribir prueba e2e con axe sobre `/`, las redirecciones y la 404 en `tests/e2e/a11y-pages.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T066 [US3] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/` un prototipo con contenido de prueba de Inicio, Sobre mí y proceso, Contacto y 404; obtener aprobación explícita de cada uno y borrar los prototipos
+- [ ] T066 [US3] ⛔ APROBACIÓN: presentar en `src/routes/prototipos/` un prototipo con contenido de prueba de las secciones Inicio, Sobre mí y proceso y Contacto de `/`, y de la 404; obtener aprobación explícita de cada uno y borrar los prototipos
 - [ ] T067 [P] [US3] Crear la molécula `ContactList` (correo, perfil profesional, CV) en `src/components/molecules/ContactList.tsx`
 - [ ] T068 [P] [US3] Crear el organismo `ProfileIntro` (nombre, rol, propuesta de valor, llamado a contacto) en `src/components/organisms/ProfileIntro.tsx`
 - [ ] T069 [P] [US3] Crear el organismo `HomeCases` con los 3 casos de producto ordenados por `order` en `src/components/organisms/HomeCases.tsx`
-- [ ] T070 [US3] Crear el template `ContentTemplate` para páginas de módulo en `src/components/templates/ContentTemplate.tsx`
-- [ ] T071 [US3] Crear las pages `HomePage`, `AboutPage`, `ContactPage` y `NotFoundPage` en `src/components/pages/`
-- [ ] T072 [US3] Conectar `/`, `/sobre-mi/`, `/contacto/` y la 404 con loader y meta en `src/routes/`
+- [ ] T070 [US3] Crear el template `ContentTemplate` para las secciones de `/` en `src/components/templates/ContentTemplate.tsx`
+- [ ] T071 [US3] Crear las pages `HomePage` (compone las secciones Inicio, Trabajos, Sobre mí y Contacto) y `NotFoundPage` en `src/components/pages/`
+- [ ] T072 [US3] Conectar `/` y la 404 con loader y meta en `src/routes/`
+- [ ] T081 [US3] Reemplazar las rutas `/trabajos/`, `/sobre-mi/` y `/contacto/` por redirecciones prerenderizadas a `/#trabajos`, `/#sobre-mi` y `/#contacto` (canónica `/`, `noindex`, fuera del sitemap; FR-032), y escribir su prueba e2e en `tests/e2e/redirects.spec.ts`
+- [ ] T082 [US3] Adaptar lo ya construido al modelo de página única: `validatePage` exige `seo` solo en `inicio.md`; `loadPage` y los módulos de ruta actuales de `trabajos`, `sobre-mi` y `contacto` pasan a ser redirecciones; `src/content/pages/` y su prueba en `tests/unit/content/schema.test.ts` se actualizan
 - [ ] T073 [US3] Encadenar `scripts/generate-sitemap.ts` al final de `npm run build` en `package.json`
 - [ ] T074 [US3] Ejecutar T063 a T065 y confirmar que pasan
 

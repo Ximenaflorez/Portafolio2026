@@ -1,1 +1,13 @@
+@use "sass:map";
+@use "spacing";
+@use "interaction";
+
 $content-max: 64rem;
+$border-width: 1px;
+
+// Encabezado fijo: una fila con padding vertical de 8px, un control de 44px y el borde inferior.
+$header-height: interaction.$target-min + 2 * map.get(spacing.$spaces, "1") + $border-width;
+
+// En teléfono el nombre se desplaza y solo queda fija la fila del menú: se oculta
+// su padding superior más el control de 44px.
+$header-collapse: -(interaction.$target-min + map.get(spacing.$spaces, "1"));
