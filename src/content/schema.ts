@@ -142,7 +142,10 @@ export function validateCase(raw: string): Validation<CaseStudy> {
       data: {
         ...draft.data,
         title: String(data.title ?? draft.data.slug),
-        seo: { title: String(data.seo?.title ?? ""), description: String(data.seo?.description ?? "") },
+        seo: {
+          title: String(data.seo?.title ?? ""),
+          description: String(data.seo?.description ?? ""),
+        },
         summary: (data.summary ?? {}) as CaseSummary,
         body: content,
       },

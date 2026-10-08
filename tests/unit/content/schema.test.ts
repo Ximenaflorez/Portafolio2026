@@ -52,7 +52,7 @@ describe("validateCase", () => {
 
   it("acepta un borrador incompleto", () => {
     const draft = caseFile(
-      "slug: caso-01\ntype: product\nstatus: draft\norder: 1\ntitle: \"[COMPLETAR: Nombre]\"",
+      'slug: caso-01\ntype: product\nstatus: draft\norder: 1\ntitle: "[COMPLETAR: Nombre]"',
       "## 1. Problema inicial\n\n[COMPLETAR]",
     );
     expect(validateCase(draft).errors).toEqual([]);
@@ -84,9 +84,7 @@ describe("validateCase", () => {
   });
 
   it("rechaza una descripción SEO de menos de 50 caracteres", () => {
-    const raw = caseFile(
-      publishedProduct.replace(/description: .*/, "description: Muy corta"),
-    );
+    const raw = caseFile(publishedProduct.replace(/description: .*/, "description: Muy corta"));
     expect(validateCase(raw).errors.join()).toMatch(/seo\.description/);
   });
 });

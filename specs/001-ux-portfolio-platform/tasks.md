@@ -91,17 +91,17 @@ description: "Lista de tareas de la plataforma de portafolio UX/UI"
 
 **Goal**: Encabezado, navegación, enlace para saltar al contenido y pie, presentes en todas las rutas (FR-017)
 
-- [ ] T035 ⛔ APROBACIÓN: presentar en `src/routes/prototipos/globales.tsx` un prototipo con contenido de prueba de la página única con secciones: los botones primario y secundario con sus estados, el encabezado fijo (en teléfono solo la fila del menú), la navegación con la sección actual marcada, el enlace para saltar al contenido y el pie; obtener aprobación explícita y borrar el prototipo
-- [ ] T036 [P] Escribir prueba axe y de teclado para `SkipLink`, `NavLink` y `TextLink` en `tests/unit/components/atoms.test.tsx`
-- [ ] T037 [P] Crear el átomo `SkipLink` hacia `#contenido` en `src/components/atoms/SkipLink.tsx`
-- [ ] T038 [P] Crear el átomo `TextLink` con estados de puntero, presión y foco desde tokens en `src/components/atoms/TextLink.tsx`
-- [ ] T039 [P] Crear el átomo `NavLink` (enlace con ancla, `aria-current="location"` y subrayado de `--indicator-width`) en `src/components/atoms/NavLink.tsx`
-- [ ] T084 [P] Escribir prueba axe, de teclado y de estados para el átomo `Button` (variantes `primary` y `secondary`, como enlace o botón, mismo tamaño, estados de puntero, presión y foco; FR-033) en `tests/unit/components/button.test.tsx`
-- [ ] T085 [P] Crear el átomo `Button` con las variantes `primary` y `secondary` desde tokens, según `contracts/tokens.md`, en `src/components/atoms/Button.tsx`
-- [ ] T040 Crear el organismo `SiteHeader` fijo (en teléfono solo la fila del menú, con `top-header-collapse sm:top-0`) con la navegación Inicio, Trabajos, Sobre mí y Contacto, y el hook que marca la sección visible, incluida la última al llegar al final y salto instantáneo con movimiento reducido, en `src/components/organisms/SiteHeader.tsx`
-- [ ] T041 Crear el organismo `SiteFooter` con correo, LinkedIn, CV, navegación repetida, crédito con enlace al caso meta y © con año, en `src/components/organisms/SiteFooter.tsx`
-- [ ] T083 [P] Escribir prueba e2e del encabezado fijo en 360, 768 y 1280px: queda visible tras el scroll (en teléfono sin el nombre); al tabular, ningún control enfocado queda bajo él; al ir a una sección su título queda libre; al final de la página el menú marca Contacto; con movimiento reducido el salto es instantáneo (FR-028, FR-029, FR-031), en `tests/e2e/header.spec.ts`
-- [ ] T042 Crear el template `SiteTemplate` (SkipLink, SiteHeader, `<main id="contenido">`, SiteFooter) en `src/components/templates/SiteTemplate.tsx`
+- [X] T035 ⛔ APROBADO el 2026-10-08: presentar en `src/routes/prototipos/globales.tsx` un prototipo con contenido de prueba de la página única con secciones: los botones primario y secundario con sus estados, el encabezado fijo (en teléfono solo la fila del menú), la navegación con la sección actual marcada, el enlace para saltar al contenido y el pie; obtener aprobación explícita y borrar el prototipo
+- [X] T036 [P] Escribir prueba axe y de teclado para `SkipLink`, `NavLink` y `TextLink` en `tests/unit/components/atoms.test.tsx`
+- [X] T037 [P] Crear el átomo `SkipLink` hacia `#contenido` en `src/components/atoms/SkipLink.tsx`
+- [X] T038 [P] Crear el átomo `TextLink` con estados de puntero, presión y foco desde tokens en `src/components/atoms/TextLink.tsx`
+- [X] T039 [P] Crear el átomo `NavLink` (enlace con ancla, `aria-current="location"` y subrayado de `--indicator-width`) en `src/components/atoms/NavLink.tsx`
+- [X] T084 [P] Escribir prueba axe, de teclado y de estados para el átomo `Button` (variantes `primary` y `secondary`, como enlace o botón, mismo tamaño, estados de puntero, presión y foco; FR-033) en `tests/unit/components/button.test.tsx`
+- [X] T085 [P] Crear el átomo `Button` con las variantes `primary` y `secondary` desde tokens, según `contracts/tokens.md`, en `src/components/atoms/Button.tsx`
+- [X] T040 Crear el organismo `SiteHeader` fijo (en teléfono solo la fila del menú, con `top-header-collapse sm:top-0`) con la navegación Inicio, Trabajos, Sobre mí y Contacto, y el hook que marca la sección visible, incluida la última al llegar al final y salto instantáneo con movimiento reducido, en `src/components/organisms/SiteHeader.tsx`
+- [X] T041 Crear el organismo `SiteFooter` con correo, LinkedIn, CV, navegación repetida, crédito con enlace al caso meta y © con año, en `src/components/organisms/SiteFooter.tsx`
+- [ ] T083 [P] [US3] (depende de T072, cuando exista `/` con secciones; la verificación manual en 360, 768 y 1280px ya pasó con los componentes reales) Escribir prueba e2e del encabezado fijo en 360, 768 y 1280px: queda visible tras el scroll (en teléfono sin el nombre); al tabular, ningún control enfocado queda bajo él; al ir a una sección su título queda libre; al final de la página el menú marca Contacto; con movimiento reducido el salto es instantáneo (FR-028, FR-029, FR-031), en `tests/e2e/header.spec.ts`
+- [X] T042 Crear el template `SiteTemplate` (SkipLink, SiteHeader, `<main id="contenido">`, SiteFooter) en `src/components/templates/SiteTemplate.tsx`
 
 **Checkpoint**: estructura global aprobada y probada.
 

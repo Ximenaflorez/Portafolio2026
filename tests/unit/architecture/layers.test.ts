@@ -10,7 +10,9 @@ const componentsDir = path.resolve(__dirname, "../../../src/components");
 export function importedLayers(source: string): Layer[] {
   const found = new Set<Layer>();
   for (const match of source.matchAll(/from\s+["']([^"']+)["']/g)) {
-    const segment = match[1].match(/(?:components\/|\.\.\/)(atoms|molecules|organisms|templates|pages)\//);
+    const segment = match[1].match(
+      /(?:components\/|\.\.\/)(atoms|molecules|organisms|templates|pages)\//,
+    );
     if (segment) found.add(segment[1] as Layer);
   }
   return [...found];
@@ -38,12 +40,17 @@ describe("detector de capas", () => {
 
   it("rechaza que un organismo importe un template por alias", () => {
     expect(
-      layerViolations("organisms", 'import { SiteTemplate } from "~/components/templates/SiteTemplate";'),
+      layerViolations(
+        "organisms",
+        'import { SiteTemplate } from "~/components/templates/SiteTemplate";',
+      ),
     ).toEqual(["templates"]);
   });
 
   it("acepta que una molécula importe átomos", () => {
-    expect(layerViolations("molecules", 'import { TextLink } from "../atoms/TextLink";')).toEqual([]);
+    expect(layerViolations("molecules", 'import { TextLink } from "../atoms/TextLink";')).toEqual(
+      [],
+    );
   });
 });
 

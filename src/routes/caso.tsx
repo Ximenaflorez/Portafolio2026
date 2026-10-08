@@ -9,9 +9,7 @@ export function loader({ params }: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ loaderData }) =>
-  loaderData
-    ? pageMeta({ ...loaderData.case.seo, path: `/trabajos/${loaderData.case.slug}` })
-    : [];
+  loaderData ? pageMeta({ ...loaderData.case.seo, path: `/trabajos/${loaderData.case.slug}` }) : [];
 
 export default function Caso() {
   return null;
