@@ -1,6 +1,6 @@
 import { Button } from "~/components/atoms/Button";
 import { TextLink } from "~/components/atoms/TextLink";
-import { Anexar, perfil, PlantillaPrototipo, rutaCaso } from "./piezas";
+import { perfil, PlantillaPrototipo, rutaCaso } from "./piezas";
 
 // Prototipo de aprobación T046: página principal (`/`) con las cuatro secciones, como el
 // portafolio anterior. En desarrollo sustituye a la página de Inicio; se borra al aprobarse.
@@ -79,11 +79,6 @@ export default function PrototipoPortada() {
             </li>
           ))}
         </ul>
-        <Anexar>
-          por cada caso: título, tipo de producto, tu rol y una línea de resultado (máximo 120
-          caracteres). El orden lo defines tú. En el prototipo, los tres enlaces abren la misma
-          página de caso de ejemplo.
-        </Anexar>
 
         <div className="mt-4 border border-border-strong bg-surface p-4">
           <p className="text-sm text-text-muted">El caso de este portafolio</p>
