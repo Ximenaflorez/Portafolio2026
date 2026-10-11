@@ -276,6 +276,33 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
       within(sobreMiSeccion).getByRole("heading", { level: 3, name: "Métodos" }),
     ).toBeInTheDocument();
     expect(within(sobreMiSeccion).getByText("Texto de métodos.")).toBeInTheDocument();
+    expect(
+      within(sobreMiSeccion).queryByRole("heading", { name: "Trayectoria" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("Sobre mí incluye Trayectoria cuando el perfil tiene entradas", () => {
+    enRuta(
+      <HomePage
+        profile={{
+          ...perfil,
+          career: {
+            experience: [{ title: "UX Lead B2B", organization: "Magneto 365", from: "2025-09" }],
+          },
+        }}
+        cvAvailable
+        cases={casos}
+        meta={meta}
+        about={sobreMi}
+        contactCall="Escríbeme para colaborar."
+      />,
+    );
+
+    const sobreMiSeccion = document.getElementById("sobre-mi")!;
+    expect(
+      within(sobreMiSeccion).getByRole("heading", { name: "Trayectoria" }),
+    ).toBeInTheDocument();
+    expect(within(sobreMiSeccion).getByText("Magneto 365")).toBeInTheDocument();
   });
 
   it("Contacto tiene el llamado y solo enlaces: correo, LinkedIn y CV", () => {

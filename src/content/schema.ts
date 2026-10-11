@@ -52,6 +52,103 @@ const draftCaseSchema = z.looseObject({
   order: z.number().int().min(1),
 });
 
+const careerDate = z.preprocess(
+  (value) => {
+    if (value instanceof Date) {
+      const year = value.getUTCFullYear();
+      const month = String(value.getUTCMonth() + 1).padStart(2, "0");
+      return `${year}-${month}`;
+    }
+    if (typeof value === "number") return String(value);
+    return value;
+  },
+  z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, "fecha inválida"),
+);
+
+function dateRank(value: string): number {
+  const [year, month] = value.split("-");
+  return Number(year) * 12 + Number(month ?? "01") - 1;
+}
+
+const toolsSchema = z
+  .array(text)
+  .min(1)
+  .refine((tools) => new Set(tools).size === tools.length, "herramientas repetidas");
+
+const experienceEntry = z.object({
+  title: text,
+  organization: text,
+  from: careerDate,
+  to: careerDate.optional(),
+  summary: text.optional(),
+  tools: toolsSchema.optional(),
+});
+
+const educationEntry = z.object({
+  title: text,
+  organization: text,
+  from: careerDate,
+});
+
+const certificateEntry = educationEntry.extend({
+  credentialUrl: z.url().optional(),
+});
+
+const careerSchema = z
+  .object({
+    experience: z.array(experienceEntry).optional(),
+    education: z.array(educationEntry).optional(),
+    certificates: z.array(certificateEntry).optional(),
+  })
+  .superRefine((career, ctx) => {
+    career.experience?.forEach((entry, index) => {
+      if (entry.to && dateRank(String(entry.to)) < dateRank(String(entry.from))) {
+        ctx.addIssue({
+          code: "custom",
+          message: "to anterior al inicio",
+          path: ["experience", index, "to"],
+        });
+      }
+    });
+    for (const kind of ["experience", "education", "certificates"] as const) {
+      const entries = career[kind];
+      if (!entries) continue;
+      for (let index = 1; index < entries.length; index++) {
+        if (dateRank(entries[index].from) > dateRank(entries[index - 1].from)) {
+          ctx.addIssue({
+            code: "custom",
+            message: "orden no descendente",
+            path: [kind, index],
+          });
+          break;
+        }
+      }
+    }
+  });
+
+export type Career = {
+  experience?: CareerExperience[];
+  education?: CareerEducation[];
+  certificates?: CareerCertificate[];
+};
+
+export type CareerExperience = {
+  title: string;
+  organization: string;
+  from: string;
+  to?: string;
+  summary?: string;
+  tools?: string[];
+};
+
+export type CareerEducation = {
+  title: string;
+  organization: string;
+  from: string;
+};
+
+export type CareerCertificate = CareerEducation & { credentialUrl?: string };
+
 const profileSchema = z.object({
   name: text,
   role: text,
@@ -59,6 +156,7 @@ const profileSchema = z.object({
   email: z.email(),
   linkedin: z.url(),
   cv: text,
+  career: careerSchema.optional(),
 });
 
 const pageSchema = z.object({ seo: seoSchema });
@@ -202,14 +300,58 @@ export function validateCase(raw: string, language: Language = "es"): Validation
   return { data: { ...parsed.data, body: content }, errors: [] };
 }
 
+function careerFieldErrors(career: unknown): string[] {
+  if (career === undefined) return [];
+  const parsed = careerSchema.safeParse(career);
+  return parsed.success ? [] : zodErrors(parsed.error);
+}
+
 export function validateProfile(raw: string, { strict }: { strict: boolean }): Validation<Profile> {
   const { data } = matter(raw);
-  if (!strict) return { data: data as Profile, errors: [] };
+  const errors = careerFieldErrors(data.career);
+  if (!strict) return errors.length > 0 ? { errors } : { data: data as Profile, errors: [] };
 
   const parsed = profileSchema.safeParse(data);
-  const errors = parsed.success ? [] : zodErrors(parsed.error);
+  if (!parsed.success) errors.push(...zodErrors(parsed.error));
   errors.push(...contentErrors(raw));
   return errors.length > 0 ? { errors } : { data: parsed.data, errors };
+}
+
+/** Misma cantidad de entradas, mismas fechas, mismas herramientas y mismo enlace a la credencial. */
+export function careerParityErrors(es?: Career, en?: Career): string[] {
+  const errors: string[] = [];
+  for (const group of ["experience", "education", "certificates"] as const) {
+    const spanish = es?.[group] ?? [];
+    const english = en?.[group] ?? [];
+    if (spanish.length !== english.length) {
+      errors.push(`career.${group}: número de entradas distinto`);
+      continue;
+    }
+    spanish.forEach((left, index) => {
+      const right = english[index];
+      if (left.from !== right.from) {
+        errors.push(`career.${group}.${index}: from distinto`);
+      }
+      if ("to" in left || "to" in right) {
+        const leftTo = "to" in left ? left.to : undefined;
+        const rightTo = "to" in right ? right.to : undefined;
+        if (leftTo !== rightTo) errors.push(`career.${group}.${index}: to distinto`);
+      }
+      if (group === "certificates") {
+        const leftUrl = (left as CareerCertificate).credentialUrl;
+        const rightUrl = (right as CareerCertificate).credentialUrl;
+        if (leftUrl !== rightUrl) errors.push(`career.${group}.${index}: credentialUrl distinto`);
+      }
+      if (group === "experience") {
+        const leftTools = (left as CareerExperience).tools ?? [];
+        const rightTools = (right as CareerExperience).tools ?? [];
+        if (leftTools.join("\0") !== rightTools.join("\0")) {
+          errors.push(`career.${group}.${index}: tools distinto`);
+        }
+      }
+    });
+  }
+  return errors;
 }
 
 export function validatePage(

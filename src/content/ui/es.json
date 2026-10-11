@@ -31,6 +31,13 @@
   "case.summary.team": "Equipo",
   "case.summary.duration": "Duración",
   "case.summary.keyResult": "Resultado clave",
+  "career.title": "Trayectoria",
+  "career.experience": "Experiencia",
+  "career.education": "Educación",
+  "career.certificates": "Certificados",
+  "career.present": "Actualidad",
+  "career.tools": "Herramientas: {title}",
+  "career.credential": "Ver credencial: {title}",
   "notFound.title": "Página no encontrada",
   "notFound.back": "Volver al inicio"
 }

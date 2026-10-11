@@ -18,6 +18,7 @@ import {
   uiParityErrors,
   validateCase,
   validatePage,
+  careerParityErrors,
   validateProfile,
   type CaseStudy,
   type ModulePage,
@@ -127,6 +128,7 @@ export function assertContentParity(): void {
       existsSync(path.join(languageDir("en"), "profile.md")) ? ["profile.md"] : [],
     ),
     ...uiParityErrors(uiTexts.es, uiTexts.en),
+    ...careerParityErrors(loadProfile("es").career, loadProfile("en").career),
   ];
   if (errors.length > 0) fail("es/ y en/", errors);
 }

@@ -31,6 +31,13 @@
   "case.summary.team": "Team",
   "case.summary.duration": "Duration",
   "case.summary.keyResult": "Key result",
+  "career.title": "Career",
+  "career.experience": "Experience",
+  "career.education": "Education",
+  "career.certificates": "Licenses & certifications",
+  "career.present": "Present",
+  "career.tools": "Tools: {title}",
+  "career.credential": "View credential: {title}",
   "notFound.title": "Page not found",
   "notFound.back": "Back to home"
 }

@@ -5,6 +5,7 @@ import { useUi } from "~/lib/use-ui";
 import { Text } from "../atoms/Text";
 import { ContactList } from "../molecules/ContactList";
 import { CaseIndex } from "../organisms/CaseIndex";
+import { Career } from "../organisms/Career";
 import { ProfileIntro } from "../organisms/ProfileIntro";
 import { ProseBody } from "../organisms/ProseBody";
 import { ContentTemplate } from "../templates/ContentTemplate";
@@ -77,7 +78,16 @@ export function HomePage({
         }
         sections={[
           { id: "trabajos", title: t("home.trabajos"), children: <CaseIndex cases={cards} /> },
-          { id: "sobre-mi", title: t("home.sobre-mi"), children: <ProseBody markdown={about} /> },
+          {
+            id: "sobre-mi",
+            title: t("home.sobre-mi"),
+            children: (
+              <>
+                <ProseBody markdown={about} />
+                <Career career={profile.career} />
+              </>
+            ),
+          },
           {
             id: "contacto",
             title: t("home.contacto"),
