@@ -15,6 +15,7 @@ summary:
   keyResult: Between 20% and 30% less abandonment
   indexLine: Faster decisions with data.
   productType: Analytics
+  sector: ATS
 ---
 
 ## 1. Initial problem

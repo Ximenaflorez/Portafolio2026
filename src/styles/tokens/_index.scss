@@ -46,14 +46,18 @@
   --content-max: #{$content-max};
   --prose-max: #{$prose-max};
   --border-width: #{$border-width};
-  --header-height: #{$header-height-phone};
+  --photo-border-width: #{$photo-border-width};
+  --photo-radius: #{$photo-radius};
+  --chip-radius: #{$chip-radius};
+  --state-hover: #{$state-hover};
+  --state-press: #{$state-press};
+  --button-radius: #{$button-radius};
+  --card-radius: #{$card-radius};
+  --header-alpha: #{$header-alpha};
+  --header-blur: #{$header-blur};
+  --header-saturate: #{$header-saturate};
+  --header-height: #{$header-height};
   --header-collapse: #{$header-collapse};
-}
-
-@media (min-width: $breakpoint-header) {
-  :root {
-    --header-height: #{$header-height};
-  }
 }
 
 // Tema oscuro cuando la persona no eligió: sigue al sistema.

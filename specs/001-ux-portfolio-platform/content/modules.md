@@ -20,21 +20,22 @@ cada pantalla se aprueba antes de construirla.
 
 ## Trabajos (FR-019)
 
-Cada entrada sale del resumen de su caso: nombre, rol, tipo de producto y línea de resultado.
+Cada entrada es una tarjeta con imagen y sale del resumen de su caso: nombre, rol, rubro (el chip)
+y línea de resultado. El caso de este portafolio es el cuarto proyecto. Las imágenes llegan después;
+mientras tanto la tarjeta usa una genérica.
 
-| Caso | Archivo | Tipo de producto |
+| Caso | Archivo | Rubro (Fintech, ATS, Research, Design system…) |
 |---|---|---|
 | [COMPLETAR] | `case-01.md` | [COMPLETAR] |
 | [COMPLETAR] | `case-02.md` | [COMPLETAR] |
 | [COMPLETAR] | `case-03.md` | [COMPLETAR] |
-| Cómo construí este portafolio | `case-meta.md` | Caso meta |
+| Cómo construí este portafolio | `case-meta.md` | [COMPLETAR] |
 
 ## Sobre mí y proceso (FR-025)
 
 - **Forma de trabajar:** [COMPLETAR]
 - **Métodos que domino:** [COMPLETAR: p. ej. investigación, arquitectura de información, sistemas de diseño, analítica]
-- **Problemas que busco:** [COMPLETAR: p. ej. plataformas B2B SaaS de alto impacto operativo]
-- **Herramientas:** [COMPLETAR]
+- **Herramientas:** van en cada experiencia de la trayectoria (FR-044), no aquí.
 
 ## Contacto (FR-005)
 

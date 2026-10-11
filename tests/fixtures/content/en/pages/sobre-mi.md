@@ -1,7 +1,7 @@
 ---
 seo:
   title: Test about
-  description: "Test about section: how I work, which methods I use and which problems I look for."
+  description: "Test about section: how I work and which methods I use to take a problem to a solution."
 ---
 
 ## Way of working
@@ -9,13 +9,5 @@ seo:
 Texto de prueba.
 
 ## Methods
-
-Texto de prueba.
-
-## Problems I look for
-
-Texto de prueba.
-
-## Tools
 
 Texto de prueba.

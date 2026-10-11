@@ -1,3 +1,5 @@
+import { NotFoundPage } from "~/components/pages/NotFoundPage";
+
 // Un solo archivo de 404 para los dos idiomas: el título lleva ambos.
 export function meta() {
   return [
@@ -7,5 +9,5 @@ export function meta() {
 }
 
 export default function NoEncontrada() {
-  return null;
+  return <NotFoundPage />;
 }

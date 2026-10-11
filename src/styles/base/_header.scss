@@ -1,0 +1,34 @@
+// Encabezado fijo con cristal (FR-028): el fondo es el color de la página con la opacidad del
+// token y desenfoca lo que pasa por detrás. Con cualquiera de las condiciones de abajo vuelve a
+// un fondo sólido, porque el contraste ya no depende de lo que haya detrás (FR-037).
+.header-glass {
+  background-color: rgb(var(--color-background) / var(--header-alpha));
+  backdrop-filter: blur(var(--header-blur)) saturate(var(--header-saturate));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .header-glass {
+    background-color: rgb(var(--color-background));
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .header-glass {
+    background-color: rgb(var(--color-background));
+    backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .header-glass {
+    background-color: rgb(var(--color-background));
+    backdrop-filter: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-glass {
+    background-color: rgb(var(--color-background));
+  }
+}

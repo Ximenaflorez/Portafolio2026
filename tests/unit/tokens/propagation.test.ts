@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { compileTokens, compileUtilities, readThemeColors } from "./helpers";
+import { compileTokens, compileUtilities, readCssVariables, readThemeColors } from "./helpers";
 
 describe("propagación de tokens (SC-006)", () => {
   it("cambiar --color-primary en el origen cambia el valor que resuelven sus utilidades", () => {
@@ -40,6 +40,33 @@ describe("propagación de tokens (SC-006)", () => {
     );
     expect(css).toMatch(/\.border-control\s*{[^}]*border-width:\s*var\(--control-border-width\)/);
     expect(css).toMatch(/\.max-w-prose\s*{[^}]*max-width:\s*var\(--prose-max\)/);
+  });
+
+  it("el borde de la foto de perfil es un token de 4px (el espacio 0.5) y Tailwind lo lee", async () => {
+    const tokens = readCssVariables(compileTokens());
+    const css = await compileUtilities(["border-photo"]);
+
+    expect(tokens.get("--photo-border-width")).toBe("4px");
+    expect(tokens.get("--photo-border-width")).toBe(tokens.get("--space-0-5"));
+    expect(css).toMatch(/\.border-photo\s*{[^}]*border-width:\s*var\(--photo-border-width\)/);
+  });
+
+  it("la esquina redondeada de la foto es un token de 16px (el espacio 2) y Tailwind lo lee", async () => {
+    const tokens = readCssVariables(compileTokens());
+    const css = await compileUtilities(["rounded-photo"]);
+
+    expect(tokens.get("--photo-radius")).toBe("16px");
+    expect(tokens.get("--photo-radius")).toBe(tokens.get("--space-2"));
+    expect(css).toMatch(/\.rounded-photo\s*{[^}]*border-radius:\s*var\(--photo-radius\)/);
+  });
+
+  it("la esquina de los chips es un token de 16px (el espacio 2) y Tailwind lo lee", async () => {
+    const tokens = readCssVariables(compileTokens());
+    const css = await compileUtilities(["rounded-chip"]);
+
+    expect(tokens.get("--chip-radius")).toBe("16px");
+    expect(tokens.get("--chip-radius")).toBe(tokens.get("--space-2"));
+    expect(css).toMatch(/\.rounded-chip\s*{[^}]*border-radius:\s*var\(--chip-radius\)/);
   });
 
   it("Tailwind no ofrece los valores por defecto de color, espaciado ni duración", async () => {

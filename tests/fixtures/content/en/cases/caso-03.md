@@ -15,6 +15,7 @@ summary:
   keyResult: Between 20% and 30% less abandonment
   indexLine: Faster account activation.
   productType: B2B SaaS
+  sector: Research
 ---
 
 ## 1. Initial problem

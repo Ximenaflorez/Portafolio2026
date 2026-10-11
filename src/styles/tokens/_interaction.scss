@@ -4,3 +4,8 @@ $focus-ring-width: 2px;
 $focus-ring-offset: 2px;
 $indicator-width: 3px;
 $control-border-width: 2px;
+
+// Capa de estado de los botones (aprobada el 2026-10-09): una capa del color de la etiqueta
+// que se superpone al relleno, en lugar de cambiar el color del botón.
+$state-hover: 0.08;
+$state-press: 0.16;

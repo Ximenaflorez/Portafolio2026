@@ -141,8 +141,10 @@ describe("CaseSummary (FR-020, FR-035)", () => {
 
     expect(screen.getByRole("heading", { level: 2, name: labels.title })).toBeInTheDocument();
     const dl = container.querySelector("dl")!;
-    expect(dl.className).toContain("border");
-    expect(dl.className).toContain("sm:grid-cols-2");
+    const clases = dl.className.split(/\s+/);
+    for (const esperada of ["border", "rounded-card", "bg-surface-tonal", "sm:grid-cols-2"]) {
+      expect(clases).toContain(esperada);
+    }
     const terms = [...dl.querySelectorAll("dt")].map((dt) => dt.textContent);
     expect(terms).toEqual(["Producto", "Mi rol", "Equipo", "Duración", "Resultado clave"]);
     expect(within(dl).getByText(summary.keyResult)).toBeInTheDocument();
@@ -194,29 +196,110 @@ describe("CaseCard (FR-019)", () => {
   const props = {
     to: "/trabajos/despacho",
     title: "Rediseño del flujo de despacho",
-    eyebrow: "B2B SaaS",
+    sector: "Fintech",
+    sectorLabel: "Rubro",
     role: "Product Designer líder",
     description: "Entre 20% y 30% menos abandono.",
     readLabel: "Leer el caso",
   };
 
-  it("muestra tipo, título, rol y resultado, con un enlace de texto descriptivo", () => {
+  it("muestra rubro, título, rol y resultado, con un enlace de texto descriptivo", () => {
     enRuta(<CaseCard {...props} />);
 
     expect(screen.getByRole("heading", { level: 3, name: props.title })).toBeInTheDocument();
-    expect(screen.getByText("B2B SaaS")).toBeInTheDocument();
+    expect(screen.getByText("Fintech")).toBeInTheDocument();
     expect(screen.getByText(props.role)).toBeInTheDocument();
     expect(screen.getByText(props.description)).toBeInTheDocument();
     const link = screen.getByRole("link", { name: `Leer el caso: ${props.title}` });
     expect(link).toHaveAttribute("href", "/trabajos/despacho");
   });
 
-  it("la variante destacada usa un borde más marcado y no muestra rol", () => {
+  it("es una tarjeta tonal: fondo con tinte, esquinas de 16px y borde de 1px", () => {
     const { container } = enRuta(
-      <CaseCard {...props} role={undefined} eyebrow="El caso de este portafolio" featured />,
+      <ul>
+        <CaseCard {...props} />
+      </ul>,
     );
+    const clases = container.querySelector("li")!.className.split(/\s+/);
+
+    for (const esperada of ["bg-surface-tonal", "rounded-card", "border", "border-border"]) {
+      expect(clases).toContain(esperada);
+    }
+    expect(clases).not.toContain("bg-surface");
+  });
+
+  it("recorta la imagen con la esquina de la tarjeta y la pone primero, a todo el ancho", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} />
+      </ul>,
+    );
+    const tarjeta = container.querySelector("li")!;
+    const imagen = tarjeta.firstElementChild!;
+
+    expect(tarjeta.className.split(/\s+/)).toContain("overflow-hidden");
+    expect(tarjeta.className.split(/\s+/)).not.toContain("p-4");
+    expect(imagen.tagName).toBe("IMG");
+    for (const esperada of ["aspect-video", "w-full", "object-cover"]) {
+      expect(imagen.className.split(/\s+/)).toContain(esperada);
+    }
+  });
+
+  it("usa una imagen genérica y decorativa hasta que el caso tenga la suya", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} />
+      </ul>,
+    );
+    const imagen = container.querySelector("img")!;
+
+    expect(imagen).toHaveAttribute("src", "/casos/generica.svg");
+    expect(imagen).toHaveAttribute("alt", "");
+  });
+
+  it("acepta la imagen propia del caso con su texto alternativo", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} image={{ src: "/casos/despacho.jpg", alt: "Pantalla de despacho" }} />
+      </ul>,
+    );
+    const imagen = container.querySelector("img")!;
+
+    expect(imagen).toHaveAttribute("src", "/casos/despacho.jpg");
+    expect(imagen).toHaveAttribute("alt", "Pantalla de despacho");
+  });
+
+  it("el rubro es un chip de solo lectura con su etiqueta para tecnología de apoyo", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} />
+      </ul>,
+    );
+    const chip = screen.getByText("Fintech").closest("p")!;
+
+    expect(chip.textContent).toBe("Rubro: Fintech");
+    expect(chip.querySelector(".sr-only")?.textContent).toBe("Rubro: ");
+    for (const esperada of ["rounded-chip", "border", "border-border", "text-sm", "self-start"]) {
+      expect(chip.className.split(/\s+/)).toContain(esperada);
+    }
+    expect(chip.closest("a, button")).toBeNull();
+    expect(container.querySelectorAll("a")).toHaveLength(1);
+  });
+
+  it("el chip va entre la imagen y el título", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} />
+      </ul>,
+    );
+    const texto = container.querySelector("li")!.textContent!;
+
+    expect(texto.indexOf("Fintech")).toBeLessThan(texto.indexOf(props.title));
+  });
+
+  it("no muestra rol si el caso no lo tiene", () => {
+    enRuta(<CaseCard {...props} role={undefined} />);
     expect(screen.queryByText(props.role)).not.toBeInTheDocument();
-    expect(container.firstElementChild!.className).toContain("border-border-strong");
   });
 
   it("no tiene violaciones de accesibilidad", async () => {
@@ -298,40 +381,49 @@ describe("CaseBody", () => {
 });
 
 describe("CaseIndex (FR-019)", () => {
-  const casos = [1, 2, 3].map((n) => ({
-    to: `/trabajos/caso-${n}`,
-    title: `Caso ${n}`,
-    eyebrow: "B2B SaaS",
-    role: "Product Designer",
-    description: `Resultado ${n}.`,
+  const sectores = ["Fintech", "ATS", "Research", "Design system"];
+  // El caso meta es una tarjeta más: el cuarto proyecto.
+  const casos = sectores.map((sector, indice) => ({
+    to: `/trabajos/caso-${indice + 1}`,
+    title: `Caso ${indice + 1}`,
+    sector,
+    sectorLabel: "Rubro",
+    role: indice === 3 ? undefined : "Product Designer",
+    description: `Resultado ${indice + 1}.`,
     readLabel: "Leer el caso",
   }));
-  const destacado = {
-    to: "/trabajos/este-portafolio",
-    title: "Cómo construí este portafolio",
-    eyebrow: "El caso de este portafolio",
-    description: "El sistema de diseño y la accesibilidad.",
-    readLabel: "Leer el caso",
-  };
 
-  it("lista los tres casos en una cuadrícula y el caso meta aparte", () => {
-    const { container } = enRuta(<CaseIndex cases={casos} featured={destacado} />);
+  it("lista los cuatro casos como tarjetas iguales en una cuadrícula de dos columnas", () => {
+    enRuta(<CaseIndex cases={casos} />);
 
     const lista = screen.getByRole("list");
-    expect(within(lista).getAllByRole("listitem")).toHaveLength(3);
-    expect(lista.className).toContain("md:grid-cols-3");
-    expect(within(lista).queryByText(destacado.title)).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 3, name: destacado.title })).toBeInTheDocument();
-    expect(container.textContent).toContain(destacado.description);
+    const tarjetas = within(lista).getAllByRole("listitem");
+    expect(tarjetas).toHaveLength(4);
+    expect(lista.className.split(/\s+/)).toContain("sm:grid-cols-2");
+    for (const tarjeta of tarjetas) {
+      expect(tarjeta.className).toContain("overflow-hidden");
+      expect(tarjeta.querySelector("img")).not.toBeNull();
+    }
   });
 
-  it("sin caso meta publicado solo muestra la lista", () => {
+  it("cada tarjeta lleva el chip de su rubro", () => {
     enRuta(<CaseIndex cases={casos} />);
-    expect(screen.queryByText("El caso de este portafolio")).not.toBeInTheDocument();
+
+    for (const sector of sectores) {
+      expect(screen.getByText(sector).closest("p")!.textContent).toBe(`Rubro: ${sector}`);
+    }
+  });
+
+  it("ya no hay una tarjeta destacada aparte", () => {
+    const { container } = enRuta(<CaseIndex cases={casos} />);
+
+    expect(container.querySelectorAll("ul")).toHaveLength(1);
+    expect(container.querySelectorAll("li")).toHaveLength(4);
+    expect(container.innerHTML).not.toContain("border-border-strong");
   });
 
   it("no tiene violaciones de accesibilidad", async () => {
-    const { container } = enRuta(<CaseIndex cases={casos} featured={destacado} />);
+    const { container } = enRuta(<CaseIndex cases={casos} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

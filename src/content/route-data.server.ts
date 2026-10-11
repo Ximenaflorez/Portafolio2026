@@ -27,6 +27,7 @@ export function homeData(language: Language) {
   return {
     ...siteData(language),
     page: loadPage(language, "inicio"),
+    about: loadPage(language, "sobre-mi").body,
     cases: publishedCases(language, "product"),
     meta: publishedCases(language, "meta")[0] ?? null,
   };

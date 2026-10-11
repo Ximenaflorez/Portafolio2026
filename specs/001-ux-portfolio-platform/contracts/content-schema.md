@@ -49,7 +49,8 @@ Frontmatter:
 | `summary.duration` | string | Obligatorio |
 | `summary.keyResult` | string | Obligatorio |
 | `summary.indexLine` | string | Obligatorio si `type: product`; 1 a 120 caracteres |
-| `summary.productType` | string | Obligatorio si `type: product` |
+| `summary.productType` | string | Obligatorio si `type: product`; se muestra en la página del caso |
+| `summary.sector` | string | Obligatorio en `product` y en `meta`; rubro del caso (p. ej. Fintech, ATS, Research, Design system), el chip de su tarjeta en Trabajos |
 
 Cuerpo: es el cuerpo de `content/case-template.md` sin el bloque de resumen, que pasa al
 frontmatter. MUST contener estos encabezados `##`, en este orden. Se acepta un prefijo numérico
@@ -92,10 +93,33 @@ Reglas de publicación (`status: published`):
 | `linkedin` | URL | Obligatorio |
 | `cv` | ruta o URL | Obligatorio; si falta el archivo, el build avisa y Contacto oculta solo ese enlace |
 
+### Trayectoria (FR-044)
+
+La trayectoria se declara en el mismo `profile.md`, bajo la clave `career`, que agrupa las entradas
+en `experience`, `education` y `certificates`. Cada grupo es opcional y, si no tiene entradas, no se
+muestra. Las entradas van de la más reciente a la más antigua. Los nombres de empresas e
+instituciones son reales: la regla de anonimato de FR-030 no aplica aquí.
+
+| Campo de la entrada | Aplica a | Regla |
+|---|---|---|
+| `title` | todos | Obligatorio: rol, título o nombre del certificado |
+| `organization` | todos | Obligatorio: empresa, institución o emisor (nombre real) |
+| `from` | todos | Obligatorio: `AAAA` o `AAAA-MM` |
+| `to` | `experience` | `AAAA`, `AAAA-MM` o ausente (= actualidad) |
+| `summary` | `experience` | Opcional, una línea de logro |
+| `tools` | `experience` | Opcional, lista de nombres de herramientas (texto corto, sin traducir; se muestran como chips) |
+| `credentialUrl` | `certificates` | Opcional, URL válida |
+
+Las entradas deben existir en `es/` y en `en/` en el mismo orden y con las mismas fechas y
+`credentialUrl`; cambian los textos (`title`, `organization` si se traduce, `summary`). Sin
+`[COMPLETAR` al publicar (FR-026). *(Forma de los campos pendiente de confirmar con la aprobación de
+T066.)*
+
 ## Páginas de módulo (`src/content/<lang>/pages/*.md`)
 
 `inicio.md`, `trabajos.md`, `sobre-mi.md` y `contacto.md` son las cuatro secciones de `/` (cuerpo
 Markdown; `trabajos.md` puede no tener cuerpo). Solo `inicio.md` lleva `seo.title` y
 `seo.description`, que son los de la página `/`; las demás secciones no tienen SEO propio.
-`sobre-mi.md` MUST contener `## Forma de trabajar`, `## Métodos` y `## Problemas que busco`
-(FR-025); en `en/`: `## How I work`, `## Methods` y `## Problems I look for`.
+`sobre-mi.md` MUST contener `## Forma de trabajar` y `## Métodos` (FR-025); en `en/`:
+`## Way of working` y `## Methods`. No lleva `## Problemas que busco` ni `## Herramientas`; las
+herramientas van en la trayectoria (FR-044).

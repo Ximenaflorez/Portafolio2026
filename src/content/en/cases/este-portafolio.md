@@ -12,6 +12,7 @@ summary:
   role: "[COMPLETAR: e.g. design, design system and frontend development]"
   duration: "[COMPLETAR]"
   keyResult: "[COMPLETAR: e.g. audit score and WCAG 2.2 AA compliance]"
+  sector: "[COMPLETAR: field, e.g. Fintech, ATS, Research or Design system]"
 ---
 
 ## 1. Initial problem

@@ -41,6 +41,24 @@ summary:
   keyResult: Entre 20% y 30% menos abandono
   indexLine: Menos abandono en el flujo de despacho
   productType: B2B SaaS
+  sector: Fintech
+`;
+
+const publishedMeta = `
+slug: este-portafolio
+type: meta
+status: published
+order: 1
+title: Cómo construí este portafolio
+seo:
+  title: Cómo construí este portafolio
+  description: Caso de estudio sobre el sistema de diseño y la accesibilidad de este portafolio.
+summary:
+  product: Este portafolio
+  role: Diseño y desarrollo frontend
+  duration: 6 meses
+  keyResult: Cumple WCAG 2.2 AA
+  sector: Design system
 `;
 
 describe("validateCase", () => {
@@ -48,6 +66,22 @@ describe("validateCase", () => {
     const result = validateCase(caseFile(publishedProduct));
     expect(result.errors).toEqual([]);
     expect(result.data?.slug).toBe("logistica-b2b");
+  });
+
+  it("exige el rubro en un caso de producto publicado (chip de la tarjeta)", () => {
+    const raw = caseFile(publishedProduct.replace(/\n\s*sector: .*/, ""));
+    expect(validateCase(raw).errors.join()).toMatch(/summary\.sector/);
+  });
+
+  it("acepta el caso meta como una tarjeta más, con su rubro", () => {
+    const result = validateCase(caseFile(publishedMeta));
+    expect(result.errors).toEqual([]);
+    expect(result.data?.summary.sector).toBe("Design system");
+  });
+
+  it("exige el rubro también en el caso meta publicado", () => {
+    const raw = caseFile(publishedMeta.replace(/\n\s*sector: .*/, ""));
+    expect(validateCase(raw).errors.join()).toMatch(/summary\.sector/);
   });
 
   it("acepta un borrador incompleto", () => {
@@ -119,7 +153,7 @@ describe("validatePage", () => {
   const about = `---
 seo:
   title: Sobre mí y proceso
-  description: Cómo trabajo, qué métodos uso y qué problemas de producto busco resolver.
+  description: Cómo trabajo y qué métodos uso para llevar un problema de producto a una solución.
 ---
 ## Forma de trabajar
 
@@ -128,13 +162,9 @@ Texto.
 ## Métodos
 
 Texto.
-
-## Problemas que busco
-
-Texto.
 `;
 
-  it("acepta Sobre mí con las tres secciones (FR-025)", () => {
+  it("acepta Sobre mí con las dos secciones, sin Problemas que busco ni Herramientas (FR-025)", () => {
     expect(validatePage(about, "sobre-mi", { strict: true }).errors).toEqual([]);
   });
 

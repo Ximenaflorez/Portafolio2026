@@ -18,18 +18,28 @@ cada campo están en [contracts/content-schema.md](./contracts/content-schema.md
 
 ### Profile
 
-- **Campos**: `lang`, `name`, `role`, `valueProposition`, `email`, `linkedin`, `cv`. Hay un perfil
+- **Campos**: `lang`, `name`, `role`, `valueProposition`, `email`, `linkedin`, `cv`, `career`
+  (`experience`, `education`, `certificates`, cada uno una lista de `CareerEntry`). Hay un perfil
   por idioma.
 - **Relaciones**: tiene 3 `CaseStudy` de tipo `product` y 1 de tipo `meta`.
 - **Validación**: correo y URL válidos. El CV es opcional en tiempo de ejecución (caso límite de la
-  spec).
+  spec). Cada `CareerEntry` tiene su par en el otro idioma (FR-042, FR-044).
+
+### CareerEntry
+
+- **Campos**: `group` (`experience` | `education` | `certificates`), `title`, `organization`,
+  `from`, `to` (solo experiencia), `summary` (solo experiencia), `tools` (solo experiencia, lista de
+  nombres), `credentialUrl` (solo certificados).
+- **Relaciones**: pertenece a un `Profile`.
+- **Validación**: fechas `AAAA` o `AAAA-MM`; orden de la más reciente a la más antigua; URL válida;
+  sin `[COMPLETAR` al publicar. Los nombres son reales (FR-044); FR-030 no aplica.
 
 ### ModulePage
 
 - **Campos**: `lang`, `id` (`inicio` | `trabajos` | `sobre-mi` | `contacto`), `seo` (solo
   `inicio`), `body`.
 - **Relaciones**: genera una `PublicPage`.
-- **Validación**: `sobre-mi` contiene forma de trabajar, métodos y problemas que busca (FR-025).
+- **Validación**: `sobre-mi` contiene forma de trabajar y métodos (FR-025).
 
 ### PublicPage (derivada en el build)
 

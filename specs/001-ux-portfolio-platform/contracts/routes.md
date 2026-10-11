@@ -92,9 +92,10 @@ Navegación y página actual (FR-031):
 Encabezado fijo (FR-028, FR-043):
 
 - Tableta y escritorio: el encabezado completo queda fijo arriba.
-- Teléfono (variante B aprobada en T086): el nombre se desplaza y queda fija la fila de la
-  navegación, que ocupa dos líneas: la navegación y, debajo, el selector de idioma y el botón de
-  tema (`--header-height` de `105px`). Desde `sm` todo va en una sola fila (`61px`).
+- Teléfono (cambio aprobado el 2026-10-08 sobre la variante B de T086): la fila de arriba lleva el
+  nombre y, a la derecha, el selector de idioma y el botón de tema, y se desplaza con la página;
+  queda fija solo la fila del menú (`--header-height` de `61px`). Desde `sm` todo va en una sola
+  fila, con la misma altura. En el documento el orden es siempre nombre, menú, idioma y tema.
 - El documento reserva espacio arriba (`scroll-padding-top`) para que ni el control enfocado, ni su
   anillo de foco, ni el título de una sección queden tapados.
 

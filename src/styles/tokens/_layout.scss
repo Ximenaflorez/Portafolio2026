@@ -6,18 +6,34 @@ $content-max: 64rem;
 $prose-max: 65ch;
 $border-width: 1px;
 
-// Punto de corte en que el encabezado pasa de dos líneas fijas a una sola fila (Tailwind `sm`).
-$breakpoint-header: 640px;
+// Foto de perfil, cuadrada (aprobado el 2026-10-08): borde de 4px (el espacio 0.5)
+// y esquinas redondeadas de 16px (el espacio 2).
+$photo-border-width: map.get(spacing.$spaces, "0-5");
+$photo-radius: map.get(spacing.$spaces, "2");
+
+// Chips (etiquetas de solo lectura, p. ej. herramientas): esquinas de 16px (el espacio 2).
+$chip-radius: map.get(spacing.$spaces, "2");
+
+// Botones: píldora (aprobado el 2026-10-09). Cualquier valor mayor que la mitad de la altura
+// da la píldora completa.
+$button-radius: 9999px;
+
+// Tarjetas: esquinas de 16px (el espacio 2).
+$card-radius: map.get(spacing.$spaces, "2");
+
+// Encabezado fijo con cristal (aprobado el 2026-10-09): el fondo es el color de la página al 90 %
+// y desenfoca lo que pasa por detrás. Más transparente que esto no cumple 4.5:1 en el peor caso.
+$header-alpha: 0.9;
+$header-blur: map.get(spacing.$spaces, "2");
+$header-saturate: 1.5;
 
 // Padding vertical de la fila fija: 8px arriba y 8px abajo.
 $header-padding: 2 * map.get(spacing.$spaces, "1");
 
-// Desde `sm`: una fila con un control de 44px, su padding vertical y el borde inferior.
+// La fila fija (el menú en teléfono; todo el encabezado desde `sm`): un control de 44px, su
+// padding vertical y el borde inferior. Es la misma altura en todos los anchos.
 $header-height: interaction.$target-min + $header-padding + $border-width;
 
-// En teléfono la fila fija lleva dos líneas de 44px (navegación; idioma y tema).
-$header-height-phone: 2 * interaction.$target-min + $header-padding + $border-width;
-
-// En teléfono el nombre se desplaza y solo queda fija la fila del menú: se oculta
-// su padding superior más el control de 44px.
+// En teléfono el nombre, el idioma y el tema van en una fila que se desplaza y solo queda fija
+// la fila del menú: se oculta el padding superior más el control de 44px.
 $header-collapse: -(interaction.$target-min + map.get(spacing.$spaces, "1"));

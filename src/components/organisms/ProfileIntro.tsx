@@ -1,0 +1,58 @@
+import { Button } from "../atoms/Button";
+import { Heading } from "../atoms/Heading";
+import { Text } from "../atoms/Text";
+
+type Props = {
+  name: string;
+  role: string;
+  valueProposition: string;
+  email: string;
+  /** Ancla de la sección Trabajos en el idioma de la página. */
+  workHref: string;
+  /** `id` del h1, que da nombre a la sección Inicio. */
+  headingId: string;
+  photo: { src: string; alt: string };
+  labels: { work: string; contact: string };
+};
+
+// Inicio (FR-018, aprobado en T066): la foto va arriba del titular, a la izquierda; debajo, el
+// nombre como único h1, el rol, la propuesta de valor y los dos botones.
+export function ProfileIntro({
+  name,
+  role,
+  valueProposition,
+  email,
+  workHref,
+  headingId,
+  photo,
+  labels,
+}: Props) {
+  return (
+    <div className="py-12">
+      <img
+        src={photo.src}
+        alt={photo.alt}
+        width={128}
+        height={128}
+        className="aspect-square w-16 rounded-photo border-photo border-primary object-cover"
+      />
+      <Heading level={1} size="4xl" id={headingId} className="mt-4">
+        {name}
+      </Heading>
+      <Text size="lg" tone="muted" className="mt-1">
+        {role}
+      </Text>
+      <Text size="lg" className="mt-4 max-w-prose">
+        {valueProposition}
+      </Text>
+      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+        <Button variant="primary" to={workHref}>
+          {labels.work}
+        </Button>
+        <Button variant="secondary" href={`mailto:${email}`}>
+          {labels.contact}
+        </Button>
+      </div>
+    </div>
+  );
+}

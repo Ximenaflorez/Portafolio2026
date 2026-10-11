@@ -12,6 +12,7 @@ summary:
   role: Design, design system and frontend development
   duration: 6 months
   keyResult: Meets WCAG 2.2 AA
+  sector: Design system
 ---
 
 ## 1. Initial problem

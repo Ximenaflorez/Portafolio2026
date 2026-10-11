@@ -110,6 +110,15 @@ export async function compileUtilities(classes: string[]): Promise<string> {
   return result.css;
 }
 
+/**
+ * Color resultante de poner `top` con opacidad `alpha` sobre `bottom` (canales "r g b").
+ * Es la composición que hace el navegador con una capa de estado o un fondo traslúcido.
+ */
+export function compositeOver(top: string, bottom: string, alpha: number): string {
+  const [t, b] = [top, bottom].map((channels) => channels.split(/\s+/).map(Number));
+  return t.map((channel, index) => channel * alpha + b[index] * (1 - alpha)).join(" ");
+}
+
 function channelToLinear(channel: number): number {
   const value = channel / 255;
   return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;

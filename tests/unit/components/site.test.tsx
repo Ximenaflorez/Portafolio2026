@@ -95,7 +95,11 @@ describe("SiteHeader (FR-028, FR-031)", () => {
     expect(clases).toContain("sticky");
     expect(clases).toContain("top-header-collapse");
     expect(clases).toContain("sm:top-0");
-    expect(clases).toContain("bg-background");
+    // Cristal aprobado el 2026-10-09: fondo traslúcido con el respaldo sólido de `.header-glass`.
+    expect(clases).toContain("header-glass");
+    expect(clases).not.toContain("bg-background");
+    expect(clases).toContain("border-b");
+    expect(clases).toContain("border-border");
   });
 
   it("marca Inicio al cargar y cambia a la sección que se ve", () => {
@@ -264,25 +268,57 @@ describe("Encabezado con selector de idioma y botón de tema (FR-017, FR-043)", 
     { file: "caso-01", type: "product", slugs: { es: "analitica", en: "analytics" } },
   ];
 
-  it("lleva el selector de idioma y el botón de tema en la misma fila fija que la navegación", () => {
+  it("agrupa idioma y tema en un mismo bloque, hermano del nombre y de la navegación", () => {
     enRuta(<SiteHeader name={perfil.name} />);
 
     const nav = screen.getByRole("navigation", { name: "Principal" });
-    const fila = nav.parentElement!;
-    const nombre = screen.getByRole("link", { name: perfil.name });
+    const controles = screen.getByRole("link", { name: "EN English" }).parentElement!;
+    const nombre = screen.getByRole("link", { name: perfil.name }).parentElement!;
 
-    expect(fila.contains(screen.getByRole("link", { name: "EN English" }))).toBe(true);
-    expect(fila.contains(screen.getByRole("button", { name: "Tema oscuro" }))).toBe(true);
-    expect(fila.contains(nombre)).toBe(false);
+    expect(controles.contains(screen.getByRole("button", { name: "Tema oscuro" }))).toBe(true);
+    expect(controles.contains(nav)).toBe(false);
+    expect(nav.parentElement).toBe(controles.parentElement);
+    expect(nombre.parentElement).toBe(controles.parentElement);
   });
 
-  it("en teléfono los controles ocupan su propia línea; desde `sm` van junto a la navegación", () => {
+  it("en teléfono idioma y tema van en la fila del nombre, a la derecha, y el menú en su propia fila", () => {
     enRuta(<SiteHeader name={perfil.name} />);
 
+    const nombre = screen.getByRole("link", { name: perfil.name }).parentElement!;
+    const nav = screen.getByRole("navigation", { name: "Principal" });
     const controles = screen.getByRole("link", { name: "EN English" }).parentElement!;
-    expect(controles.className).toContain("w-full");
-    expect(controles.className).toContain("sm:w-auto");
-    expect(controles.className).toContain("justify-end");
+
+    expect(nombre.className).toContain("order-1");
+    expect(controles.className).toContain("order-2");
+    expect(controles.className).toContain("ml-auto");
+    expect(nav.className).toContain("order-3");
+    expect(nav.className).toContain("w-full");
+  });
+
+  it("desde `sm` todo va en una sola fila: nombre a la izquierda, menú y controles a la derecha", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    const nombre = screen.getByRole("link", { name: perfil.name }).parentElement!;
+    const nav = screen.getByRole("navigation", { name: "Principal" });
+    const controles = screen.getByRole("link", { name: "EN English" }).parentElement!;
+
+    expect(nombre.parentElement!.className).toContain("sm:flex-nowrap");
+    expect(nombre.className).toContain("sm:mr-auto");
+    expect(nav.className).toContain("sm:order-none");
+    expect(nav.className).toContain("sm:w-auto");
+    expect(controles.className).toContain("sm:order-none");
+    expect(controles.className).toContain("sm:ml-0");
+  });
+
+  it("el orden en el documento es nombre, navegación, idioma y tema (el de la fila única de escritorio)", () => {
+    enRuta(<SiteHeader name={perfil.name} />);
+
+    const orden = Array.from(screen.getByRole("banner").querySelectorAll("a, button")).map((el) =>
+      el.textContent?.trim(),
+    );
+    expect(orden[0]).toBe(perfil.name);
+    expect(orden[1]).toBe("Inicio");
+    expect(orden[orden.length - 2]).toMatch(/^EN/);
   });
 
   it("en español ofrece pasar a inglés: la misma página principal", () => {

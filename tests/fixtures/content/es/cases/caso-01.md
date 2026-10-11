@@ -15,6 +15,7 @@ summary:
   keyResult: Entre 20% y 30% menos abandono
   indexLine: Menos abandono en el flujo de despacho.
   productType: B2B SaaS
+  sector: Fintech
 ---
 
 ## 1. Problema inicial

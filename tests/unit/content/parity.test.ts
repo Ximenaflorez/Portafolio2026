@@ -65,6 +65,7 @@ summary:
   keyResult: Between 20% and 30% less abandonment
   indexLine: Less abandonment in the dispatch flow
   productType: B2B SaaS
+  sector: Fintech
 `;
 
 const description = "Case study about how abandonment was reduced in a B2B dispatch flow.";
@@ -91,8 +92,8 @@ describe("encabezados y etiquetas por idioma (FR-042)", () => {
     expect(errors).toMatch(/Problema inicial/);
   });
 
-  it("Sobre mí exige sus tres secciones en el idioma de la página", () => {
-    const aboutEn = `---\nseo:\n  title: About and process\n  description: ${description}\n---\n## Way of working\n\nText.\n\n## Methods\n\nText.\n\n## Problems I look for\n\nText.\n`;
+  it("Sobre mí exige sus dos secciones en el idioma de la página", () => {
+    const aboutEn = `---\nseo:\n  title: About and process\n  description: ${description}\n---\n## Way of working\n\nText.\n\n## Methods\n\nText.\n`;
 
     expect(validatePage(aboutEn, "sobre-mi", { strict: true, language: "en" }).errors).toEqual([]);
     expect(

@@ -14,19 +14,15 @@ const casos: RouteConfig = [
 
 // Inglés: vive bajo `/en/`, con `work` en lugar de `trabajos` (contracts/routes.md).
 // Las páginas de sección separadas solo existen en español, como redirecciones.
-const english: RouteConfig = prefix("en", [
-  index("routes/en/inicio.tsx"),
+const englishCases: RouteConfig = [
   ...(publishedCases("en", "meta").length > 0
     ? [route("work/this-portfolio", "routes/en/caso-meta.tsx")]
     : []),
   ...(publishedCases("en", "product").length > 0
     ? [route("work/:slug", "routes/en/caso.tsx")]
     : []),
-]);
-
-// Prototipos de aprobación (Constitución, principio V): nunca entran en el build de producción.
-// (Ahora no hay ninguno vigente; el próximo se registra aquí.)
-const prototipos: RouteConfig = [];
+];
+const english: RouteConfig = prefix("en", [index("routes/en/inicio.tsx"), ...englishCases]);
 
 export default [
   index("routes/inicio.tsx"),
@@ -35,6 +31,5 @@ export default [
   route("sobre-mi", "routes/sobre-mi.tsx"),
   route("contacto", "routes/contacto.tsx"),
   ...english,
-  ...(process.env.NODE_ENV === "production" ? [] : prototipos),
   route("*", "routes/no-encontrada.tsx"),
 ] satisfies RouteConfig;

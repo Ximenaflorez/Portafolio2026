@@ -1,6 +1,7 @@
 import { homeData } from "~/content/route-data.server";
 import { alternateLinks, homePath } from "~/lib/i18n";
 import { pageMeta } from "~/lib/seo";
+import { HomeRouteView } from "./home-view";
 import type { Route } from "./+types/inicio";
 
 export function loader() {
@@ -16,6 +17,6 @@ export function meta({ loaderData }: Route.MetaArgs) {
   });
 }
 
-export default function Inicio() {
-  return null;
+export default function Inicio({ loaderData }: Route.ComponentProps) {
+  return <HomeRouteView data={loaderData} />;
 }

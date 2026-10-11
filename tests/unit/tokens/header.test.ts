@@ -14,23 +14,16 @@ describe("encabezado fijo (FR-028, FR-043)", () => {
 
   it("la altura visible del encabezado se calcula con el objetivo mínimo, el espaciado y el borde", () => {
     expect(variables.get("--border-width")).toBe("1px");
-    // Desde `sm` una sola fila: 44px de control + 2 × 8px de espaciado + 1px de borde.
-    const wide = readBlocks(tokens).find(
-      (block) => block.media?.includes("min-width") && block.variables.has("--header-height"),
-    );
-    expect(wide?.variables.get("--header-height")).toBe("61px");
+    // Una sola fila fija: 44px de control + 2 × 8px de espaciado + 1px de borde.
+    expect(readBaseVariable(tokens, "--header-height")).toBe("61px");
   });
 
-  it("en teléfono la fila fija lleva dos líneas (navegación; idioma y tema): 2 × 44px + 2 × 8px + 1px", () => {
-    expect(readBaseVariable(tokens, "--header-height")).toBe("105px");
-  });
-
-  it("el cambio de altura ocurre en el mismo punto de corte en que el nombre deja de desplazarse", () => {
-    const wide = readBlocks(tokens).find(
+  it("la altura fija es la misma en todos los anchos: en teléfono la fila fija es solo el menú", () => {
+    const override = readBlocks(tokens).find(
       (block) => block.media?.includes("min-width") && block.variables.has("--header-height"),
     );
 
-    expect(wide?.media).toMatch(/min-width:\s*640px/);
+    expect(override).toBeUndefined();
   });
 
   it("en teléfono se oculta la fila del nombre: 8px de espaciado + 44px de control", () => {

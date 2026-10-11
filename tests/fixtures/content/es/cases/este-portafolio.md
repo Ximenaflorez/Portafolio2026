@@ -12,6 +12,7 @@ summary:
   role: Diseño, sistema de diseño y desarrollo frontend
   duration: 6 meses
   keyResult: Cumple WCAG 2.2 AA
+  sector: Design system
 ---
 
 ## 1. Problema inicial

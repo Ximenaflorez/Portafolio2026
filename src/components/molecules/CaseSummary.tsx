@@ -33,7 +33,7 @@ export function CaseSummary({
       <Heading level={2} size="xl" className="mt-6">
         {labels.title}
       </Heading>
-      <dl className="mt-2 grid gap-2 border border-border bg-surface p-4 sm:grid-cols-2">
+      <dl className="mt-2 grid gap-2 rounded-card border border-border bg-surface-tonal p-4 sm:grid-cols-2">
         <Field label={labels.product}>{summary.product}</Field>
         <Field label={labels.role}>{summary.role}</Field>
         {summary.team && <Field label={labels.team}>{summary.team}</Field>}

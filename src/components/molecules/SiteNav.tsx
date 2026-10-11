@@ -5,11 +5,11 @@ import { NavLink } from "../atoms/NavLink";
 
 // Navegación entre las secciones de la página principal del idioma. Solo vive en el encabezado:
 // el pie no la repite.
-export function SiteNav({ current }: { current?: SectionId }) {
+export function SiteNav({ current, className }: { current?: SectionId; className?: string }) {
   const { language, t } = useUi();
 
   return (
-    <nav aria-label={t("nav.label")}>
+    <nav aria-label={t("nav.label")} className={className}>
       <ul className="flex flex-wrap gap-x-2">
         {sections.map((section) => (
           <li key={section.id}>

@@ -12,6 +12,7 @@ summary:
   role: "[COMPLETAR: p. ej. diseño, sistema de diseño y desarrollo frontend]"
   duration: "[COMPLETAR]"
   keyResult: "[COMPLETAR: p. ej. puntaje de la auditoría y cumplimiento WCAG 2.2 AA]"
+  sector: "[COMPLETAR: rubro, p. ej. Fintech, ATS, Research o Design system]"
 ---
 
 ## 1. Problema inicial

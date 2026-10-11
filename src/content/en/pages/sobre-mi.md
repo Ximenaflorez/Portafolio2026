@@ -11,11 +11,3 @@ seo:
 ## Methods
 
 [COMPLETAR: e.g. research, information architecture, design systems, analytics]
-
-## Problems I look for
-
-[COMPLETAR: e.g. high operational impact B2B SaaS platforms]
-
-## Tools
-
-[COMPLETAR]

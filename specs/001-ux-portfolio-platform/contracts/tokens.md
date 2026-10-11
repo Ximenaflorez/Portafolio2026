@@ -1,6 +1,6 @@
 # Contract: Tokens de diseño
 
-Fuente de verdad: Contrato de tokens de `.specify/memory/constitution.md` (v1.3.0).
+Fuente de verdad: Contrato de tokens de `.specify/memory/constitution.md` (v1.4.0).
 SASS los emite como variables CSS en `:root`. Tailwind los lee y **reemplaza** su tema por defecto
 para color, tipografía y espaciado, así que esas utilidades no existen fuera de estos tokens.
 
@@ -24,6 +24,13 @@ el mismo nombre, la misma variable y la misma clase de Tailwind; solo cambia el 
 | Border | `--color-border` | `214 211 209` | `border-border` |
 | Border strong | `--color-border-strong` | `120 113 108` | `border-border-strong` |
 | Sobre Primary | `--color-on-primary` | `255 255 255` | `text-on-primary` |
+| Surface tonal (derivado) | `--color-surface-tonal` | `247 247 253` (4 % de Primary sobre Surface) | `bg-surface-tonal` |
+| Secondary container (derivado) | `--color-secondary-container` | `224 223 242` (14 % de Primary sobre Background) | `bg-secondary-container` |
+
+Los dos últimos son **derivados**: SASS los mezcla desde el Primary de cada tema, así que cambiar el
+Primary los cambia también (aprobados el 2026-10-09). En total son 15 tokens de color: 13 base y 2
+tonales. Los valores de arriba son los del tema claro con el Primary actual; los del tema oscuro
+salen de su propio Primary.
 
 Valor en Tailwind: `rgb(var(--color-<token>) / <alpha-value>)`.
 
@@ -34,6 +41,12 @@ Valor en Tailwind: `rgb(var(--color-<token>) / <alpha-value>)`.
 | Text, Text muted, Primary, Error, Success | Background y Surface | 4.5:1 |
 | On primary | Primary, Primary hover, Primary active | 4.5:1 |
 | Focus, Border strong | Background y Surface | 3:1 |
+| Text, Text muted, Primary | Surface tonal (tarjetas) | 4.5:1 |
+| Primary (etiqueta del botón secundario) | Secondary container | 4.5:1 |
+| Primary (contorno del botón secundario) | Background y Surface | 3:1 |
+| Etiqueta del botón sobre su fondo con la capa de estado al 8 % y al 16 % | ver Botones | 4.5:1 |
+| Text, Text muted, Primary, Primary hover, Primary active | Background compuesto al `--header-alpha` sobre blanco puro y sobre negro puro (peor caso del encabezado de cristal) | 4.5:1 |
+| Focus | el mismo fondo compuesto del encabezado | 3:1 |
 
 Las mismas parejas se miden **en cada tema** (FR-037, SC-008).
 
@@ -138,18 +151,30 @@ de scroll ni en bucle (FR-029).
 
 ## Botones (FR-033)
 
-Los dos botones comparten tamaño (mínimo `--target-min`), borde `--control-border-width`, relleno
-horizontal de espacio 4 (32px), texto semibold y transición `--duration-state`.
+Estilo aprobado el 2026-10-09 (opción D del prototipo de estilo): píldora tonal con capa de estado,
+base Material 3. Los dos botones comparten forma (`--button-radius`), tamaño (mínimo
+`--target-min`), borde de `--border-width` (1px), relleno horizontal de espacio 4 (32px), texto
+semibold y transición `--duration-state`.
 
 | Estado | Primario | Secundario |
 |---|---|---|
-| Reposo | fondo y borde `primary`, texto `on-primary` | sin fondo, borde y texto `primary` |
-| Puntero encima | fondo y borde `primary-hover` | borde y texto `primary-hover` |
-| Presionado | fondo y borde `primary-active` | borde y texto `primary-active` |
+| Reposo | fondo y borde `primary`, texto `on-primary` | fondo `secondary-container`, borde y texto `primary` |
+| Puntero encima | reposo + capa `on-primary` al `--state-hover` | reposo + capa `primary` al `--state-hover` |
+| Presionado | reposo + capa `on-primary` al `--state-press` | reposo + capa `primary` al `--state-press` |
 | Foco de teclado | anillo `focus` (ver Foco) | anillo `focus` (ver Foco) |
 
-El contraste de `primary`, `primary-hover` y `primary-active` sobre `background` y `surface` es de
-4.5:1 o más (prueba en `tests/unit/tokens/contrast.test.ts`).
+- El color del botón **no cambia** con el puntero ni al presionar: se superpone una capa (`::after`)
+  del color de la etiqueta, del 8 % (`--state-hover`) y del 16 % (`--state-press`).
+- El contorno `primary` del secundario da el 3:1 que su relleno tonal, tan cercano al fondo, no da solo.
+- Con movimiento reducido la capa aparece sin transición (`--duration-state` vale `0ms`).
+
+| Token | Variable CSS | Valor |
+|---|---|---|
+| Esquinas del botón | `--button-radius` | `9999px` (píldora) |
+| Capa de estado con el puntero | `--state-hover` | `0.08` |
+| Capa de estado al presionar | `--state-press` | `0.16` |
+
+`primary-hover` y `primary-active` siguen en uso para enlaces de texto y para el botón de tema.
 
 ## Layout
 
@@ -158,7 +183,14 @@ El contraste de `primary`, `primary-hover` y `primary-active` sobre `background`
 | Ancho máximo del contenido | `--content-max` | `64rem` (1024px), centrado |
 | Ancho de lectura del texto de un caso | `--prose-max` | `65ch`, unos 65 caracteres por línea; las imágenes de apoyo usan todo `--content-max` |
 | Grosor de borde | `--border-width` | `1px` |
-| Altura visible del encabezado fijo | `--header-height` | Desde `sm`: `61px` = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1). En teléfono, la fila fija lleva dos líneas (navegación; idioma y tema): `105px` = 2 × 44 + 2 × 8 + 1 |
+| Borde de la foto de perfil (cuadrada, color Primary) | `--photo-border-width` | `4px` = espacio 0.5 (aprobado 2026-10-08) |
+| Esquinas de la foto de perfil | `--photo-radius` | `16px` = espacio 2 (aprobado 2026-10-08) |
+| Esquinas de los chips de solo lectura (herramientas) | `--chip-radius` | `16px` = espacio 2 (aprobado 2026-10-09). Chip: fondo `surface-tonal`, borde `border` de 1px, texto `text` |
+| Esquinas de las tarjetas (tonales, con borde de 1px) | `--card-radius` | `16px` = espacio 2 (aprobado 2026-10-09) |
+| Opacidad del fondo del encabezado de cristal | `--header-alpha` | `0.9`; 80 % ya no cumple 4.5:1 en el peor caso del tema claro y 70 % no cumple en ninguno (aprobado 2026-10-09) |
+| Desenfoque del encabezado de cristal | `--header-blur` | `16px` = espacio 2 |
+| Saturación del encabezado de cristal | `--header-saturate` | `1.5` |
+| Altura visible del encabezado fijo | `--header-height` | `61px` en todos los anchos = objetivo mínimo (44) + 2 × espacio 1 (8) + borde (1). En teléfono la fila fija es solo el menú; el nombre, el idioma y el tema van en la fila de arriba, que se desplaza (decisión del 2026-10-08, sustituye la variante B de dos líneas fijas de `105px`) |
 | Parte del encabezado que sale en teléfono | `--header-collapse` | `-52px` = −(objetivo mínimo + espacio 1); posición `top` del encabezado en teléfono, `0` desde el punto de corte `sm` |
 
 ```text
@@ -166,6 +198,14 @@ html → scroll-padding-top: var(--header-height) + var(--focus-ring-offset) + v
 ```
 
 Evita que el encabezado fijo tape el control enfocado, su anillo o el título de una sección (FR-028).
+
+### Encabezado de cristal (aprobado el 2026-10-09)
+
+La clase `.header-glass` (`src/styles/base/_header.scss`) da al encabezado fijo el color de la página
+al `--header-alpha` y desenfoca (`--header-blur`, `--header-saturate`) lo que pasa por detrás. Es el
+**único** elemento con cristal. Vuelve a un fondo sólido y sin desenfoque con
+`prefers-reduced-transparency: reduce`, `prefers-contrast: more`, `forced-colors: active` y cuando el
+navegador no soporta `backdrop-filter`. Mantiene su borde inferior visible. No hay animación de brillo.
 
 ## Foco
 

@@ -15,6 +15,7 @@ summary:
   keyResult: Between 20% and 30% less abandonment
   indexLine: Less abandonment in the dispatch flow.
   productType: B2B SaaS
+  sector: Fintech
 ---
 
 ## 1. Initial problem

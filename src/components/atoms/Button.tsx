@@ -1,15 +1,17 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router";
 
-// Mismo tamaño y borde en las dos variantes para que midan lo mismo (FR-033).
+// Píldora con capa de estado (aprobado el 2026-10-09): el color no cambia con el puntero ni al
+// presionar; se superpone una capa (`after:`) del color de la etiqueta al 8 % y al 16 %.
+// Mismo tamaño y borde en las dos variantes para que midan lo mismo (FR-033). En teléfono ocupan
+// todo el ancho; desde `sm` el de su contenido.
 const base =
-  "inline-flex min-h-target min-w-target items-center justify-center border-control px-4 font-semibold transition-colors duration-state";
+  "relative inline-flex w-full sm:w-auto min-h-target min-w-target items-center justify-center rounded-button border px-4 font-semibold transition-colors duration-state after:pointer-events-none after:absolute after:inset-0 after:rounded-inherit after:content-empty after:opacity-0 after:transition-opacity after:duration-state hover:after:opacity-state-hover active:after:opacity-state-press";
 
 const variants = {
-  primary:
-    "border-primary bg-primary text-on-primary hover:border-primary-hover hover:bg-primary-hover active:border-primary-active active:bg-primary-active",
-  secondary:
-    "border-primary bg-transparent text-primary hover:border-primary-hover hover:text-primary-hover active:border-primary-active active:text-primary-active",
+  primary: "border-primary bg-primary text-on-primary after:bg-on-primary",
+  // El contorno en Primary da el 3:1 que el relleno tonal, tan cercano al fondo, no da solo.
+  secondary: "border-primary bg-secondary-container text-primary after:bg-primary",
 } as const;
 
 type Common = { variant: keyof typeof variants; children: ReactNode };

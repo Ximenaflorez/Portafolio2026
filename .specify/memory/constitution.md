@@ -1,15 +1,20 @@
 <!--
 Sync Impact Report
-Version change: 1.2.0 → 1.3.0
+Version change: 1.3.0 → 1.4.0
 Modified principles:
-- II. Sistema de Diseño: los tokens de color tienen un valor por tema (claro y oscuro)
-- IV. Accesibilidad WCAG 2.2 AA: el contraste MUST cumplirse en ambos temas
+- II. Sistema de Diseño: el contrato incluye ahora forma, estado y cristal, además de
+  color, tipografía y espaciado
+- IV. Accesibilidad WCAG 2.2 AA: el contraste MUST cumplirse también en el peor caso de un
+  fondo traslúcido, y el cristal MUST tener respaldo sólido
 Added sections: none
 Modified sections:
-- Contrato de tokens: de "tema claro único" a dos temas; valores del tema oscuro aprobados
-  el 2026-10-08 tras su prototipo (principio V, tarea T086)
+- Contrato de tokens: dos colores tonales derivados del Primary (Surface tonal y Secondary
+  container); forma de botones (píldora), tarjetas y chips (16px); capa de estado de los
+  botones; encabezado de cristal con su opacidad, desenfoque y respaldos. Aprobado el
+  2026-10-09 tras el prototipo comparativo de estilo (principio V, tarea T106)
 Removed sections: none
 Follow-up TODOs: none
+(1.3.0: dos temas; valores del tema oscuro aprobados el 2026-10-08, tarea T086)
 (1.2.0: V. Aprobación previa de interfaz permite prototipos no publicados; el tamaño mínimo de
 los controles es una dimensión, no un espacio)
 -->
@@ -34,7 +39,8 @@ locales que rompan el sistema visual.
 
 ### II. Sistema de Diseño (Design Tokens)
 
-Los colores, la tipografía y el espaciado MUST definirse una sola vez
+Los colores, la tipografía, el espaciado, la forma, los estados y el cristal
+MUST definirse una sola vez
 como variables CSS y MUST exponerse a Tailwind desde ese mismo origen.
 Cada token de color MUST tener un valor para el tema claro y otro para el
 tema oscuro, con el mismo nombre; los componentes MUST NOT conocer el tema.
@@ -72,6 +78,10 @@ ARIA MUST usarse cuando el HTML semántico no baste, y MUST NOT repetir
 semántica que el elemento nativo ya expone.
 El contraste MUST cumplir WCAG 2.2 nivel AA en el tema claro y en el
 tema oscuro, y MUST validarse antes de aprobar una pantalla.
+Un fondo traslúcido MUST cumplirlo en el peor caso (el tinte sobre blanco
+puro y sobre negro puro) y MUST volver a un fondo sólido con
+`prefers-reduced-transparency`, `prefers-contrast: more`, `forced-colors`
+y sin soporte de `backdrop-filter`.
 Texto, nombre accesible y estado MUST quedar disponibles para tecnología
 de asistencia.
 
@@ -118,6 +128,17 @@ El texto blanco sobre Primary, Primary hover y Primary active MUST
 mantener al menos 4.5:1 (7.9:1, 9.9:1 y 11.4:1).
 Border MUST NOT usarse como único indicador de un control.
 
+Colores tonales (aprobados el 2026-10-09): se derivan del Primary de cada
+tema, así que cambiar el Primary los cambia.
+
+| Token | Valor claro | Valor oscuro | Uso |
+|---|---|---|---|
+| Surface tonal | `#F7F7FD` | `#211F20` | Fondo de tarjetas: 4 % de Primary sobre Surface |
+| Secondary container | `#E0DFF2` | `#21222B` | Relleno del botón secundario: 14 % de Primary sobre Background |
+
+Text, Text muted y Primary MUST mantener 4.5:1 sobre Surface tonal, y Primary
+MUST mantener 4.5:1 sobre Secondary container, en los dos temas.
+
 Color, tema oscuro (aprobado el 2026-10-08): los 13 tokens llevan los mismos
 nombres que en el tema claro.
 
@@ -139,6 +160,20 @@ nombres que en el tema claro.
 
 En el tema oscuro, Primary hover y Primary active son más claros que Primary
 (en el claro son más oscuros) para seguir contrastando con el fondo.
+
+Forma, estado y cristal (aprobados el 2026-10-09; base Material 3 con el
+cristal de iOS solo en el encabezado):
+
+- Botones: píldora (esquina completa), en dos variantes (primaria y
+  secundaria) del mismo tamaño. El color no cambia con el puntero ni al
+  presionar: se superpone una capa de la etiqueta del 8 % (puntero) y del
+  16 % (presión). El secundario lleva contorno Primary de 1px, que da 3:1
+  contra la página.
+- Tarjetas: fondo Surface tonal, borde de 1px y esquinas de 16px.
+- Chips de solo lectura: fondo Surface tonal, borde de 1px y esquinas de 16px.
+- Encabezado fijo: fondo Background al 90 % con desenfoque de 16px y
+  saturación 1.5. Es el único elemento con cristal. Con 80 % falla el
+  texto secundario del tema claro, y con 70 % fallan los dos temas.
 
 Tipografía:
 
@@ -183,4 +218,4 @@ El versionado MUST seguir SemVer:
 Cada especificación, plan e implementación MUST revisarse contra estos
 principios. La guía de desarrollo es `.specify/memory/constitution.md`.
 
-**Version**: 1.3.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-08
+**Version**: 1.4.0 | **Ratified**: 2026-10-07 | **Last Amended**: 2026-10-09

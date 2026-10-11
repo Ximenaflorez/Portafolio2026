@@ -15,6 +15,7 @@ summary:
   keyResult: Entre 20% y 30% menos abandono
   indexLine: Activación más rápida de cuentas.
   productType: B2B SaaS
+  sector: Research
 ---
 
 ## 1. Problema inicial

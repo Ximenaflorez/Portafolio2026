@@ -10,33 +10,35 @@ function enRouter(ui: React.ReactElement) {
 }
 
 describe("Button (FR-033)", () => {
-  it("la variante primaria tiene relleno Primary y texto on-primary", () => {
+  it("la variante primaria tiene relleno Primary, texto on-primary y contorno Primary", () => {
     enRouter(
       <Button variant="primary" href="/x">
         Ver
       </Button>,
     );
 
-    const clases = screen.getByRole("link", { name: "Ver" }).className;
+    const clases = screen.getByRole("link", { name: "Ver" }).className.split(/\s+/);
     expect(clases).toContain("bg-primary");
     expect(clases).toContain("text-on-primary");
+    expect(clases).toContain("border-primary");
   });
 
-  it("la variante secundaria no tiene relleno y usa borde y texto Primary", () => {
+  it("la variante secundaria es tonal: relleno secondary-container, texto y contorno Primary", () => {
     enRouter(
       <Button variant="secondary" href="/x">
         Escríbeme
       </Button>,
     );
 
-    const clases = screen.getByRole("link", { name: "Escríbeme" }).className;
-    expect(clases).toContain("bg-transparent");
+    const clases = screen.getByRole("link", { name: "Escríbeme" }).className.split(/\s+/);
+    expect(clases).toContain("bg-secondary-container");
     expect(clases).toContain("border-primary");
     expect(clases).toContain("text-primary");
     expect(clases).not.toContain("bg-primary");
+    expect(clases).not.toContain("bg-transparent");
   });
 
-  it("las dos variantes tienen el mismo tamaño: mismo borde, relleno y área mínima", () => {
+  it("las dos variantes son píldoras del mismo tamaño: mismo borde, relleno y área mínima", () => {
     enRouter(
       <>
         <Button variant="primary" href="/a">
@@ -49,44 +51,67 @@ describe("Button (FR-033)", () => {
     );
 
     for (const nombre of ["Uno", "Dos"]) {
-      const clases = screen.getByRole("link", { name: nombre }).className;
-      expect(clases).toContain("border-control");
-      expect(clases).toContain("px-4");
-      expect(clases).toContain("min-h-target");
-      expect(clases).toContain("min-w-target");
+      const clases = screen.getByRole("link", { name: nombre }).className.split(/\s+/);
+      for (const esperada of ["rounded-button", "border", "px-4", "min-h-target", "min-w-target"]) {
+        expect(clases).toContain(esperada);
+      }
+    }
+  });
+
+  it("en teléfono ocupan todo el ancho y desde `sm` el de su contenido", () => {
+    enRouter(
+      <>
+        <Button variant="primary" href="/a">
+          Uno
+        </Button>
+        <Button variant="secondary" onClick={() => {}}>
+          Dos
+        </Button>
+      </>,
+    );
+
+    for (const elemento of [
+      screen.getByRole("link", { name: "Uno" }),
+      screen.getByRole("button", { name: "Dos" }),
+    ]) {
+      const clases = elemento.className.split(/\s+/);
+      expect(clases).toContain("w-full");
+      expect(clases).toContain("sm:w-auto");
     }
   });
 
   it.each([
-    [
-      "primary",
-      [
-        "hover:bg-primary-hover",
-        "hover:border-primary-hover",
-        "active:bg-primary-active",
-        "active:border-primary-active",
-      ],
-    ],
-    [
-      "secondary",
-      [
-        "hover:text-primary-hover",
-        "hover:border-primary-hover",
-        "active:text-primary-active",
-        "active:border-primary-active",
-      ],
-    ],
-  ] as const)("la variante %s distingue puntero y presión con tokens", (variante, esperadas) => {
-    enRouter(
-      <Button variant={variante} href="/x">
-        Acción
-      </Button>,
-    );
+    ["primary", "after:bg-on-primary"],
+    ["secondary", "after:bg-primary"],
+  ] as const)(
+    "la variante %s marca puntero y presión con una capa de estado (%s), sin cambiar de color",
+    (variante, capa) => {
+      enRouter(
+        <Button variant={variante} href="/x">
+          Acción
+        </Button>,
+      );
 
-    const clases = screen.getByRole("link", { name: "Acción" }).className;
-    for (const clase of esperadas) expect(clases).toContain(clase);
-    expect(clases).toContain("duration-state");
-  });
+      const clases = screen.getByRole("link", { name: "Acción" }).className.split(/\s+/);
+      for (const esperada of [
+        "relative",
+        capa,
+        "after:absolute",
+        "after:inset-0",
+        "after:rounded-inherit",
+        "after:content-empty",
+        "after:pointer-events-none",
+        "after:opacity-0",
+        "hover:after:opacity-state-hover",
+        "active:after:opacity-state-press",
+        "after:duration-state",
+        "duration-state",
+      ]) {
+        expect(clases).toContain(esperada);
+      }
+      expect(clases.some((clase) => /^(hover|active):(bg|border|text)-/.test(clase))).toBe(false);
+    },
+  );
 
   it("con `href` es un enlace; con `to` es un enlace interno; sin ninguno es un botón", () => {
     enRouter(

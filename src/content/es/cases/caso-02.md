@@ -15,6 +15,7 @@ summary:
   keyResult: "[COMPLETAR: la métrica o el aprendizaje principal]"
   indexLine: "[COMPLETAR: resultado en una frase, máximo 120 caracteres]"
   productType: "[COMPLETAR: p. ej. B2B SaaS]"
+  sector: "[COMPLETAR: rubro, p. ej. Fintech, ATS, Research o Design system]"
 ---
 
 ## 1. Problema inicial

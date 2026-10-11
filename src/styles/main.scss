@@ -7,6 +7,7 @@
 @include meta.load-css("base/typography");
 @include meta.load-css("base/focus");
 @include meta.load-css("base/layout");
+@include meta.load-css("base/header");
 @include meta.load-css("base/theme");
 
 @tailwind components;

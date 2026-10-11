@@ -20,6 +20,8 @@ const productSummary = z.object({
   keyResult: text,
   indexLine: text.max(120),
   productType: text,
+  // Rubro del caso (p. ej. Fintech, ATS, Research, Design system): el chip de su tarjeta.
+  sector: text,
 });
 
 const metaSummary = z.object({
@@ -27,6 +29,7 @@ const metaSummary = z.object({
   role: text,
   duration: text,
   keyResult: text,
+  sector: text,
 });
 
 const caseBase = {
@@ -68,6 +71,7 @@ export type CaseSummary = {
   keyResult: string;
   indexLine?: string;
   productType?: string;
+  sector?: string;
 };
 
 export type CaseStudy = {
@@ -111,7 +115,7 @@ const wording: Record<Language, Wording> = {
       "Arquitectura de la solución",
       "Resultados y aprendizajes",
     ],
-    aboutSections: ["Forma de trabajar", "Métodos", "Problemas que busco"],
+    aboutSections: ["Forma de trabajar", "Métodos"],
     keyDecisions: /Decisi(?:ón|ones) clave/,
     keyDecisionsName: "**Decisiones clave:**",
     lessons: /Lo que (?:no funcionó|haría distinto)/,
@@ -119,7 +123,7 @@ const wording: Record<Language, Wording> = {
   },
   en: {
     caseSections: ["Initial problem", "Research", "Solution architecture", "Results and learnings"],
-    aboutSections: ["Way of working", "Methods", "Problems I look for"],
+    aboutSections: ["Way of working", "Methods"],
     keyDecisions: /Key decisions?/,
     keyDecisionsName: "**Key decisions:**",
     lessons: /What (?:didn['’]t work|I would do differently)/,

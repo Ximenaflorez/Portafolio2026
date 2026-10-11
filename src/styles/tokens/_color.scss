@@ -1,4 +1,7 @@
+@use "sass:color";
+@use "sass:list";
 @use "sass:map";
+@use "sass:math";
 
 $color-overrides: () !default;
 $color-overrides-dark: () !default;
@@ -43,3 +46,39 @@ $colors-dark: map.merge(
   ),
   $color-overrides-dark
 );
+
+// Colores tonales (aprobados el 2026-10-09): se derivan del Primary de cada tema, así que
+// cambiar el Primary también los cambia.
+// - `surface-tonal`: fondo de las tarjetas, 4 % de Primary sobre la superficie.
+// - `secondary-container`: relleno del botón secundario, 14 % de Primary sobre el fondo.
+$tonal-surface-weight: 4%;
+$tonal-secondary-weight: 14%;
+
+@function to-color($channels) {
+  @return rgb(list.nth($channels, 1), list.nth($channels, 2), list.nth($channels, 3));
+}
+
+@function tint($base, $over, $weight) {
+  $mixed: color.mix(to-color($over), to-color($base), $weight);
+  @return math.round(color.channel($mixed, "red", $space: rgb))
+    math.round(color.channel($mixed, "green", $space: rgb))
+    math.round(color.channel($mixed, "blue", $space: rgb));
+}
+
+@function with-tonal($palette) {
+  $primary: map.get($palette, "primary");
+  @return map.merge(
+    $palette,
+    (
+      "surface-tonal": tint(map.get($palette, "surface"), $primary, $tonal-surface-weight),
+      "secondary-container": tint(
+          map.get($palette, "background"),
+          $primary,
+          $tonal-secondary-weight
+        ),
+    )
+  );
+}
+
+$colors: with-tonal($colors);
+$colors-dark: with-tonal($colors-dark);

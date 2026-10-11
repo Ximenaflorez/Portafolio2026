@@ -11,11 +11,3 @@ seo:
 ## Métodos
 
 [COMPLETAR: p. ej. investigación, arquitectura de información, sistemas de diseño, analítica]
-
-## Problemas que busco
-
-[COMPLETAR: p. ej. plataformas B2B SaaS de alto impacto operativo]
-
-## Herramientas
-
-[COMPLETAR]

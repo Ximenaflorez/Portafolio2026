@@ -15,6 +15,7 @@ summary:
   keyResult: "[COMPLETAR: the main metric or learning]"
   indexLine: "[COMPLETAR: result in one sentence, 120 characters maximum]"
   productType: "[COMPLETAR: e.g. B2B SaaS]"
+  sector: "[COMPLETAR: field, e.g. Fintech, ATS, Research or Design system]"
 ---
 
 ## 1. Initial problem
