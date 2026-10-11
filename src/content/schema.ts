@@ -300,20 +300,23 @@ export function validateCase(raw: string, language: Language = "es"): Validation
   return { data: { ...parsed.data, body: content }, errors: [] };
 }
 
-function careerFieldErrors(career: unknown): string[] {
-  if (career === undefined) return [];
+function parseCareer(career: unknown): Validation<Career | undefined> {
+  if (career === undefined) return { data: undefined, errors: [] };
   const parsed = careerSchema.safeParse(career);
-  return parsed.success ? [] : zodErrors(parsed.error);
+  return parsed.success ? { data: parsed.data, errors: [] } : { errors: zodErrors(parsed.error) };
 }
 
 export function validateProfile(raw: string, { strict }: { strict: boolean }): Validation<Profile> {
   const { data } = matter(raw);
-  const errors = careerFieldErrors(data.career);
-  if (!strict) return errors.length > 0 ? { errors } : { data: data as Profile, errors: [] };
+  const career = parseCareer(data.career);
+  if (!strict) {
+    if (career.errors.length > 0) return { errors: career.errors };
+    return { data: { ...(data as Profile), career: career.data }, errors: [] };
+  }
 
   const parsed = profileSchema.safeParse(data);
-  if (!parsed.success) errors.push(...zodErrors(parsed.error));
-  errors.push(...contentErrors(raw));
+  const errors = parsed.success ? [] : zodErrors(parsed.error);
+  errors.push(...career.errors, ...contentErrors(raw));
   return errors.length > 0 ? { errors } : { data: parsed.data, errors };
 }
 

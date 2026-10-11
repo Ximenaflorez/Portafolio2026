@@ -8,8 +8,12 @@ const months = {
   en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 } as const;
 
-function formatDate(value: string, language: Language): string {
-  const [year, month] = value.split("-");
+function formatDate(value: string | number | Date, language: Language): string {
+  const text =
+    value instanceof Date
+      ? `${value.getUTCFullYear()}-${String(value.getUTCMonth() + 1).padStart(2, "0")}`
+      : String(value);
+  const [year, month] = text.split("-");
   if (!month) return year;
   return `${months[language][Number(month) - 1]} ${year}`;
 }
