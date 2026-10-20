@@ -1,10 +1,8 @@
 import type { CaseStudy } from "~/content/schema";
-import { extractSections } from "~/lib/case-sections";
 import { homePath as languageHome } from "~/lib/i18n";
 import { caseLabels } from "~/lib/ui";
 import { useUi } from "~/lib/use-ui";
 import { CaseSummary, type CaseSummaryLabels } from "../molecules/CaseSummary";
-import { SectionIndex } from "../molecules/SectionIndex";
 import { CaseBody } from "../organisms/CaseBody";
 import { CaseTemplate } from "../templates/CaseTemplate";
 import { SiteTemplate } from "../templates/SiteTemplate";
@@ -13,13 +11,15 @@ export type CasePageLabels = {
   back: string;
   eyebrowProduct: string;
   eyebrowMeta: string;
-  index: string;
   summary: CaseSummaryLabels;
 };
 
 type SiteProps = Parameters<typeof SiteTemplate>[0];
 
-type Props = Pick<SiteProps, "profile" | "cvAvailable" | "metaCaseHref" | "year" | "casePairs"> & {
+type Props = Pick<
+  SiteProps,
+  "profile" | "cvAvailable" | "metaCaseHref" | "year" | "casePairs"
+> & {
   caseStudy: CaseStudy;
   /** Textos de la página; por defecto, los de interfaz del idioma de la ruta. */
   labels?: CasePageLabels;
@@ -60,7 +60,6 @@ export function CasePage({
         eyebrow={eyebrow}
         title={title}
         summary={<CaseSummary summary={summary} labels={text.summary} />}
-        index={<SectionIndex label={text.index} items={extractSections(body)} />}
       >
         <CaseBody markdown={body} />
       </CaseTemplate>

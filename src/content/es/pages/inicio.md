@@ -4,4 +4,4 @@ seo:
   description: "[COMPLETAR: entre 50 y 160 caracteres]"
 ---
 
-[COMPLETAR: llamado a contacto]
+Si tu equipo busca a alguien que une investigación, sistemas y tecnología, escríbeme.

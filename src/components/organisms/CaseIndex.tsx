@@ -2,11 +2,15 @@ import { CaseCard } from "../molecules/CaseCard";
 
 type CardProps = Parameters<typeof CaseCard>[0];
 
-// Las tarjetas de los casos en dos columnas desde `sm` (FR-019). El caso de este portafolio es una
-// tarjeta más, el cuarto proyecto: quien llama lo pone en la lista como cualquier otro.
-export function CaseIndex({ cases }: { cases: CardProps[] }) {
+// Cada tarjeta ocupa el ancho de la sección: texto a la izquierda, imagen a la derecha.
+// El caso de este portafolio es una tarjeta más, el cuarto proyecto.
+export function CaseIndex({ cases, emptyLabel }: { cases: CardProps[]; emptyLabel: string }) {
+  if (cases.length === 0) {
+    return <p className="mt-6 max-w-prose">{emptyLabel}</p>;
+  }
+
   return (
-    <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+    <ul className="mt-6 flex flex-col gap-4">
       {cases.map((item) => (
         <CaseCard key={item.to} {...item} />
       ))}

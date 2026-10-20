@@ -22,6 +22,10 @@ const productSummary = z.object({
   productType: text,
   // Rubro del caso (p. ej. Fintech, ATS, Research, Design system): el chip de su tarjeta.
   sector: text,
+  // Chips extra de la tarjeta, después del rubro. P. ej. «Investigación».
+  tags: z.array(text).optional(),
+  // Tipo de trabajo, distinto del tipo de producto: p. ej. «Investigación de viabilidad».
+  kind: text.optional(),
 });
 
 const metaSummary = z.object({
@@ -75,6 +79,11 @@ const toolsSchema = z
   .min(1)
   .refine((tools) => new Set(tools).size === tools.length, "herramientas repetidas");
 
+const skillsSchema = z
+  .array(text)
+  .min(1)
+  .refine((skills) => new Set(skills).size === skills.length, "habilidades repetidas");
+
 const experienceEntry = z.object({
   title: text,
   organization: text,
@@ -82,6 +91,7 @@ const experienceEntry = z.object({
   to: careerDate.optional(),
   summary: text.optional(),
   tools: toolsSchema.optional(),
+  skills: skillsSchema.optional(),
 });
 
 const educationEntry = z.object({
@@ -139,6 +149,7 @@ export type CareerExperience = {
   to?: string;
   summary?: string;
   tools?: string[];
+  skills?: string[];
 };
 
 export type CareerEducation = {
@@ -170,6 +181,8 @@ export type CaseSummary = {
   indexLine?: string;
   productType?: string;
   sector?: string;
+  tags?: string[];
+  kind?: string;
 };
 
 export type CaseStudy = {
@@ -350,6 +363,11 @@ export function careerParityErrors(es?: Career, en?: Career): string[] {
         const rightTools = (right as CareerExperience).tools ?? [];
         if (leftTools.join("\0") !== rightTools.join("\0")) {
           errors.push(`career.${group}.${index}: tools distinto`);
+        }
+        const leftSkills = (left as CareerExperience).skills ?? [];
+        const rightSkills = (right as CareerExperience).skills ?? [];
+        if (leftSkills.length !== rightSkills.length) {
+          errors.push(`career.${group}.${index}: skills distinto`);
         }
       }
     });

@@ -5,10 +5,12 @@ import { Link } from "react-router";
 export function NavLink({
   to,
   current = false,
+  className = "",
   children,
 }: {
   to: string;
   current?: boolean;
+  className?: string;
   children: ReactNode;
 }) {
   const state = current
@@ -19,7 +21,7 @@ export function NavLink({
     <Link
       to={to}
       aria-current={current ? "location" : undefined}
-      className={`inline-flex min-h-target min-w-target items-center border-b-indicator transition-colors duration-state hover:text-primary-hover active:text-primary-active ${state}`}
+      className={`inline-flex min-h-target min-w-target items-center border-b-indicator transition-colors duration-state hover:text-primary-hover active:text-primary-active ${state} ${className}`.trim()}
     >
       {children}
     </Link>

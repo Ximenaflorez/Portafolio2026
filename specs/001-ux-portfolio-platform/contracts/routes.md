@@ -95,7 +95,7 @@ Encabezado fijo (FR-028, FR-043):
 - Teléfono (cambio aprobado el 2026-10-08 sobre la variante B de T086): la fila de arriba lleva el
   nombre y, a la derecha, el selector de idioma y el botón de tema, y se desplaza con la página;
   queda fija solo la fila del menú (`--header-height` de `61px`). Desde `sm` todo va en una sola
-  fila, con la misma altura. En el documento el orden es siempre nombre, menú, idioma y tema.
+  fila, con la misma altura. En el documento el orden es el que se ve: nombre, idioma, tema y menú.
 - El documento reserva espacio arriba (`scroll-padding-top`) para que ni el control enfocado, ni su
   anillo de foco, ni el título de una sección queden tapados.
 

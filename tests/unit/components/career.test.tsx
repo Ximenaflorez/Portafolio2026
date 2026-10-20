@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
@@ -50,16 +51,16 @@ function enRuta(data: CareerData = career, ruta = "/") {
 }
 
 describe("Career (FR-044)", () => {
-  it("tiene el encabezado «Trayectoria» y cada grupo es una lista con su encabezado", () => {
+  it("cada grupo es un título de tercer nivel y una lista", () => {
     enRuta();
 
-    expect(screen.getByRole("heading", { level: 3, name: "Trayectoria" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Trayectoria" })).not.toBeInTheDocument();
     for (const [grupo, entradas] of [
       ["Experiencia", 2],
       ["Educación", 1],
       ["Certificados", 2],
     ] as const) {
-      expect(screen.getByRole("heading", { level: 4, name: grupo })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { level: 3, name: grupo })).toBeInTheDocument();
       const lista = screen.getByRole("list", { name: grupo });
       expect(lista.children).toHaveLength(entradas);
     }
@@ -72,9 +73,16 @@ describe("Career (FR-044)", () => {
     const [actual, anterior] = Array.from(lista.children) as HTMLElement[];
     expect(within(actual).getByText("UX Lead B2B")).toBeInTheDocument();
     expect(within(actual).getByText("Magneto Empleos")).toBeInTheDocument();
+    expect(within(actual).getByText("UX Lead B2B").parentElement).toBe(
+      within(actual).getByText("Magneto Empleos").parentElement,
+    );
     expect(within(actual).getByText("Definí la estrategia de UX B2B.")).toBeInTheDocument();
     expect(actual.querySelector("time")).toHaveAttribute("datetime", "2025-09");
     expect(actual).toHaveTextContent("sep 2025 – Actualidad");
+    expect(actual).toHaveTextContent("Actual");
+    expect(actual.querySelector("details")).toHaveAttribute("open");
+    expect(actual.className).not.toContain("rounded-card");
+    expect(actual.className).not.toContain("bg-surface-tonal");
 
     const fechas = Array.from(anterior.querySelectorAll("time")).map((t) =>
       t.getAttribute("datetime"),
@@ -83,21 +91,76 @@ describe("Career (FR-044)", () => {
     expect(anterior).toHaveTextContent("oct 2022 – jul 2024");
   });
 
+  it("un logro con varias líneas se lee como párrafos separados", () => {
+    enRuta({
+      ...career,
+      experience: [
+        {
+          ...career.experience![0],
+          summary: "Primera línea.\nSegunda línea.",
+        },
+      ],
+    });
+
+    const lista = screen.getByRole("list", { name: "Experiencia" });
+    const actual = lista.children[0] as HTMLElement;
+    expect(within(actual).getByText("Primera línea.")).toBeInTheDocument();
+    expect(within(actual).getByText("Segunda línea.")).toBeInTheDocument();
+  });
+
+  it("la experiencia es un acordeón: el actual abre y el resto espera el clic", async () => {
+    enRuta();
+
+    const lista = screen.getByRole("list", { name: "Experiencia" });
+    const [actual, anterior] = Array.from(lista.children) as HTMLElement[];
+
+    expect(within(actual).getByText("Definí la estrategia de UX B2B.")).toBeVisible();
+    expect(anterior.querySelector("details")).not.toHaveAttribute("open");
+
+    await userEvent.click(within(anterior).getByText("Diseñadora UX"));
+    expect(anterior.querySelector("details")).toHaveAttribute("open");
+    expect(
+      within(anterior).getByRole("list", { name: "Herramientas: Diseñadora UX" }),
+    ).toBeVisible();
+  });
+
+  it("muestra cinco habilidades y resume el resto en un +", async () => {
+    enRuta({
+      ...career,
+      experience: [
+        {
+          ...career.experience![0],
+          skills: ["Una", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete"],
+        },
+      ],
+    });
+
+    const habilidades = screen.getByRole("list", { name: "Habilidades: UX Lead B2B" });
+    expect(within(habilidades).getByText("Cinco")).toBeInTheDocument();
+    expect(within(habilidades).queryByText("Seis")).not.toBeInTheDocument();
+    const mas = within(habilidades).getByRole("button", { name: "2 habilidades más" });
+    expect(mas).toHaveTextContent("+2");
+
+    await userEvent.click(mas);
+    expect(within(habilidades).getByText("Siete")).toBeInTheDocument();
+    expect(within(habilidades).queryByRole("button")).not.toBeInTheDocument();
+  });
+
   it("las herramientas son una lista con nombre propio, de solo lectura", () => {
     enRuta();
 
     const herramientas = screen.getByRole("list", { name: "Herramientas: UX Lead B2B" });
-    expect(within(herramientas).getAllByRole("listitem").map((li) => li.textContent)).toEqual([
-      "Figma",
-      "Maze",
-    ]);
+    expect(
+      within(herramientas)
+        .getAllByRole("listitem")
+        .map((li) => li.textContent),
+    ).toEqual(["Figma", "Maze"]);
     for (const chip of within(herramientas).getAllByRole("listitem")) {
       expect(chip.className).toContain("rounded-chip");
       expect(chip.className).toContain("border");
       expect(chip).not.toHaveAttribute("tabindex");
       expect(within(chip).queryByRole("button")).not.toBeInTheDocument();
     }
-    expect(screen.getByRole("list", { name: "Herramientas: Diseñadora UX" })).toBeInTheDocument();
   });
 
   it("la educación muestra título, institución y año", () => {
@@ -134,15 +197,19 @@ describe("Career (FR-044)", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("no usa imágenes", () => {
+  it("no usa imágenes; el más y el cierre del acordeón son decorativos", () => {
     const { container } = enRuta();
-    expect(container.querySelector("img, svg")).toBeNull();
+    expect(container.querySelector("img")).toBeNull();
+    for (const icon of container.querySelectorAll("svg")) {
+      expect(icon).toHaveAttribute("aria-hidden", "true");
+    }
   });
 
   it("en inglés usa sus textos y sus meses", () => {
     enRuta(career, "/en/");
 
-    expect(screen.getByRole("heading", { level: 3, name: "Career" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name: "Experience" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Career" })).not.toBeInTheDocument();
     expect(screen.getByRole("list", { name: "Experience" })).toHaveTextContent(
       "Sep 2025 – Present",
     );

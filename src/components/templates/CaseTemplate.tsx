@@ -2,15 +2,13 @@ import type { ReactNode } from "react";
 import { Heading } from "../atoms/Heading";
 import { TextLink } from "../atoms/TextLink";
 
-// Estructura de la página de un caso (FR-035): volver, título, resumen, índice y cuerpo.
-// No hay enlace de volver al final ni caso siguiente.
+// Página de un caso: volver antes del título, luego el resumen y el cuerpo.
 export function CaseTemplate({
   backHref,
   backLabel,
   eyebrow,
   title,
   summary,
-  index,
   children,
 }: {
   backHref: string;
@@ -18,21 +16,19 @@ export function CaseTemplate({
   eyebrow: string;
   title: string;
   summary: ReactNode;
-  index: ReactNode;
   children?: ReactNode;
 }) {
   return (
-    <article className="py-8">
-      <TextLink to={backHref} variant="standalone">
+    <article className="pb-8">
+      <TextLink to={backHref} variant="standalone" className="font-semibold">
         <span aria-hidden="true">←&nbsp;</span>
         {backLabel}
       </TextLink>
-      <p className="mt-4 text-text-muted">{eyebrow}</p>
-      <Heading level={1} className="mt-1">
+      <p className="mt-6 text-primary">{eyebrow}</p>
+      <Heading level={1} size="4xl" className="mt-2">
         {title}
       </Heading>
       {summary}
-      {index}
       {children}
     </article>
   );

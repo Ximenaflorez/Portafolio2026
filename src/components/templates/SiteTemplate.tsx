@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { CasePair } from "~/lib/i18n";
 import { useUi } from "~/lib/use-ui";
+import { BackToTop } from "../atoms/BackToTop";
 import { SkipLink } from "../atoms/SkipLink";
 import { SiteFooter } from "../organisms/SiteFooter";
 import { SiteHeader } from "../organisms/SiteHeader";
@@ -35,6 +36,7 @@ export function SiteTemplate({
         metaCaseHref={metaCaseHref}
         year={year}
       />
+      <BackToTop label={t("controls.backToTop")} />
     </div>
   );
 }

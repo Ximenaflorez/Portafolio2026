@@ -24,21 +24,31 @@ export function Career({ career }: { career?: CareerData }) {
 
   return (
     <div className="mt-8">
-      <Heading level={3}>{t("career.title")}</Heading>
       {visible.map((group) => (
         <div key={group.id} className="mt-6">
-          <Heading level={4} id={`titulo-carrera-${group.id}`}>
+          <Heading level={3} id={`titulo-carrera-${group.id}`}>
             {group.title}
           </Heading>
-          <ul aria-labelledby={`titulo-carrera-${group.id}`}>
-            {group.items.map((entry) => (
+          <ul
+            aria-labelledby={`titulo-carrera-${group.id}`}
+            className={
+              group.id === "experience"
+                ? "mt-2 divide-y divide-border border-y border-border"
+                : "mt-2 grid gap-2 sm:grid-cols-2"
+            }
+          >
+            {group.items.map((entry, index) => (
               <CareerEntry
                 key={`${group.id}-${entry.title}-${entry.from}`}
                 entry={entry}
                 kind={group.id}
                 presentLabel={t("career.present")}
+                currentLabel={t("career.current")}
                 toolsLabel={t("career.tools", { title: entry.title })}
+                skillsLabel={t("career.skills", { title: entry.title })}
+                skillsMoreLabel={(count) => t("career.skillsMore", { count })}
                 credentialLabel={t("career.credential", { title: entry.title })}
+                defaultOpen={group.id === "experience" && index === 0}
               />
             ))}
           </ul>

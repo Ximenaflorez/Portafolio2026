@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router";
 import { axe } from "vitest-axe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LanguageSwitch } from "~/components/atoms/LanguageSwitch";
+import { MenuToggle } from "~/components/atoms/MenuToggle";
 import { ThemeToggle } from "~/components/atoms/ThemeToggle";
 
 function systemPrefersDark(dark: boolean) {
@@ -108,6 +109,51 @@ describe("ThemeToggle (FR-038)", () => {
 
   it("no tiene violaciones de accesibilidad", async () => {
     const { container } = render(<ThemeToggle label="Tema oscuro" />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+describe("MenuToggle", () => {
+  const props = {
+    open: false,
+    openLabel: "Abrir menú",
+    closeLabel: "Cerrar menú",
+    controls: "menu-principal",
+    onClick: vi.fn(),
+  };
+
+  it("nombra el panel, dice si está abierto y tiene área de 44×44 px (FR-027)", () => {
+    render(<MenuToggle {...props} />);
+    const button = screen.getByRole("button", { name: "Abrir menú" });
+
+    expect(button).toHaveAttribute("aria-expanded", "false");
+    expect(button).toHaveAttribute("aria-controls", "menu-principal");
+    expect(button.className).toContain("min-h-target");
+    expect(button.className).toContain("min-w-target");
+    expect(button.className).toContain("sm:hidden");
+  });
+
+  it("al estar abierto cambia el nombre y el ícono", () => {
+    const { container } = render(<MenuToggle {...props} open />);
+    expect(screen.getByRole("button", { name: "Cerrar menú" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+    expect(container.querySelector("svg")).toHaveAttribute("data-icon", "close");
+  });
+
+  it("se activa con el teclado", async () => {
+    const onClick = vi.fn();
+    render(<MenuToggle {...props} onClick={onClick} />);
+
+    await userEvent.tab();
+    expect(screen.getByRole("button")).toHaveFocus();
+    await userEvent.keyboard("{Enter}");
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it("no tiene violaciones de accesibilidad", async () => {
+    const { container } = render(<MenuToggle {...props} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

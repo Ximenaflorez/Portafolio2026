@@ -7,7 +7,6 @@ import { Heading } from "~/components/atoms/Heading";
 import { Text } from "~/components/atoms/Text";
 import { CaseCard } from "~/components/molecules/CaseCard";
 import { CaseSummary } from "~/components/molecules/CaseSummary";
-import { SectionIndex } from "~/components/molecules/SectionIndex";
 import { CaseBody } from "~/components/organisms/CaseBody";
 import { CaseIndex } from "~/components/organisms/CaseIndex";
 import { CasePage } from "~/components/pages/CasePage";
@@ -127,6 +126,7 @@ describe("CaseSummary (FR-020, FR-035)", () => {
     team: "Equipo",
     duration: "Duración",
     keyResult: "Resultado clave",
+    kind: "Tipo",
   };
   const summary = {
     product: "Plataforma B2B de despachos",
@@ -136,25 +136,31 @@ describe("CaseSummary (FR-020, FR-035)", () => {
     keyResult: "Entre 20% y 30% menos abandono",
   };
 
-  it("presenta el resumen como lista de definiciones dentro de una tarjeta con borde", () => {
+  it("abre con el producto y una fila de datos; el resultado clave ocupa todo el ancho", () => {
     const { container } = render(<CaseSummary summary={summary} labels={labels} />);
 
     expect(screen.getByRole("heading", { level: 2, name: labels.title })).toBeInTheDocument();
+    expect(screen.getByText(summary.product).tagName).toBe("P");
     const dl = container.querySelector("dl")!;
     const clases = dl.className.split(/\s+/);
-    for (const esperada of ["border", "rounded-card", "bg-surface-tonal", "sm:grid-cols-2"]) {
+    for (const esperada of ["border-t", "grid-cols-2", "lg:grid-cols-4"]) {
       expect(clases).toContain(esperada);
     }
     const terms = [...dl.querySelectorAll("dt")].map((dt) => dt.textContent);
-    expect(terms).toEqual(["Producto", "Mi rol", "Equipo", "Duración", "Resultado clave"]);
-    expect(within(dl).getByText(summary.keyResult)).toBeInTheDocument();
+    expect(terms).toEqual(["Mi rol", "Equipo", "Duración"]);
+    const banner = screen.getByText(summary.keyResult).closest("div")!;
+    expect(banner.className).toContain("bg-primary");
+    expect(banner.className).toContain("text-on-primary");
+    expect(screen.getByText("Resultado clave")).toBeInTheDocument();
+    expect(screen.getByText("· Resumen en 30 segundos")).toBeInTheDocument();
   });
 
-  it("destaca el resultado clave a todo el ancho de la tarjeta", () => {
-    const { container } = render(<CaseSummary summary={summary} labels={labels} />);
-    const keyResult = screen.getByText("Resultado clave").parentElement!;
-    expect(keyResult.className).toContain("sm:col-span-2");
-    expect(container.querySelector("dd.text-lg")?.textContent).toBe(summary.keyResult);
+  it("muestra el tipo de trabajo cuando el caso lo trae", () => {
+    render(
+      <CaseSummary summary={{ ...summary, kind: "Investigación de viabilidad" }} labels={labels} />,
+    );
+    expect(screen.getByText("Tipo")).toBeInTheDocument();
+    expect(screen.getByText("Investigación de viabilidad")).toBeInTheDocument();
   });
 
   it("omite el equipo si el caso no lo tiene (caso meta)", () => {
@@ -164,30 +170,6 @@ describe("CaseSummary (FR-020, FR-035)", () => {
 
   it("no tiene violaciones de accesibilidad", async () => {
     const { container } = render(<CaseSummary summary={summary} labels={labels} />);
-    expect(await axe(container)).toHaveNoViolations();
-  });
-});
-
-describe("SectionIndex (FR-035)", () => {
-  const items = [
-    { id: "problema-inicial", title: "Problema inicial", number: 1 },
-    { id: "investigacion", title: "Investigación", number: 2 },
-  ];
-
-  it("lista las secciones numeradas con enlaces ancla dentro de una navegación con nombre", () => {
-    render(<SectionIndex label="En este caso" items={items} />);
-
-    const nav = screen.getByRole("navigation", { name: "En este caso" });
-    const links = within(nav).getAllByRole("link");
-    expect(links.map((a) => a.textContent)).toEqual(["1. Problema inicial", "2. Investigación"]);
-    expect(links.map((a) => a.getAttribute("href"))).toEqual([
-      "#problema-inicial",
-      "#investigacion",
-    ]);
-  });
-
-  it("no tiene violaciones de accesibilidad", async () => {
-    const { container } = render(<SectionIndex label="En este caso" items={items} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });
@@ -228,19 +210,22 @@ describe("CaseCard (FR-019)", () => {
     expect(clases).not.toContain("bg-surface");
   });
 
-  it("recorta la imagen con la esquina de la tarjeta y la pone primero, a todo el ancho", () => {
+  it("recorta la imagen con la esquina de la tarjeta: abajo en teléfono y a la derecha desde `sm`", () => {
     const { container } = enRuta(
       <ul>
         <CaseCard {...props} />
       </ul>,
     );
     const tarjeta = container.querySelector("li")!;
-    const imagen = tarjeta.firstElementChild!;
+    const imagen = tarjeta.lastElementChild!;
+    const clases = tarjeta.className.split(/\s+/);
 
-    expect(tarjeta.className.split(/\s+/)).toContain("overflow-hidden");
-    expect(tarjeta.className.split(/\s+/)).not.toContain("p-4");
+    expect(clases).toContain("overflow-hidden");
+    expect(clases).toContain("flex-col");
+    expect(clases).toContain("sm:flex-row");
+    expect(clases).not.toContain("p-4");
     expect(imagen.tagName).toBe("IMG");
-    for (const esperada of ["aspect-video", "w-full", "object-cover"]) {
+    for (const esperada of ["aspect-video", "w-full", "object-cover", "sm:w-1/2"]) {
       expect(imagen.className.split(/\s+/)).toContain(esperada);
     }
   });
@@ -286,7 +271,24 @@ describe("CaseCard (FR-019)", () => {
     expect(container.querySelectorAll("a")).toHaveLength(1);
   });
 
-  it("el chip va entre la imagen y el título", () => {
+  it("muestra los chips extra junto al rubro, antes del título", () => {
+    const { container } = enRuta(
+      <ul>
+        <CaseCard {...props} tags={["Investigación"]} />
+      </ul>,
+    );
+    const extra = screen.getByText("Investigación").closest("p")!;
+
+    expect(extra.textContent).toBe("Investigación");
+    expect(extra.closest("a, button")).toBeNull();
+    for (const esperada of ["rounded-chip", "border", "border-border", "text-sm"]) {
+      expect(extra.className.split(/\s+/)).toContain(esperada);
+    }
+    const texto = container.querySelector("li")!.textContent!;
+    expect(texto.indexOf("Investigación")).toBeLessThan(texto.indexOf(props.title));
+  });
+
+  it("el rubro va antes del título", () => {
     const { container } = enRuta(
       <ul>
         <CaseCard {...props} />
@@ -316,13 +318,13 @@ describe("CaseBody", () => {
   it("numera las secciones, les da id y las agrupa en regiones con nombre", () => {
     const { container } = enRuta(<CaseBody markdown={markdown} />);
 
-    const h2 = screen.getByRole("heading", { level: 2, name: "1. Problema inicial" });
+    const h2 = screen.getByRole("heading", { level: 2, name: "Problema inicial" });
     expect(h2).toHaveAttribute("id", "titulo-problema-inicial");
     const seccion = container.querySelector("section#problema-inicial")!;
     expect(seccion).toHaveAttribute("aria-labelledby", "titulo-problema-inicial");
     expect(container.querySelectorAll("section")).toHaveLength(4);
     expect(
-      screen.getByRole("heading", { level: 2, name: "2. Investigación y datos de usuario" }),
+      screen.getByRole("heading", { level: 2, name: "Investigación y datos de usuario" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3, name: "Hallazgos" })).toBeInTheDocument();
   });
@@ -339,7 +341,9 @@ describe("CaseBody", () => {
     expect(etiqueta.tagName).toBe("STRONG");
     expect(etiqueta.className).toContain("block");
     expect(etiqueta.parentElement).toHaveTextContent("La empresa es una plataforma SaaS");
-    expect(screen.getByText(/Tensión/).className).toContain("text-text-muted");
+    const pregunta = screen.getByText(/Tensión/);
+    expect(pregunta.textContent).toMatch(/^01 · /);
+    expect(pregunta.className).toContain("text-primary");
   });
 
   it("renderiza listas, citas y enlaces con los componentes del sistema", () => {
@@ -374,6 +378,32 @@ describe("CaseBody", () => {
     expect(screen.getByText("Figura 1. Abandono por paso")).toBeVisible();
   });
 
+  it("agrupa los porcentajes en cifras grandes y las modalidades en tarjetas", () => {
+    enRuta(
+      <CaseBody
+        markdown={`## Datos
+
+- **31,5 %** del presupuesto
+- **20 %** con crédito
+
+## Solución
+
+- **Apuntado digital:** $10.000 – $100.000
+- **Fiado electrónico:** $150.000 – $1.000.000
+`}
+      />,
+    );
+
+    const cifra = screen.getByText("31,5 %");
+    expect(cifra.tagName).toBe("STRONG");
+    expect(cifra.className).toContain("text-3xl");
+    expect(cifra.closest("ul")!.className).toContain("sm:grid-cols-3");
+
+    const modalidad = screen.getByText("Apuntado digital");
+    expect(modalidad.closest("li")!.className).toContain("rounded-card");
+    expect(modalidad.closest("ul")!.className).toContain("sm:grid-cols-2");
+  });
+
   it("no tiene violaciones de accesibilidad", async () => {
     const { container } = enRuta(<CaseBody markdown={markdown} />);
     expect(await axe(container)).toHaveNoViolations();
@@ -393,21 +423,23 @@ describe("CaseIndex (FR-019)", () => {
     readLabel: "Leer el caso",
   }));
 
-  it("lista los cuatro casos como tarjetas iguales en una cuadrícula de dos columnas", () => {
-    enRuta(<CaseIndex cases={casos} />);
+  it("lista los cuatro casos como tarjetas iguales a todo el ancho", () => {
+    enRuta(<CaseIndex cases={casos} emptyLabel="Aún no hay casos publicados." />);
 
     const lista = screen.getByRole("list");
     const tarjetas = within(lista).getAllByRole("listitem");
     expect(tarjetas).toHaveLength(4);
-    expect(lista.className.split(/\s+/)).toContain("sm:grid-cols-2");
+    expect(lista.className.split(/\s+/)).toContain("flex-col");
+    expect(lista.className.split(/\s+/)).not.toContain("sm:grid-cols-2");
     for (const tarjeta of tarjetas) {
       expect(tarjeta.className).toContain("overflow-hidden");
+      expect(tarjeta.className).toContain("sm:flex-row");
       expect(tarjeta.querySelector("img")).not.toBeNull();
     }
   });
 
-  it("cada tarjeta lleva el chip de su rubro", () => {
-    enRuta(<CaseIndex cases={casos} />);
+  it("cada tarjeta lleva el rubro", () => {
+    enRuta(<CaseIndex cases={casos} emptyLabel="Aún no hay casos publicados." />);
 
     for (const sector of sectores) {
       expect(screen.getByText(sector).closest("p")!.textContent).toBe(`Rubro: ${sector}`);
@@ -415,7 +447,9 @@ describe("CaseIndex (FR-019)", () => {
   });
 
   it("ya no hay una tarjeta destacada aparte", () => {
-    const { container } = enRuta(<CaseIndex cases={casos} />);
+    const { container } = enRuta(
+      <CaseIndex cases={casos} emptyLabel="Aún no hay casos publicados." />,
+    );
 
     expect(container.querySelectorAll("ul")).toHaveLength(1);
     expect(container.querySelectorAll("li")).toHaveLength(4);
@@ -423,8 +457,17 @@ describe("CaseIndex (FR-019)", () => {
   });
 
   it("no tiene violaciones de accesibilidad", async () => {
-    const { container } = enRuta(<CaseIndex cases={casos} />);
+    const { container } = enRuta(
+      <CaseIndex cases={casos} emptyLabel="Aún no hay casos publicados." />,
+    );
     expect(await axe(container)).toHaveNoViolations();
+  });
+
+  it("sin casos explica que todavía no hay, y no deja una lista vacía", () => {
+    enRuta(<CaseIndex cases={[]} emptyLabel="Aún no hay casos publicados." />);
+
+    expect(screen.getByText("Aún no hay casos publicados.")).toBeInTheDocument();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 });
 
@@ -437,7 +480,6 @@ describe("CaseTemplate (FR-035)", () => {
         eyebrow="Caso de producto · B2B SaaS"
         title="Un caso"
         summary={<p>Resumen</p>}
-        index={<p>Índice</p>}
       >
         <p>Cuerpo</p>
       </CaseTemplate>,
@@ -450,7 +492,7 @@ describe("CaseTemplate (FR-035)", () => {
     expect(screen.getAllByRole("link", { name: /Volver a Trabajos/ })).toHaveLength(1);
   });
 
-  it("ordena: volver, título, resumen, índice y cuerpo", () => {
+  it("ordena: volver, título, resumen y cuerpo", () => {
     enRuta(
       <CaseTemplate
         backHref="/#trabajos"
@@ -458,15 +500,14 @@ describe("CaseTemplate (FR-035)", () => {
         eyebrow="Tipo"
         title="Título"
         summary={<p>RESUMEN</p>}
-        index={<p>INDICE</p>}
       >
         <p>CUERPO</p>
       </CaseTemplate>,
     );
     const texto = document.body.textContent ?? "";
+    expect(texto.indexOf("Volver")).toBeLessThan(texto.indexOf("Título"));
     expect(texto.indexOf("Título")).toBeLessThan(texto.indexOf("RESUMEN"));
-    expect(texto.indexOf("RESUMEN")).toBeLessThan(texto.indexOf("INDICE"));
-    expect(texto.indexOf("INDICE")).toBeLessThan(texto.indexOf("CUERPO"));
+    expect(texto.indexOf("RESUMEN")).toBeLessThan(texto.indexOf("CUERPO"));
   });
 });
 
@@ -481,7 +522,6 @@ describe("CasePage", () => {
     back: "Volver a Trabajos",
     eyebrowProduct: "Caso de producto",
     eyebrowMeta: "Caso de este portafolio",
-    index: "En este caso",
     summary: {
       title: "Resumen en 30 segundos",
       product: "Producto",
@@ -489,6 +529,7 @@ describe("CasePage", () => {
       team: "Equipo",
       duration: "Duración",
       keyResult: "Resultado clave",
+      kind: "Tipo",
     },
   };
   const caso: CaseStudy = {
@@ -514,7 +555,7 @@ describe("CasePage", () => {
     return enRuta(<CasePage profile={perfil} cvAvailable caseStudy={c} labels={labels} />);
   }
 
-  it("compone el caso: volver, un solo h1, resumen, índice de cuatro secciones y cuerpo", () => {
+  it("compone el caso: volver, un solo h1, resumen y cuerpo, sin índice de secciones", () => {
     pagina();
 
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -524,21 +565,9 @@ describe("CasePage", () => {
       "href",
       "/#trabajos",
     );
-    const indice = screen.getByRole("navigation", { name: "En este caso" });
-    expect(within(indice).getAllByRole("link")).toHaveLength(4);
+    expect(screen.queryByRole("navigation", { name: "En este caso" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Resumen en 30 segundos" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { level: 2, name: "1. Problema inicial" }),
-    ).toBeInTheDocument();
-  });
-
-  it("el índice enlaza a los mismos id que tiene el cuerpo", () => {
-    const { container } = pagina();
-    const indice = screen.getByRole("navigation", { name: "En este caso" });
-    for (const link of within(indice).getAllByRole("link")) {
-      const id = link.getAttribute("href")!.slice(1);
-      expect(container.querySelector(`section#${id}`)).not.toBeNull();
-    }
+    expect(screen.getByRole("heading", { level: 2, name: "Problema inicial" })).toBeInTheDocument();
   });
 
   it("el caso meta no muestra equipo y usa su propia etiqueta de tipo", () => {
@@ -611,7 +640,7 @@ describe("CasePage en inglés (FR-042)", () => {
       "/en/#trabajos",
     );
     expect(screen.getByText("Product case · B2B SaaS")).toBeInTheDocument();
-    expect(screen.getByRole("navigation", { name: "In this case" })).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: "In this case" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "30-second summary" })).toBeInTheDocument();
     expect(screen.getByText("Key result")).toBeInTheDocument();
   });

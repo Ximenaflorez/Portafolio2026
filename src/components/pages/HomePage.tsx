@@ -1,13 +1,15 @@
 import type { CaseStudy, Profile } from "~/content/schema";
+import { splitAbout } from "~/lib/about";
+import { firstMarkdownImage } from "~/lib/case-sections";
 import { casePath, metaCasePath, sectionPath, type Language } from "~/lib/i18n";
 import type { Translate } from "~/lib/ui";
 import { useUi } from "~/lib/use-ui";
 import { Text } from "../atoms/Text";
 import { ContactList } from "../molecules/ContactList";
+import { AboutSplit } from "../organisms/AboutSplit";
 import { CaseIndex } from "../organisms/CaseIndex";
 import { Career } from "../organisms/Career";
 import { ProfileIntro } from "../organisms/ProfileIntro";
-import { ProseBody } from "../organisms/ProseBody";
 import { ContentTemplate } from "../templates/ContentTemplate";
 import { SiteTemplate } from "../templates/SiteTemplate";
 
@@ -34,9 +36,11 @@ function caseCard(item: CaseStudy, language: Language, t: Translate) {
     title: item.title,
     sector: item.summary.sector ?? "",
     sectorLabel: t("work.sector"),
+    tags: item.summary.tags,
     role: item.summary.role,
     description: (!isMeta && item.summary.indexLine) || item.summary.keyResult,
     readLabel: t("work.read"),
+    image: firstMarkdownImage(item.body),
   };
 }
 
@@ -54,6 +58,7 @@ export function HomePage({
 }: Props) {
   const { language, t } = useUi();
   const cards = [...cases, ...(meta ? [meta] : [])].map((item) => caseCard(item, language, t));
+  const aboutParts = splitAbout(about);
 
   return (
     <SiteTemplate
@@ -74,35 +79,73 @@ export function HomePage({
             headingId="titulo-inicio"
             photo={{ src: photoSrc, alt: t("home.photoAlt", { name: profile.name }) }}
             labels={{ work: t("home.ctaWork"), contact: t("home.ctaContact") }}
+            stats={[
+              { value: t("home.stat.years.value"), label: t("home.stat.years.label") },
+              { value: t("home.stat.cases.value"), label: t("home.stat.cases.label") },
+              { value: t("home.stat.result.value"), label: t("home.stat.result.label") },
+            ]}
           />
         }
         sections={[
-          { id: "trabajos", title: t("home.trabajos"), children: <CaseIndex cases={cards} /> },
+          {
+            id: "trabajos",
+            title: t("home.trabajos.heading"),
+            eyebrow: t("home.trabajos.index"),
+            titleSize: "3xl",
+            children: <CaseIndex cases={cards} emptyLabel={t("work.empty")} />,
+          },
           {
             id: "sobre-mi",
-            title: t("home.sobre-mi"),
+            title: t("home.sobre-mi.heading"),
+            hideTitle: true,
             children: (
               <>
-                <ProseBody markdown={about} />
+                <AboutSplit
+                  headingId="titulo-sobre-mi"
+                  index={t("home.sobre-mi.index")}
+                  heading={t("home.sobre-mi.heading")}
+                  intro={aboutParts.working}
+                  practices={[
+                    {
+                      title: t("home.sobre-mi.research.title"),
+                      body: t("home.sobre-mi.research.body"),
+                      icon: "research",
+                    },
+                    {
+                      title: t("home.sobre-mi.systems.title"),
+                      body: t("home.sobre-mi.systems.body"),
+                      icon: "systems",
+                    },
+                    {
+                      title: t("home.sobre-mi.data.title"),
+                      body: t("home.sobre-mi.data.body"),
+                      icon: "data",
+                    },
+                  ]}
+                />
                 <Career career={profile.career} />
               </>
             ),
           },
           {
             id: "contacto",
-            title: t("home.contacto"),
+            title: t("home.contacto.heading"),
+            eyebrow: t("home.contacto.index"),
+            titleSize: "4xl",
             children: (
-              <>
-                <Text className="mt-2 max-w-prose">{contactCall.trim()}</Text>
+              <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <Text className="max-w-prose lg:max-w-sm">{contactCall.trim()}</Text>
                 <ContactList
+                  variant="actions"
                   email={profile.email}
+                  emailLabel={t("home.contacto.email")}
                   linkedin={profile.linkedin}
                   cv={cvAvailable ? profile.cv : undefined}
                   label={t("footer.contact")}
-                  cvLabel={t("footer.cv")}
-                  className="mt-4 flex flex-col"
+                  cvLabel={t("home.contacto.cv")}
+                  className="flex flex-col gap-2 sm:flex-row sm:flex-wrap lg:shrink-0 lg:flex-nowrap"
                 />
-              </>
+              </div>
             ),
           },
         ]}

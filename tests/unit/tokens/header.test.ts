@@ -16,6 +16,7 @@ describe("encabezado fijo (FR-028, FR-043)", () => {
     expect(variables.get("--border-width")).toBe("1px");
     // Una sola fila fija: 44px de control + 2 × 8px de espaciado + 1px de borde.
     expect(readBaseVariable(tokens, "--header-height")).toBe("61px");
+    expect(readBaseVariable(tokens, "--header-visible")).toBe("61px");
   });
 
   it("la altura fija es la misma en todos los anchos: en teléfono la fila fija es solo el menú", () => {
@@ -42,7 +43,7 @@ describe("encabezado fijo (FR-028, FR-043)", () => {
     const css = compileMainScss();
 
     expect(css).toMatch(
-      /html\s*{[^}]*scroll-padding-top:\s*calc\(var\(--header-height\)\s*\+\s*var\(--focus-ring-offset\)\s*\+\s*var\(--focus-ring-width\)\)/,
+      /html\s*{[^}]*scroll-padding-top:\s*calc\(var\(--header-visible\)\s*\+\s*var\(--focus-ring-offset\)\s*\+\s*var\(--focus-ring-width\)\)/,
     );
   });
 });

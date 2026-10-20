@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { extractSections, headingTitle, slugify, splitBySection } from "~/lib/case-sections";
+import {
+  extractSections,
+  firstMarkdownImage,
+  headingTitle,
+  slugify,
+  splitBySection,
+  tabLabel,
+} from "~/lib/case-sections";
 
 const body = `Texto previo.
 
@@ -32,6 +39,19 @@ describe("headingTitle", () => {
   });
 });
 
+describe("tabLabel", () => {
+  it("acorta los títulos largos y deja igual los que ya caben en la pestaña", () => {
+    expect(tabLabel("Problema inicial")).toBe("Problema inicial");
+    expect(tabLabel("Investigación y datos")).toBe("Investigación");
+    expect(tabLabel("Arquitectura de la solución")).toBe("Solución");
+    expect(tabLabel("Resultados y aprendizajes")).toBe("Resultados");
+    expect(tabLabel("Research and data")).toBe("Research");
+    expect(tabLabel("Solution architecture")).toBe("Solution");
+    expect(tabLabel("Results and learnings")).toBe("Results");
+    expect(tabLabel("Visual support")).toBe("Visual support");
+  });
+});
+
 describe("extractSections", () => {
   it("lista solo los encabezados `##`, numerados en orden y sin prefijo", () => {
     expect(extractSections(body)).toEqual([
@@ -60,5 +80,24 @@ describe("splitBySection", () => {
     const { intro, sections } = splitBySection("## Uno\n\nA\n\n## Dos\n\nB");
     expect(intro).toBe("");
     expect(sections).toHaveLength(2);
+  });
+});
+
+describe("firstMarkdownImage", () => {
+  it("devuelve la primera imagen con alt y src", () => {
+    expect(
+      firstMarkdownImage('Texto\n\n![Tendero en la tienda](/casos/caso-01.jpg "Pie")\n'),
+    ).toEqual({ src: "/casos/caso-01.jpg", alt: "Tendero en la tienda" });
+  });
+
+  it("ignora una imagen sin texto alternativo", () => {
+    expect(firstMarkdownImage("![](/casos/caso-01.jpg)\n![Con alt](/casos/otra.jpg)")).toEqual({
+      src: "/casos/otra.jpg",
+      alt: "Con alt",
+    });
+  });
+
+  it("sin imagen, no inventa una", () => {
+    expect(firstMarkdownImage("Solo texto.")).toBeUndefined();
   });
 });

@@ -13,6 +13,8 @@ type Props = {
   headingId: string;
   photo: { src: string; alt: string };
   labels: { work: string; contact: string };
+  /** Cifras del Inicio aprobadas en T066: años, casos publicados y resultado. */
+  stats?: { value: string; label: string }[];
 };
 
 // Inicio (FR-018, aprobado en T066): la foto va arriba del titular, a la izquierda; debajo, el
@@ -26,6 +28,7 @@ export function ProfileIntro({
   headingId,
   photo,
   labels,
+  stats = [],
 }: Props) {
   return (
     <div className="py-12">
@@ -53,6 +56,16 @@ export function ProfileIntro({
           {labels.contact}
         </Button>
       </div>
+      {stats.length > 0 ? (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-3">
+          {stats.map((item) => (
+            <li key={item.label}>
+              <p className="font-heading text-3xl">{item.value}</p>
+              <p className="mt-1 text-text-muted">{item.label}</p>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }

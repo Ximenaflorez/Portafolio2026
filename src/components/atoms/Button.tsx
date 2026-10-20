@@ -6,7 +6,7 @@ import { Link } from "react-router";
 // Mismo tamaño y borde en las dos variantes para que midan lo mismo (FR-033). En teléfono ocupan
 // todo el ancho; desde `sm` el de su contenido.
 const base =
-  "relative inline-flex w-full sm:w-auto min-h-target min-w-target items-center justify-center rounded-button border px-4 font-semibold transition-colors duration-state after:pointer-events-none after:absolute after:inset-0 after:rounded-inherit after:content-empty after:opacity-0 after:transition-opacity after:duration-state hover:after:opacity-state-hover active:after:opacity-state-press";
+  "relative inline-flex w-full sm:w-auto min-h-target min-w-target items-center justify-center gap-2 rounded-button border px-4 font-semibold transition-colors duration-state after:pointer-events-none after:absolute after:inset-0 after:rounded-inherit after:content-empty after:opacity-0 after:transition-opacity after:duration-state hover:after:opacity-state-hover active:after:opacity-state-press";
 
 const variants = {
   primary: "border-primary bg-primary text-on-primary after:bg-on-primary",
@@ -17,9 +17,14 @@ const variants = {
 type Common = { variant: keyof typeof variants; children: ReactNode };
 
 type Props =
-  | (Common & { to: string; href?: never; onClick?: never })
-  | (Common & { href: string; to?: never; onClick?: never })
-  | (Common & { onClick: MouseEventHandler<HTMLButtonElement>; to?: never; href?: never });
+  | (Common & { to: string; href?: never; onClick?: never; download?: never })
+  | (Common & { href: string; to?: never; onClick?: never; download?: boolean | string })
+  | (Common & {
+      onClick: MouseEventHandler<HTMLButtonElement>;
+      to?: never;
+      href?: never;
+      download?: never;
+    });
 
 export function Button(props: Props) {
   const classes = `${base} ${variants[props.variant]}`;
@@ -33,7 +38,7 @@ export function Button(props: Props) {
   }
   if (props.href !== undefined) {
     return (
-      <a href={props.href} className={classes}>
+      <a href={props.href} className={classes} download={props.download}>
         {props.children}
       </a>
     );

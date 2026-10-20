@@ -17,9 +17,38 @@ export function headingTitle(text: string): string {
   return text.replace(/^\d+\.\s*/, "").trim();
 }
 
+/** Número de sección a dos dígitos, el mismo en las pestañas y en el cuerpo. */
+export function padSection(number: number): string {
+  return String(number).padStart(2, "0");
+}
+
+/**
+ * Texto corto de la pestaña. El encabezado del cuerpo conserva el título completo
+ * que exige el esquema.
+ */
+export function tabLabel(title: string): string {
+  const key = slugify(title);
+  if (key.startsWith("investigacion")) return "Investigación";
+  if (key.startsWith("research")) return "Research";
+  if (key.startsWith("arquitectura-de-la-solucion")) return "Solución";
+  if (key.startsWith("solution-architecture")) return "Solution";
+  if (key.startsWith("resultados")) return "Resultados";
+  if (key.startsWith("results")) return "Results";
+  if (key.startsWith("apoyo-visual")) return "Apoyo visual";
+  if (key.startsWith("visual-support")) return "Visual support";
+  return title;
+}
+
 export function extractSections(markdown: string): CaseSection[] {
   const titles = [...markdown.matchAll(/^##\s+(.+?)\s*$/gm)].map((match) => headingTitle(match[1]));
   return titles.map((title, index) => ({ id: slugify(title), title, number: index + 1 }));
+}
+
+/** Primera imagen Markdown del cuerpo: la tarjeta del índice y el apoyo visual usan la misma. */
+export function firstMarkdownImage(markdown: string): { src: string; alt: string } | undefined {
+  const match = markdown.match(/!\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/);
+  if (!match) return undefined;
+  return { src: match[2], alt: match[1] };
 }
 
 /** Divide el cuerpo en el texto previo al primer `##` y un bloque por sección. */

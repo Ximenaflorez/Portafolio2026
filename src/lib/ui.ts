@@ -26,7 +26,6 @@ export function caseLabels(t: Translate) {
     back: t("case.back"),
     eyebrowProduct: t("case.eyebrowProduct"),
     eyebrowMeta: t("case.eyebrowMeta"),
-    index: t("case.index"),
     summary: {
       title: t("case.summary.title"),
       product: t("case.summary.product"),
@@ -34,6 +33,7 @@ export function caseLabels(t: Translate) {
       team: t("case.summary.team"),
       duration: t("case.summary.duration"),
       keyResult: t("case.summary.keyResult"),
+      kind: t("case.summary.kind"),
     },
   };
 }

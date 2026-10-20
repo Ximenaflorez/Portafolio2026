@@ -1,22 +1,60 @@
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useLocation } from "react-router";
-import { equivalentPath, isHomePath, otherLanguage, sectionPath, type CasePair } from "~/lib/i18n";
+import {
+  equivalentPath,
+  isHomePath,
+  otherLanguage,
+  sectionPath,
+  type CasePair,
+} from "~/lib/i18n";
 import { useActiveSection, useAnchorScrollBehavior } from "~/lib/use-active-section";
+import { useVisibleHeaderOffset } from "~/lib/use-header-offset";
 import { useUi } from "~/lib/use-ui";
 import { LanguageSwitch } from "../atoms/LanguageSwitch";
+import { MenuToggle } from "../atoms/MenuToggle";
 import { TextLink } from "../atoms/TextLink";
 import { ThemeToggle } from "../atoms/ThemeToggle";
 import { SiteNav } from "../molecules/SiteNav";
 
-// Fijo (FR-028, FR-043). En teléfono hay dos filas: nombre con idioma y tema a la derecha (se
-// desplaza con la página) y, debajo, el menú (única fila fija). `top-header-collapse` oculta la
-// primera fila; desde `sm` todo va en una sola fila. Las clases `order-*` colocan los controles
-// junto al nombre en teléfono; en el documento el orden es siempre nombre, menú, idioma y tema.
-export function SiteHeader({ name, casePairs = [] }: { name: string; casePairs?: CasePair[] }) {
-  const { pathname } = useLocation();
+const noop = () => () => {};
+const menuId = "menu-principal";
+
+// Fijo (FR-028, FR-043). En teléfono: nombre a la izquierda; idioma, tema y hamburguesa a la
+// derecha; el menú se abre debajo. Desde `sm` la nav queda a la derecha y, al final, idioma y tema.
+export function SiteHeader({
+  name,
+  casePairs = [],
+}: {
+  name: string;
+  casePairs?: CasePair[];
+}) {
+  const headerRef = useRef<HTMLElement>(null);
+  const { pathname, hash } = useLocation();
   const { language, t } = useUi();
   const isHome = isHomePath(pathname);
   const current = useActiveSection(isHome);
   useAnchorScrollBehavior();
+  useVisibleHeaderOffset(headerRef);
+
+  const hydrated = useSyncExternalStore(
+    noop,
+    () => true,
+    () => false,
+  );
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   const target = otherLanguage(language);
   // En la página principal el selector conserva la sección que se está viendo; en Inicio, que es
@@ -25,9 +63,9 @@ export function SiteHeader({ name, casePairs = [] }: { name: string; casePairs?:
   const languageHref = equivalentPath(pathname, target, casePairs, kept);
 
   return (
-    <header className="sticky top-header-collapse z-10 header-glass border-b border-border sm:top-0">
+    <header ref={headerRef} className="sticky top-0 z-10 header-glass border-b border-border">
       <div className="mx-auto flex max-w-content flex-wrap items-center px-3 sm:flex-nowrap sm:gap-x-3 md:px-4">
-        <div className="order-1 pt-1 sm:order-none sm:mr-auto sm:py-1">
+        <div className="py-1 sm:order-1">
           <TextLink
             to={sectionPath(language, "inicio")}
             variant="standalone"
@@ -36,8 +74,7 @@ export function SiteHeader({ name, casePairs = [] }: { name: string; casePairs?:
             {name}
           </TextLink>
         </div>
-        <SiteNav current={current} className="order-3 w-full py-1 sm:order-none sm:w-auto" />
-        <div className="order-2 ml-auto flex items-center pt-1 sm:order-none sm:ml-0 sm:py-1">
+        <div className="ml-auto flex items-center py-1 sm:order-3 sm:ml-0">
           <LanguageSwitch
             to={languageHref}
             code={t("controls.languageCode")}
@@ -45,7 +82,21 @@ export function SiteHeader({ name, casePairs = [] }: { name: string; casePairs?:
             language={target}
           />
           <ThemeToggle label={t("controls.theme")} />
+          {hydrated ? (
+            <MenuToggle
+              open={open}
+              openLabel={t("nav.open")}
+              closeLabel={t("nav.close")}
+              controls={menuId}
+              onClick={() => setOpen((value) => !value)}
+            />
+          ) : null}
         </div>
+        <SiteNav
+          id={menuId}
+          current={current}
+          className={`w-full py-1 sm:order-2 sm:ml-auto sm:w-auto ${hydrated && !open ? "max-sm:hidden" : ""}`}
+        />
       </div>
     </header>
   );

@@ -57,6 +57,8 @@
   --header-blur: #{$header-blur};
   --header-saturate: #{$header-saturate};
   --header-height: #{$header-height};
+  // Arranque igual a una fila. El encabezado lo sustituye por la altura visible real.
+  --header-visible: #{$header-height};
   --header-collapse: #{$header-collapse};
 }
 
