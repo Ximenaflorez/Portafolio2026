@@ -1,10 +1,23 @@
-import { copyFileSync, existsSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { casePairs, publicPages } from "../src/content/load.server";
 import { alternateLinks } from "../src/lib/i18n";
 import { canonicalUrl } from "../src/lib/seo";
 
 const outDir = path.resolve("build/client");
+
+// React Router guarda el HTML en build/client/<basename>/ porque el basename
+// forma parte de la ruta de prerender. GitHub Pages ya sirve el artefacto desde
+// esa ruta, así que esas páginas tienen que quedar en la raíz del artefacto.
+const basePath = (process.env.BASE_PATH ?? "/").replace(/^\/|\/$/g, "");
+const nested = basePath ? path.join(outDir, basePath) : "";
+if (nested && existsSync(nested)) {
+  for (const entry of readdirSync(nested)) {
+    cpSync(path.join(nested, entry), path.join(outDir, entry), { recursive: true, force: true });
+  }
+  rmSync(nested, { recursive: true, force: true });
+}
+
 const pairs = casePairs();
 
 // Cada página lista su versión en cada idioma, y cada idioma aparece como una entrada (SC-007).
