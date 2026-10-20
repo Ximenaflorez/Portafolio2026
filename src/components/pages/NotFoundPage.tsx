@@ -1,4 +1,5 @@
 import { homePath } from "~/lib/i18n";
+import { publicUrl } from "~/lib/public-url";
 import { translator } from "~/lib/ui";
 import { Heading } from "../atoms/Heading";
 import { TextLink } from "../atoms/TextLink";
@@ -21,12 +22,12 @@ export function NotFoundPage() {
       </Heading>
       <ul className="mt-4 flex flex-col">
         <li>
-          <TextLink variant="standalone" href={homePath("es")} lang="es" hrefLang="es">
+          <TextLink variant="standalone" href={publicUrl(homePath("es"))} lang="es" hrefLang="es">
             {es("notFound.back")}
           </TextLink>
         </li>
         <li>
-          <TextLink variant="standalone" href={homePath("en")} lang="en" hrefLang="en">
+          <TextLink variant="standalone" href={publicUrl(homePath("en"))} lang="en" hrefLang="en">
             {en("notFound.back")}
           </TextLink>
         </li>

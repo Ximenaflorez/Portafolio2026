@@ -1,3 +1,4 @@
+import { publicUrl } from "~/lib/public-url";
 import { TextLink } from "../atoms/TextLink";
 
 type Props = {
@@ -100,7 +101,7 @@ export function CaseCard({
         </div>
       </div>
       <img
-        src={image.src}
+        src={publicUrl(image.src)}
         alt={image.alt}
         className="aspect-video w-full object-cover sm:w-1/2 sm:shrink-0 sm:self-stretch sm:aspect-auto"
       />

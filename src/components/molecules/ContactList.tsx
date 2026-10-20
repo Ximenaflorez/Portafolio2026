@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { publicUrl } from "~/lib/public-url";
 import { Button } from "../atoms/Button";
 import { TextLink } from "../atoms/TextLink";
 
@@ -74,6 +75,8 @@ export function ContactList({
   variant = "links",
   className = "",
 }: Props) {
+  const cvHref = cv ? publicUrl(cv) : undefined;
+
   if (variant === "actions") {
     return (
       <ul className={className || undefined} aria-label={label}>
@@ -87,9 +90,9 @@ export function ContactList({
             LinkedIn
           </Action>
         </li>
-        {cv && (
+        {cvHref && (
           <li>
-            <Action href={cv} variant="secondary" download icon="download">
+            <Action href={cvHref} variant="secondary" download icon="download">
               {cvLabel}
             </Action>
           </li>
@@ -110,9 +113,9 @@ export function ContactList({
           LinkedIn
         </TextLink>
       </li>
-      {cv && (
+      {cvHref && (
         <li>
-          <TextLink variant="standalone" href={cv} download>
+          <TextLink variant="standalone" href={cvHref} download>
             {cvLabel}
           </TextLink>
         </li>

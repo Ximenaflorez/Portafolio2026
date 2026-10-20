@@ -1,3 +1,4 @@
+import { publicUrl } from "~/lib/public-url";
 import { Button } from "../atoms/Button";
 import { Heading } from "../atoms/Heading";
 import { Text } from "../atoms/Text";
@@ -33,7 +34,7 @@ export function ProfileIntro({
   return (
     <div className="py-12">
       <img
-        src={photo.src}
+        src={publicUrl(photo.src)}
         alt={photo.alt}
         width={128}
         height={128}

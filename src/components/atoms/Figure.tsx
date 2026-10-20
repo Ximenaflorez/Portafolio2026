@@ -1,3 +1,5 @@
+import { publicUrl } from "~/lib/public-url";
+
 type Props = {
   src: string;
   /** Obligatorio: qué se ve y qué conclusión muestra (FR-016). */
@@ -16,7 +18,7 @@ export function Figure({ src, alt, caption, width, height, className = "" }: Pro
   return (
     <figure className={`mt-4 ${className}`.trim()}>
       <img
-        src={src}
+        src={publicUrl(src)}
         alt={alt}
         width={width}
         height={height}
