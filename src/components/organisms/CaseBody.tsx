@@ -113,7 +113,8 @@ function piecesOf(text: string): Piece[] {
 
 function peelChunk(chunk: string): { title: string; kicker?: string; rest: string } {
   const title = headingTitle(chunk.match(/^##\s+(.+?)\s*$/m)?.[1] ?? "");
-  let rest = chunk.replace(/^##\s+.+?\n+/, "");
+  // El archivo puede traer CRLF: la línea `##` se quita entera para no pintar el título dos veces.
+  let rest = chunk.replace(/^##[^\n]*\n+/, "");
   const kicker = rest.match(/^(?:\*|_)([^*\n_]+)(?:\*|_)[ \t]*\n*/);
   if (!kicker) return { title, rest: rest.trim() };
   return { title, kicker: kicker[1].trim(), rest: rest.slice(kicker[0].length).trim() };
@@ -122,6 +123,10 @@ function peelChunk(chunk: string): { title: string; kicker?: string; rest: strin
 // Función con nombre propio para que el párrafo reconozca que contiene solo una imagen.
 function MarkdownImage({ src, alt, title }: ComponentProps<"img">) {
   return <Figure src={String(src ?? "")} alt={alt ?? ""} caption={title ?? alt ?? ""} />;
+}
+
+function MarkdownEmphasis({ children }: { children?: ReactNode }) {
+  return <em className="text-text-muted">{children}</em>;
 }
 
 function buildComponents(): Components {
@@ -154,6 +159,16 @@ function buildComponents(): Components {
 
       // Una imagen sola en su párrafo es una figura: no puede quedar dentro de un `<p>`.
       if (rest.length === 0 && isElementOfType(first, MarkdownImage)) return first;
+
+      // Una nota larga en cursiva, bajo las figuras, usa la letra del pie de imagen.
+      if (
+        rest.length === 0 &&
+        isValidElement<{ children?: ReactNode }>(first) &&
+        first.type === MarkdownEmphasis &&
+        textOf(first.props.children).trim().length > 160
+      ) {
+        return <p className="mt-1 text-sm text-text-muted">{textOf(first.props.children).trim()}</p>;
+      }
 
       // Una línea solo en cursiva es la pregunta de cada sección (tensión, descubrimiento…).
       if (rest.length === 0 && isElementOfType(first, "em")) {
@@ -229,7 +244,7 @@ function buildComponents(): Components {
       }
       return <li>{children}</li>;
     },
-    em: ({ children }) => <em className="text-text-muted">{children}</em>,
+    em: MarkdownEmphasis,
     ol: ({ children }) => (
       <ol className={`mt-2 list-decimal space-y-1 pl-4 ${prose}`}>{children}</ol>
     ),
@@ -267,7 +282,14 @@ function FieldGrid({ items, components }: { items: Field[]; components: Componen
   );
 }
 
-export function CaseBody({ markdown }: { markdown: string }) {
+export function CaseBody({
+  markdown,
+  afterIntro,
+}: {
+  markdown: string;
+  /** Enlaces que van bajo la primera imagen del caso, antes de las secciones. */
+  afterIntro?: ReactNode;
+}) {
   const components = buildComponents();
   const numbers = new Map(extractSections(markdown).map((section) => [section.id, section.number]));
   const { intro, sections } = splitBySection(markdown);
@@ -275,6 +297,7 @@ export function CaseBody({ markdown }: { markdown: string }) {
   return (
     <div>
       {intro.trim() !== "" && <ReactMarkdown components={components}>{intro}</ReactMarkdown>}
+      {afterIntro}
       {sections.map((chunk) => {
         const { title, kicker, rest } = peelChunk(chunk);
         const id = slugify(title);

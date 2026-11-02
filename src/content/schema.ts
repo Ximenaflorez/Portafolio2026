@@ -24,6 +24,9 @@ const productSummary = z.object({
   sector: text,
   // Chips extra de la tarjeta, después del rubro. P. ej. «Investigación».
   tags: z.array(text).optional(),
+  // Pantalla publicada y repositorio de los markdown que fundaron el caso.
+  screenUrl: z.url().optional(),
+  specUrl: z.url().optional(),
   // Tipo de trabajo, distinto del tipo de producto: p. ej. «Investigación de viabilidad».
   kind: text.optional(),
 });
@@ -183,6 +186,8 @@ export type CaseSummary = {
   sector?: string;
   tags?: string[];
   kind?: string;
+  screenUrl?: string;
+  specUrl?: string;
 };
 
 export type CaseStudy = {
@@ -214,8 +219,6 @@ type Wording = {
   aboutSections: string[];
   keyDecisions: RegExp;
   keyDecisionsName: string;
-  lessons: RegExp;
-  lessonsName: string;
 };
 
 const wording: Record<Language, Wording> = {
@@ -229,16 +232,12 @@ const wording: Record<Language, Wording> = {
     aboutSections: ["Forma de trabajar", "Métodos"],
     keyDecisions: /Decisi(?:ón|ones) clave/,
     keyDecisionsName: "**Decisiones clave:**",
-    lessons: /Lo que (?:no funcionó|haría distinto)/,
-    lessonsName: "**Lo que no funcionó:** o **Lo que haría distinto:**",
   },
   en: {
     caseSections: ["Initial problem", "Research", "Solution architecture", "Results and learnings"],
     aboutSections: ["Way of working", "Methods"],
     keyDecisions: /Key decisions?/,
     keyDecisionsName: "**Key decisions:**",
-    lessons: /What (?:didn['’]t work|I would do differently)/,
-    lessonsName: "**What didn't work:** or **What I would do differently:**",
   },
 };
 
@@ -304,9 +303,6 @@ export function validateCase(raw: string, language: Language = "es"): Validation
   }
   if (!hasFilledLabel(content, words.keyDecisions)) {
     errors.push(`falta ${words.keyDecisionsName} con al menos una decisión`);
-  }
-  if (!hasFilledLabel(content, words.lessons)) {
-    errors.push(`falta ${words.lessonsName}`);
   }
 
   if (!parsed.success || errors.length > 0) return { errors };

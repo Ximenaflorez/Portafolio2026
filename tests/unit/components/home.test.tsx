@@ -282,7 +282,7 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
     expect(screen.getByRole("img", { name: `Foto de ${perfil.name}` })).toBeInTheDocument();
     expect(screen.getByText("años diseñando producto")).toBeInTheDocument();
     expect(screen.getByText("casos de producto publicados")).toBeInTheDocument();
-    expect(screen.getByText("menos abandono en flujo de despacho")).toBeInTheDocument();
+    expect(screen.getByText("clics para buscar talento")).toBeInTheDocument();
   });
 
   it("no tiene una sección aparte de Lo que hago", () => {
@@ -348,7 +348,7 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
     expect(within(document.getElementById("trabajos")!).getAllByRole("listitem")).toHaveLength(3);
   });
 
-  it("Sobre mí pone las tres líneas como tarjetas bajo el texto, sin Trayectoria si no hay entradas", () => {
+  it("Sobre mí pone las prácticas como tarjetas bajo el texto, sin Trayectoria si no hay entradas", () => {
     pagina();
 
     const sobreMiSeccion = document.getElementById("sobre-mi")!;
@@ -368,9 +368,13 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
     expect(
       within(sobreMiSeccion).getByText(/Decisiones de diseño medibles/),
     ).toBeInTheDocument();
+    expect(
+      within(sobreMiSeccion).getByRole("heading", { name: "Spec-Driven Development (SDD)" }),
+    ).toBeInTheDocument();
+    expect(within(sobreMiSeccion).getByText(/ambigüedad técnica/)).toBeInTheDocument();
     expect(within(sobreMiSeccion).queryByText("Texto de métodos.")).not.toBeInTheDocument();
     const tarjetas = within(sobreMiSeccion).getAllByRole("listitem");
-    expect(tarjetas).toHaveLength(3);
+    expect(tarjetas).toHaveLength(4);
     expect(tarjetas[0].className).toContain("rounded-card");
     expect(tarjetas[0].className).toContain("bg-surface");
     for (const tarjeta of tarjetas) {
@@ -466,7 +470,7 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
     expect(screen.getByRole("img", { name: `Photo of ${perfil.name}` })).toBeInTheDocument();
     expect(screen.getByText("years designing product")).toBeInTheDocument();
     expect(screen.getByText("published product cases")).toBeInTheDocument();
-    expect(screen.getByText("less drop-off in the dispatch flow")).toBeInTheDocument();
+    expect(screen.getByText("clicks to search for talent")).toBeInTheDocument();
     const tarjetas = within(document.getElementById("trabajos")!).getAllByRole("listitem");
     expect(within(tarjetas[0]).getByRole("link")).toHaveAttribute("href", "/en/work/pagos/");
     expect(within(tarjetas[3]).getByRole("link")).toHaveAttribute(

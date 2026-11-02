@@ -288,6 +288,27 @@ describe("CaseCard (FR-019)", () => {
     expect(texto.indexOf("Investigación")).toBeLessThan(texto.indexOf(props.title));
   });
 
+  it("ofrece la pantalla y el fundamento cuando el caso tiene esas direcciones", () => {
+    enRuta(
+      <ul>
+        <CaseCard
+          {...props}
+          screen={{ href: "https://example.com/pantalla", label: "Ver la pantalla" }}
+          spec={{ href: "https://example.com/spec", label: "Ver el fundamento" }}
+        />
+      </ul>,
+    );
+
+    expect(screen.getByRole("link", { name: "Ver la pantalla" })).toHaveAttribute(
+      "href",
+      "https://example.com/pantalla",
+    );
+    expect(screen.getByRole("link", { name: "Ver el fundamento" })).toHaveAttribute(
+      "href",
+      "https://example.com/spec",
+    );
+  });
+
   it("el rubro va antes del título", () => {
     const { container } = enRuta(
       <ul>
@@ -327,6 +348,32 @@ describe("CaseBody", () => {
       screen.getByRole("heading", { level: 2, name: "Investigación y datos de usuario" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3, name: "Hallazgos" })).toBeInTheDocument();
+  });
+
+  it("pone una nota larga en cursiva con la letra del pie de imagen, sin titular", () => {
+    const nota =
+      "La página pública es de solo lectura. Subir el Excel, guardar Se queda o Se va y enviar a Jira corren en un servidor privado, con el programa de Python, las credenciales de Jira y los archivos del mes.";
+    const { container } = enRuta(
+      <CaseBody
+        markdown={`## 1. Resultados y aprendizajes\n\n_Impacto y reflexión_\n\n_${nota}_`}
+      />,
+    );
+    const parrafo = screen.getByText(/página pública/);
+
+    expect(screen.queryByText("Siguientes pasos")).not.toBeInTheDocument();
+    expect(parrafo.tagName).toBe("P");
+    expect(parrafo.className).toContain("text-sm");
+    expect(parrafo.className).toContain("text-text-muted");
+    expect(container.querySelector("figcaption")?.className).not.toBe(parrafo.className);
+  });
+
+  it("no repite el título de la sección cuando el markdown trae CRLF", () => {
+    enRuta(<CaseBody markdown={markdown.replace(/\n/g, "\r\n")} />);
+
+    expect(screen.getAllByRole("heading", { level: 2, name: "Problema inicial" })).toHaveLength(1);
+    expect(
+      screen.getAllByRole("heading", { level: 2, name: "Investigación y datos de usuario" }),
+    ).toHaveLength(1);
   });
 
   it("nunca crea un segundo h1", () => {

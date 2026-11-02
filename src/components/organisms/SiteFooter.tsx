@@ -1,4 +1,6 @@
+import { useLocation } from "react-router";
 import type { Profile } from "~/content/schema";
+import { isHomePath } from "~/lib/i18n";
 import { useUi } from "~/lib/use-ui";
 import { TextLink } from "../atoms/TextLink";
 import { ContactList } from "../molecules/ContactList";
@@ -19,18 +21,21 @@ export function SiteFooter({
   year = new Date().getFullYear(),
 }: Props) {
   const { t } = useUi();
+  const { pathname } = useLocation();
 
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto flex max-w-content flex-col gap-4 px-3 py-6 md:px-4">
-        <ContactList
-          email={profile.email}
-          linkedin={profile.linkedin}
-          cv={cvAvailable ? profile.cv : undefined}
-          label={t("footer.contact")}
-          cvLabel={t("footer.cv")}
-          className="flex flex-wrap gap-x-3"
-        />
+        {isHomePath(pathname) ? (
+          <ContactList
+            email={profile.email}
+            linkedin={profile.linkedin}
+            cv={cvAvailable ? profile.cv : undefined}
+            label={t("footer.contact")}
+            cvLabel={t("footer.cv")}
+            className="flex flex-wrap gap-x-3"
+          />
+        ) : null}
         <div className="flex flex-col gap-1 text-sm text-text-muted sm:flex-row sm:justify-between">
           <p>
             {t("footer.credit", { name: profile.name })}

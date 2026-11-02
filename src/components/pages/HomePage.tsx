@@ -40,6 +40,12 @@ function caseCard(item: CaseStudy, language: Language, t: Translate) {
     role: item.summary.role,
     description: (!isMeta && item.summary.indexLine) || item.summary.keyResult,
     readLabel: t("work.read"),
+    screen: item.summary.screenUrl
+      ? { href: item.summary.screenUrl, label: t("work.screen") }
+      : undefined,
+    spec: item.summary.specUrl
+      ? { href: item.summary.specUrl, label: t("work.spec") }
+      : undefined,
     image: firstMarkdownImage(item.body),
   };
 }
@@ -120,6 +126,11 @@ export function HomePage({
                       title: t("home.sobre-mi.data.title"),
                       body: t("home.sobre-mi.data.body"),
                       icon: "data",
+                    },
+                    {
+                      title: t("home.sobre-mi.spec.title"),
+                      body: t("home.sobre-mi.spec.body"),
+                      icon: "spec",
                     },
                   ]}
                 />

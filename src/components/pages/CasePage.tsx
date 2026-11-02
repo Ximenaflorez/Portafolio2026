@@ -2,6 +2,7 @@ import type { CaseStudy } from "~/content/schema";
 import { homePath as languageHome } from "~/lib/i18n";
 import { caseLabels } from "~/lib/ui";
 import { useUi } from "~/lib/use-ui";
+import { CaseLinks } from "../molecules/CaseLinks";
 import { CaseSummary, type CaseSummaryLabels } from "../molecules/CaseSummary";
 import { CaseBody } from "../organisms/CaseBody";
 import { CaseTemplate } from "../templates/CaseTemplate";
@@ -61,7 +62,17 @@ export function CasePage({
         title={title}
         summary={<CaseSummary summary={summary} labels={text.summary} />}
       >
-        <CaseBody markdown={body} />
+        <CaseBody
+          markdown={body}
+          afterIntro={
+            <CaseLinks
+              screen={
+                summary.screenUrl ? { href: summary.screenUrl, label: t("work.screen") } : undefined
+              }
+              spec={summary.specUrl ? { href: summary.specUrl, label: t("work.spec") } : undefined}
+            />
+          }
+        />
       </CaseTemplate>
     </SiteTemplate>
   );

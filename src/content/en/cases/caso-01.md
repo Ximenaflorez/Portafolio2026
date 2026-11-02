@@ -11,7 +11,7 @@ summary:
   product: "A digital tab or store-credit model for food purchases, meant as a month-end top-up at the trusted store."
   role: "UX Researcher / Product Designer"
   team: "Product and research"
-  duration: "January 2024"
+  duration: "2 months in January 2024"
   keyResult: "Families spend 47.3% on food but budget only 31.5%: they need credit at month end."
   indexLine: "Validating food credit in the traditional channel and neighborhood stores."
   productType: "B2B2C / Fintech"
@@ -72,21 +72,13 @@ summary:
 
 **System and components:** Reuse the existing lending system and add the new modes to the portfolio.
 
-**Collaboration with engineering:** *To complete · handoff feasibility and changes to the current lending system.*
-
 **Validation:** Desirability (31.52% vs 47.30%), feasibility (reuse of the system), and viability (~4% extra cost). *To complete: tests with people.*
 
 ## 4. Results and learnings
 
 *Impact and reflection*
 
-**Results:** The model proved desirable, feasible, and viable: it covers the month-end top-up, it sits on the current system, and the store recovers the loan on a fixed term. *To complete: effect if it launched.*
-
-**What didn't work:** *To complete · which hypotheses failed or what you had to correct.*
-
-**What I would do differently:** *To complete · your reflection as a designer.*
-
-**Next steps:** *To complete · pilot, usability tests, metrics to measure.*
+**Results:** The model proved desirable, feasible, and viable: it covers the month-end top-up, it sits on the current system, and the store recovers the loan on a fixed term. The research opened a pilot of 100 million pesos to read how people behave when they buy food on credit, as distinct from merchandise.
 
 ## 5. Visual support
 
@@ -94,14 +86,10 @@ summary:
 
 ![Shopkeeper in an apron and a customer in a neighborhood store, next to a sign offering credit for the business.](/casos/caso-01.jpg "Credit in the traditional channel: the neighborhood store.")
 
-**User journey:** *To complete · image here.*
+![RADDAR pocketshare chart for Colombia in October 2023: food for the household takes 31.52% of every 100 pesos.](/casos/caso-01-canasta.png "31.52% of wages goes to food (minimum wage of $403,000) and does not cover the family basket.")
 
-**Credit flow:** *To complete · image here.*
+![RADDAR chart for October 2023: bars for the household spending share of wages and rent, credit, and remittances, plus the yearly line of those three sources.](/casos/caso-01-fuentes.png "In October 2023, 20% of household spending came from credit and 75.45% from wages and rent. Source: RADDAR, Gastometría.")
 
-**Wireframes:** *To complete · image here.*
+![Family spending table against the minimum wage: the household assigns 31.52% of wages to food while the basket requires 47.30%, with a 4.17% extra cost.](/casos/caso-01-salario.png "Against the minimum wage, 31.52% of pay goes to food, but the basket requires 47.30%.")
 
-**Final screens:** *To complete · image here.*
-
-**Stakeholder map:** *To complete · image here.*
-
-**Key data:** *To complete · image here.*
+![Slide with two business questions: why a shopper would accept interest and a guarantee, and why the store would stop extending cash credit.](/casos/caso-01-negocio.png "What we want to answer as a business: credit as a month-end top-up, and the store gives up the tab if a third party guarantees the return.")

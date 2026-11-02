@@ -107,9 +107,9 @@ describe("validateCase", () => {
     expect(validateCase(raw).errors.join()).toMatch(/Decisiones clave/);
   });
 
-  it("rechaza un caso publicado sin lo que no funcionó ni lo que haría distinto (FR-023)", () => {
+  it("publica un caso cuyo resultado no trae lo que no funcionó ni lo que haría distinto", () => {
     const raw = caseFile(publishedProduct, body.replace("**Lo que no funcionó:**", "**Notas:**"));
-    expect(validateCase(raw).errors.join()).toMatch(/no funcionó/);
+    expect(validateCase(raw).errors).toEqual([]);
   });
 
   it("rechaza una imagen sin texto alternativo (FR-016)", () => {

@@ -18,7 +18,13 @@ type Common = { variant: keyof typeof variants; children: ReactNode };
 
 type Props =
   | (Common & { to: string; href?: never; onClick?: never; download?: never })
-  | (Common & { href: string; to?: never; onClick?: never; download?: boolean | string })
+  | (Common & {
+      href: string;
+      to?: never;
+      onClick?: never;
+      download?: boolean | string;
+      newTab?: boolean;
+    })
   | (Common & {
       onClick: MouseEventHandler<HTMLButtonElement>;
       to?: never;
@@ -38,7 +44,13 @@ export function Button(props: Props) {
   }
   if (props.href !== undefined) {
     return (
-      <a href={props.href} className={classes} download={props.download}>
+      <a
+        href={props.href}
+        className={classes}
+        download={props.download}
+        target={props.newTab ? "_blank" : undefined}
+        rel={props.newTab ? "noreferrer" : undefined}
+      >
         {props.children}
       </a>
     );

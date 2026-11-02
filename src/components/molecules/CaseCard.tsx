@@ -1,4 +1,5 @@
 import { publicUrl } from "~/lib/public-url";
+import { CaseLinks } from "./CaseLinks";
 import { TextLink } from "../atoms/TextLink";
 
 type Props = {
@@ -14,6 +15,10 @@ type Props = {
   /** Línea de resultado del caso, o su descripción en el caso meta. */
   description: string;
   readLabel: string;
+  /** Pantalla publicada del caso, si existe. */
+  screen?: { href: string; label: string };
+  /** Markdown que fundaron el caso, si existen. */
+  spec?: { href: string; label: string };
   /** Imagen del caso; sin ella se usa una genérica y decorativa. */
   image?: { src: string; alt: string };
 };
@@ -21,24 +26,6 @@ type Props = {
 const genericImage = { src: "/casos/generica.svg", alt: "" };
 
 const chip = "self-start rounded-chip border border-border bg-surface px-1 py-0.5 text-sm";
-
-function CheckIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="mt-0.5 h-3 w-3 shrink-0 text-success"
-    >
-      <path d="M5 12l5 5L20 7" />
-    </svg>
-  );
-}
 
 function ArrowIcon() {
   return (
@@ -70,6 +57,8 @@ export function CaseCard({
   role,
   description,
   readLabel,
+  screen,
+  spec,
   image = genericImage,
 }: Props) {
   return (
@@ -88,16 +77,14 @@ export function CaseCard({
         </div>
         <h3 className="mt-2 text-2xl">{title}</h3>
         {role && <p className="mt-1 text-sm text-text-muted">{role}</p>}
-        <p className="mt-4 flex gap-2">
-          <CheckIcon />
-          <span>{description}</span>
-        </p>
-        <div className="mt-6">
+        <p className="mt-4">{description}</p>
+        <div className="mt-6 flex flex-col gap-2">
           <TextLink to={to} variant="standalone" className="gap-2 font-semibold">
             {readLabel}
             <ArrowIcon />
             <span className="sr-only">: {title}</span>
           </TextLink>
+          <CaseLinks screen={screen} spec={spec} className="flex flex-col gap-2" />
         </div>
       </div>
       <img

@@ -11,7 +11,7 @@ summary:
   product: "Un modelo de «apuntado» o fiado digital para compras de alimentos, pensado como ajuste de fin de mes en la tienda de confianza."
   role: "UX Researcher / Product Designer"
   team: "Producto e investigación"
-  duration: "Enero 2024"
+  duration: "2 meses en enero de 2024"
   keyResult: "Las familias gastan 47,3 % en alimentos pero solo asignan 31,5 %: necesitan crédito a fin de mes."
   indexLine: "Validación de crédito para alimentación en el canal tradicional y tiendas de barrio."
   productType: "B2B2C / Fintech"
@@ -72,21 +72,13 @@ summary:
 
 **Sistema y componentes:** Reusar el sistema de créditos existente e incorporar las nuevas modalidades al portafolio.
 
-**Colaboración con ingeniería:** *Por completar · viabilidad de handoff y ajustes con el sistema de créditos actual.*
-
 **Validación:** Deseabilidad (31,52 % vs 47,30 %), factibilidad (reuso del sistema) y viabilidad (~4 % de sobrecosto). *Por completar: pruebas con personas.*
 
 ## 4. Resultados y aprendizajes
 
 *Impacto y reflexión*
 
-**Resultados:** El modelo resultó deseable, factible y viable: cubre el ajuste de fin de mes, se monta sobre el sistema actual y la tienda recupera el préstamo en un plazo fijo. *Por completar: efecto si se lanzó.*
-
-**Lo que no funcionó:** *Por completar · qué hipótesis fallaron o qué tuviste que corregir.*
-
-**Lo que haría distinto:** *Por completar · tu reflexión personal como diseñador.*
-
-**Siguientes pasos:** *Por completar · piloto, pruebas de usabilidad, métricas a medir.*
+**Resultados:** El modelo resultó deseable, factible y viable: cubre el ajuste de fin de mes, se monta sobre el sistema actual y la tienda recupera el préstamo en un plazo fijo. La investigación abrió una prueba piloto de 100 millones de pesos para leer cómo se comporta quien fía alimentos, distinto de quien fía mercancía.
 
 ## 5. Apoyo visual
 
@@ -94,14 +86,10 @@ summary:
 
 ![Tendero con delantal y un cliente en una tienda de barrio, junto a un letrero que ofrece crédito para el negocio.](/casos/caso-01.jpg "Crédito en el canal tradicional: la tienda de barrio.")
 
-**Journey del usuario:** *Por completar · imagen aquí.*
+![Gráfico de RADDAR del pocketshare en Colombia en octubre de 2023: alimentos para el hogar ocupan 31,52 % de cada 100 pesos.](/casos/caso-01-canasta.png "El 31,52 % del salario se va en alimentos (salario mínimo de $403.000) y no alcanza para la canasta del grupo familiar.")
 
-**Flujo de crédito:** *Por completar · imagen aquí.*
+![Gráfico de RADDAR de octubre de 2023: barras de participación del gasto del hogar en salario y rentas, crédito y remesas, y la línea anual de esas tres fuentes.](/casos/caso-01-fuentes.png "En octubre de 2023, el 20 % del gasto del hogar venía de crédito y el 75,45 % de salario y renta. Fuente: RADDAR, Gastometría.")
 
-**Wireframes:** *Por completar · imagen aquí.*
+![Tabla del gasto familiar frente al salario mínimo: el hogar destina 31,52 % del salario a alimentos y la canasta exige 47,30 %, con un sobrecosto de 4,17 %.](/casos/caso-01-salario.png "Frente al salario mínimo, el 31,52 % del salario va a alimentos, pero la canasta exige 47,30 %.")
 
-**Pantallas finales:** *Por completar · imagen aquí.*
-
-**Mapa de stakeholders:** *Por completar · imagen aquí.*
-
-**Datos clave:** *Por completar · imagen aquí.*
+![Lámina con dos preguntas de negocio: por qué quien compra aceptaría intereses y un aval, y por qué la tienda dejaría de fiar en efectivo.](/casos/caso-01-negocio.png "Qué queremos responder como negocio: el crédito como ajuste de fin de mes, y la tienda cede el fiado si un tercero garantiza el retorno.")

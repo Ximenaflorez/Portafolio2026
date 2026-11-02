@@ -4,7 +4,7 @@ import { Text } from "../atoms/Text";
 type Practice = {
   title: string;
   body: string;
-  icon: "research" | "systems" | "data";
+  icon: "research" | "systems" | "data" | "spec";
 };
 
 type Props = {
@@ -50,6 +50,14 @@ function PracticeIcon({ name }: { name: Practice["icon"] }) {
           <path d="M21 19H3" />
         </>
       ) : null}
+      {name === "spec" ? (
+        <>
+          <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
+          <path d="M14 3v5h5" />
+          <path d="M9 13h6" />
+          <path d="M9 17h4" />
+        </>
+      ) : null}
     </svg>
   );
 }
@@ -80,7 +88,7 @@ export function AboutSplit({ headingId, index, heading, intro, practices }: Prop
         {heading}
       </Heading>
       <Paragraphs text={intro} />
-      <ul className="mt-6 grid gap-4 md:grid-cols-3">
+      <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {practices.map((item) => (
           <li key={item.title} className="rounded-card border border-border bg-surface p-6">
             <PracticeIcon name={item.icon} />

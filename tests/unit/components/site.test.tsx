@@ -221,6 +221,15 @@ describe("SiteFooter", () => {
     expect(cv).toHaveAttribute("download");
   });
 
+  it("en una página interna no muestra correo, LinkedIn ni CV", () => {
+    enRuta(<SiteFooter {...props} />, "/trabajos/caso-05-orquestador-reglas/");
+
+    expect(screen.queryByRole("link", { name: perfil.email })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "LinkedIn" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /CV/ })).not.toBeInTheDocument();
+    expect(screen.getByText(/© 2026/)).toBeInTheDocument();
+  });
+
   it("oculta el enlace al CV si el archivo falta", () => {
     enRuta(<SiteFooter {...props} cvAvailable={false} />);
     expect(screen.queryByRole("link", { name: /CV/ })).not.toBeInTheDocument();
