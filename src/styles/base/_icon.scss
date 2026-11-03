@@ -1,0 +1,8 @@
+// El reset deja `height: auto` en los svg. Esta clase gana por especificidad y fija
+// el glifo en 20px, con 2px de aire a cada lado.
+.ui-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin: var(--icon-pad);
+  flex-shrink: 0;
+}

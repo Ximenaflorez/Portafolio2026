@@ -16,7 +16,6 @@ export function CaseRouteView({ data }: { data: CaseRouteData }) {
   return (
     <CasePage
       profile={data.profile}
-      cvAvailable={data.cvAvailable}
       metaCaseHref={data.metaCaseHref}
       casePairs={data.casePairs}
       caseStudy={data.case}

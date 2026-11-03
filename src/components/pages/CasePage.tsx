@@ -17,10 +17,7 @@ export type CasePageLabels = {
 
 type SiteProps = Parameters<typeof SiteTemplate>[0];
 
-type Props = Pick<
-  SiteProps,
-  "profile" | "cvAvailable" | "metaCaseHref" | "year" | "casePairs"
-> & {
+type Props = Pick<SiteProps, "profile" | "metaCaseHref" | "year" | "casePairs"> & {
   caseStudy: CaseStudy;
   /** Textos de la página; por defecto, los de interfaz del idioma de la ruta. */
   labels?: CasePageLabels;
@@ -30,7 +27,6 @@ type Props = Pick<
 
 export function CasePage({
   profile,
-  cvAvailable,
   metaCaseHref,
   year,
   casePairs,
@@ -48,13 +44,7 @@ export function CasePage({
       : [text.eyebrowProduct, summary.productType].filter(Boolean).join(" · ");
 
   return (
-    <SiteTemplate
-      profile={profile}
-      cvAvailable={cvAvailable}
-      metaCaseHref={metaCaseHref}
-      year={year}
-      casePairs={casePairs}
-    >
+    <SiteTemplate profile={profile} metaCaseHref={metaCaseHref} year={year} casePairs={casePairs}>
       <CaseTemplate
         backHref={`${home}#trabajos`}
         backLabel={text.back}

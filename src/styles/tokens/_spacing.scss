@@ -13,3 +13,7 @@ $spaces: (
   "12": 96px,
   "16": 128px,
 );
+
+// El glifo mide 20px y deja 2px libres a cada lado. No entran en la escala de 8px.
+$icon-size: 20px;
+$icon-pad: 2px;

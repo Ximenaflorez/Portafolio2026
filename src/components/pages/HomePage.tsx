@@ -15,7 +15,8 @@ import { SiteTemplate } from "../templates/SiteTemplate";
 
 type SiteProps = Parameters<typeof SiteTemplate>[0];
 
-type Props = Pick<SiteProps, "cvAvailable" | "metaCaseHref" | "year" | "casePairs"> & {
+type Props = Pick<SiteProps, "metaCaseHref" | "year" | "casePairs"> & {
+  cvAvailable: boolean;
   profile: Profile;
   /** Casos de producto publicados, ya ordenados. */
   cases: CaseStudy[];
@@ -67,13 +68,7 @@ export function HomePage({
   const aboutParts = splitAbout(about);
 
   return (
-    <SiteTemplate
-      profile={profile}
-      cvAvailable={cvAvailable}
-      metaCaseHref={metaCaseHref}
-      year={year}
-      casePairs={casePairs}
-    >
+    <SiteTemplate profile={profile} metaCaseHref={metaCaseHref} year={year} casePairs={casePairs}>
       <ContentTemplate
         intro={
           <ProfileIntro

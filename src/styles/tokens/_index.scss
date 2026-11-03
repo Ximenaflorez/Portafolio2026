@@ -37,6 +37,9 @@
     --space-#{$name}: #{$space};
   }
 
+  --icon-size: #{$icon-size};
+  --icon-pad: #{$icon-pad};
+
   --duration-state: #{$duration-state};
   --target-min: #{$target-min};
   --focus-ring-width: #{$focus-ring-width};

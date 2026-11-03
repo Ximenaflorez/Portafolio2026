@@ -28,9 +28,9 @@ export function ThemeToggle({ label }: { label: string }) {
       className={`${box} text-text transition-colors duration-state hover:text-primary-hover active:text-primary-active`}
     >
       {dark ? (
-        <Moon data-icon="moon" aria-hidden focusable="false" className="h-3 w-3" />
+        <Moon data-icon="moon" aria-hidden focusable="false" className="ui-icon" />
       ) : (
-        <Sun data-icon="sun" aria-hidden focusable="false" className="h-3 w-3" />
+        <Sun data-icon="sun" aria-hidden focusable="false" className="ui-icon" />
       )}
     </button>
   );

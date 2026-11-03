@@ -599,7 +599,7 @@ describe("CasePage", () => {
   };
 
   function pagina(c: CaseStudy = caso) {
-    return enRuta(<CasePage profile={perfil} cvAvailable caseStudy={c} labels={labels} />);
+    return enRuta(<CasePage profile={perfil} caseStudy={c} labels={labels} />);
   }
 
   it("compone el caso: volver, un solo h1, resumen y cuerpo, sin índice de secciones", () => {
@@ -674,7 +674,7 @@ describe("CasePage en inglés (FR-042)", () => {
   function pagina() {
     return render(
       <MemoryRouter initialEntries={["/en/work/analytics/"]}>
-        <CasePage profile={perfil} cvAvailable caseStudy={caso} />
+        <CasePage profile={perfil} caseStudy={caso} />
       </MemoryRouter>,
     );
   }
@@ -697,7 +697,6 @@ describe("CasePage en inglés (FR-042)", () => {
       <MemoryRouter initialEntries={["/en/work/analytics/"]}>
         <CasePage
           profile={perfil}
-          cvAvailable
           caseStudy={caso}
           casePairs={[
             { file: "caso-01.md", type: "product", slugs: { es: "analitica", en: "analytics" } },

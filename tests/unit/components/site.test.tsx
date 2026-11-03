@@ -203,36 +203,17 @@ describe("SiteHeader (FR-028, FR-031)", () => {
 describe("SiteFooter", () => {
   const props = {
     profile: perfil,
-    cvAvailable: true,
     metaCaseHref: "/trabajos/este-portafolio",
     year: 2026,
   };
 
-  it("muestra correo, LinkedIn y el CV como descarga", () => {
+  it("no lista correo, LinkedIn ni CV: eso queda en Contacto", () => {
     enRuta(<SiteFooter {...props} />);
-
-    expect(screen.getByRole("link", { name: perfil.email })).toHaveAttribute(
-      "href",
-      `mailto:${perfil.email}`,
-    );
-    expect(screen.getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", perfil.linkedin);
-    const cv = screen.getByRole("link", { name: /CV/ });
-    expect(cv).toHaveAttribute("href", "/cv.pdf");
-    expect(cv).toHaveAttribute("download");
-  });
-
-  it("en una página interna no muestra correo, LinkedIn ni CV", () => {
-    enRuta(<SiteFooter {...props} />, "/trabajos/caso-05-orquestador-reglas/");
 
     expect(screen.queryByRole("link", { name: perfil.email })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "LinkedIn" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /CV/ })).not.toBeInTheDocument();
     expect(screen.getByText(/© 2026/)).toBeInTheDocument();
-  });
-
-  it("oculta el enlace al CV si el archivo falta", () => {
-    enRuta(<SiteFooter {...props} cvAvailable={false} />);
-    expect(screen.queryByRole("link", { name: /CV/ })).not.toBeInTheDocument();
   });
 
   it("no repite la navegación entre secciones: eso lo hace solo el encabezado", () => {
@@ -266,7 +247,7 @@ describe("SiteFooter", () => {
 });
 
 describe("SiteTemplate (FR-017)", () => {
-  const props = { profile: perfil, cvAvailable: true, metaCaseHref: "/trabajos/este-portafolio" };
+  const props = { profile: perfil, metaCaseHref: "/trabajos/este-portafolio" };
 
   it("ordena: enlace para saltar, encabezado, contenido principal y pie", () => {
     enRuta(
@@ -463,13 +444,13 @@ describe("Encabezado con selector de idioma y botón de tema (FR-017, FR-043)", 
 });
 
 describe("Pie y plantilla en inglés (FR-042)", () => {
-  const props = { profile: perfil, cvAvailable: true, metaCaseHref: "/en/work/this-portfolio/" };
+  const props = { profile: perfil, metaCaseHref: "/en/work/this-portfolio/" };
 
   it("el pie muestra sus textos en inglés", () => {
     enRuta(<SiteFooter {...props} year={2026} />, "/en/");
 
-    expect(screen.getByRole("list", { name: "Contact" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Download CV (PDF)" })).toHaveAttribute("download");
+    expect(screen.queryByRole("list", { name: "Contact" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Download CV (PDF)" })).not.toBeInTheDocument();
     expect(screen.getByText(/Designed and built by Nombre Apellido/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "How I built this portfolio" })).toHaveAttribute(
       "href",

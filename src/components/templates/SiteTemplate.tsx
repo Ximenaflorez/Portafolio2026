@@ -11,7 +11,6 @@ type FooterProps = Parameters<typeof SiteFooter>[0];
 // Elementos globales en el orden de tabulación de contracts/routes.md.
 export function SiteTemplate({
   profile,
-  cvAvailable,
   metaCaseHref,
   year,
   casePairs,
@@ -30,12 +29,7 @@ export function SiteTemplate({
       >
         {children}
       </main>
-      <SiteFooter
-        profile={profile}
-        cvAvailable={cvAvailable}
-        metaCaseHref={metaCaseHref}
-        year={year}
-      />
+      <SiteFooter profile={profile} metaCaseHref={metaCaseHref} year={year} />
       <BackToTop label={t("controls.backToTop")} />
     </div>
   );

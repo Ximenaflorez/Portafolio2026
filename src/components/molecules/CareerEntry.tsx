@@ -126,8 +126,8 @@ function Tools({ tools, label }: { tools: string[]; label: string }) {
 function ToggleIcon() {
   return (
     <span className="inline-flex min-h-target min-w-target shrink-0 items-center justify-center text-text">
-      <Plus aria-hidden focusable="false" className="h-3 w-3 group-open:hidden" />
-      <X aria-hidden focusable="false" className="hidden h-3 w-3 group-open:block" />
+      <Plus aria-hidden focusable="false" className="ui-icon group-open:hidden" />
+      <X aria-hidden focusable="false" className="ui-icon hidden group-open:block" />
     </span>
   );
 }

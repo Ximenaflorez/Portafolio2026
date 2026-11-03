@@ -20,7 +20,7 @@ type Props = {
 
 function ActionIcon({ kind }: { kind: "external" | "download" }) {
   const Icon = kind === "download" ? Download : ArrowUpRight;
-  return <Icon aria-hidden focusable="false" className="h-3 w-3" />;
+  return <Icon aria-hidden focusable="false" className="ui-icon" />;
 }
 
 function Action({

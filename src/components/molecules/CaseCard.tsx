@@ -64,7 +64,7 @@ export function CaseCard({
         <div className="mt-6 flex flex-col gap-2">
           <TextLink to={to} variant="standalone" className="gap-2 font-semibold">
             {readLabel}
-            <ArrowUpRight aria-hidden focusable="false" className="h-3 w-3 shrink-0" />
+            <ArrowUpRight aria-hidden focusable="false" className="ui-icon" />
             <span className="sr-only">: {title}</span>
           </TextLink>
           <CaseLinks screen={screen} spec={spec} className="flex flex-col gap-2" />
