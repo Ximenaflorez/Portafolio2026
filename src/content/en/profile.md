@@ -4,7 +4,7 @@ role: "Senior Product Designer & UX/UI Lead"
 valueProposition: "I work with product teams to simplify complex system flows, grounding decisions in data, accessibility, and strategic integration of artificial intelligence."
 email: "ximenalvarezflorez11@gmail.com"
 linkedin: "https://www.linkedin.com/in/ximena-alvarez-florez11"
-cv: /cv.pdf
+cv: /cv-en.pdf
 career:
   experience:
     - title: "B2B UX Lead"
