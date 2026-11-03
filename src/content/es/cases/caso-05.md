@@ -2,7 +2,7 @@
 slug: caso-05-orquestador-reglas
 type: product
 status: published
-order: 5
+order: 1
 title: "Orquestador de métricas y feedback cualitativo con IA"
 seo:
   title: "Métricas y feedback con IA | Caso de estudio"

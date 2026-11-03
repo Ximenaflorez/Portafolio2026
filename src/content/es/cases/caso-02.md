@@ -2,7 +2,7 @@
 slug: caso-02-informes-financieros-aliados
 type: product
 status: published
-order: 2
+order: 4
 title: "Informes financieros claros para aliados de una fintech"
 seo:
   title: "Informes financieros de aliados | Caso de estudio"

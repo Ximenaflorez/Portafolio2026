@@ -1,3 +1,4 @@
+import { Plus, X } from "lucide-react";
 import { useRef, useState } from "react";
 import type { CareerCertificate, CareerEducation, CareerExperience } from "~/content/schema";
 import type { Language } from "~/lib/i18n";
@@ -125,30 +126,8 @@ function Tools({ tools, label }: { tools: string[]; label: string }) {
 function ToggleIcon() {
   return (
     <span className="inline-flex min-h-target min-w-target shrink-0 items-center justify-center text-text">
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        className="h-3 w-3 group-open:hidden"
-      >
-        <path d="M12 5v14M5 12h14" />
-      </svg>
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        className="hidden h-3 w-3 group-open:block"
-      >
-        <path d="M6 6l12 12M18 6L6 18" />
-      </svg>
+      <Plus aria-hidden focusable="false" className="h-3 w-3 group-open:hidden" />
+      <X aria-hidden focusable="false" className="hidden h-3 w-3 group-open:block" />
     </span>
   );
 }

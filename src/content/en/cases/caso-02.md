@@ -2,7 +2,7 @@
 slug: case-02-partner-financial-reports
 type: product
 status: published
-order: 2
+order: 4
 title: "Clear financial reports for a fintech's partners"
 seo:
   title: "Financial reports for partners | Case study"

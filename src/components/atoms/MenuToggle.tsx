@@ -1,3 +1,5 @@
+import { Menu, X } from "lucide-react";
+
 type Props = {
   open: boolean;
   openLabel: string;
@@ -20,26 +22,11 @@ export function MenuToggle({ open, openLabel, closeLabel, controls, onClick }: P
       onClick={onClick}
       className={box}
     >
-      <svg
-        data-icon={open ? "close" : "menu"}
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-3 w-3"
-      >
-        {open ? (
-          <path d="M6 6l12 12M18 6L6 18" />
-        ) : (
-          <>
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </>
-        )}
-      </svg>
+      {open ? (
+        <X data-icon="close" aria-hidden focusable="false" className="h-3 w-3" />
+      ) : (
+        <Menu data-icon="menu" aria-hidden focusable="false" className="h-3 w-3" />
+      )}
     </button>
   );
 }

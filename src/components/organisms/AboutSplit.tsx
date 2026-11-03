@@ -1,3 +1,4 @@
+import { ChartColumn, FileText, LayoutGrid, Search, type LucideIcon } from "lucide-react";
 import { Heading } from "../atoms/Heading";
 import { Text } from "../atoms/Text";
 
@@ -15,51 +16,16 @@ type Props = {
   practices: Practice[];
 };
 
+const practiceIcons: Record<Practice["icon"], LucideIcon> = {
+  research: Search,
+  systems: LayoutGrid,
+  data: ChartColumn,
+  spec: FileText,
+};
+
 function PracticeIcon({ name }: { name: Practice["icon"] }) {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4 text-primary"
-    >
-      {name === "research" ? (
-        <>
-          <circle cx="11" cy="11" r="7" />
-          <path d="M21 21l-4.3-4.3" />
-        </>
-      ) : null}
-      {name === "systems" ? (
-        <>
-          <rect x="3" y="3" width="7" height="7" rx="1.5" />
-          <rect x="14" y="3" width="7" height="7" rx="1.5" />
-          <rect x="3" y="14" width="7" height="7" rx="1.5" />
-          <rect x="14" y="14" width="7" height="7" rx="1.5" />
-        </>
-      ) : null}
-      {name === "data" ? (
-        <>
-          <path d="M4 19V11" />
-          <path d="M10 19V5" />
-          <path d="M16 19v-6" />
-          <path d="M21 19H3" />
-        </>
-      ) : null}
-      {name === "spec" ? (
-        <>
-          <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
-          <path d="M14 3v5h5" />
-          <path d="M9 13h6" />
-          <path d="M9 17h4" />
-        </>
-      ) : null}
-    </svg>
-  );
+  const Icon = practiceIcons[name];
+  return <Icon aria-hidden focusable="false" className="h-4 w-4 text-primary" />;
 }
 
 function Paragraphs({ text }: { text: string }) {

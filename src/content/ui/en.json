@@ -36,7 +36,7 @@
   "home.sobre-mi.systems.title": "Systems and accessibility",
   "home.sobre-mi.systems.body": "Atomic components and tokens that scale across products while keeping WCAG standards.",
   "home.sobre-mi.data.title": "Decisions with metrics",
-  "home.sobre-mi.data.body": "Measurable design decisions aligned to adoption and retention metrics (Clarity, Amplitude).",
+  "home.sobre-mi.data.body": "Measurable design decisions aligned to adoption and retention metrics (Clarity, Google Analytics).",
   "home.sobre-mi.spec.title": "Spec-Driven Development (SDD)",
   "home.sobre-mi.spec.body": "I reduce technical ambiguity and the friction between design and engineering. I document business rules, asynchronous flows, and AI behavior before building, using atomic methods and design-token handoff.",
   "home.contacto": "Contact",

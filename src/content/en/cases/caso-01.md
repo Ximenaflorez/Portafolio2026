@@ -2,7 +2,7 @@
 slug: case-01-neighborhood-store-microcredit
 type: product
 status: published
-order: 1
+order: 5
 title: "Microcredit in neighborhood stores for Colombian families"
 seo:
   title: "Neighborhood-store microcredit | Case study"

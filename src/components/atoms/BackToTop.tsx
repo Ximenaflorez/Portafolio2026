@@ -1,3 +1,4 @@
+import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
 // Píldora de 44 px, solo en teléfono y solo tras bajar una pantalla. El salto usa el
@@ -28,19 +29,7 @@ export function BackToTop({ label }: { label: string }) {
       onClick={() => window.scrollTo({ top: 0 })}
       className={box}
     >
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-3 w-3"
-      >
-        <path d="M12 19V5M6 11l6-6 6 6" />
-      </svg>
+      <ArrowUp aria-hidden focusable="false" className="h-3 w-3" />
     </button>
   );
 }

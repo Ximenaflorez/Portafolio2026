@@ -2,7 +2,7 @@
 slug: case-04-vacancy-pipeline
 type: product
 status: published
-order: 4
+order: 2
 title: "The vacancy pipeline stalls in the first stages"
 seo:
   title: "Vacancy pipeline | Case study"

@@ -2,7 +2,7 @@
 slug: caso-04-embudo-vacantes
 type: product
 status: published
-order: 4
+order: 2
 title: "El embudo de vacantes se traba en las primeras etapas"
 seo:
   title: "Embudo de vacantes | Caso de estudio"

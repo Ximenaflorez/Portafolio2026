@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import { publicUrl } from "~/lib/public-url";
 import { CaseLinks } from "./CaseLinks";
 import { TextLink } from "../atoms/TextLink";
@@ -26,24 +27,6 @@ type Props = {
 const genericImage = { src: "/casos/generica.svg", alt: "" };
 
 const chip = "self-start rounded-chip border border-border bg-surface px-1 py-0.5 text-sm";
-
-function ArrowIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-3 w-3 shrink-0"
-    >
-      <path d="M7 17L17 7M10 7h7v7" />
-    </svg>
-  );
-}
 
 // Tarjeta tonal al estilo Material (aprobada el 2026-10-09): la imagen sangra hasta los bordes y
 // la tarjeta la recorta con su esquina. En teléfono va abajo del texto; desde `sm`, a la derecha.
@@ -81,7 +64,7 @@ export function CaseCard({
         <div className="mt-6 flex flex-col gap-2">
           <TextLink to={to} variant="standalone" className="gap-2 font-semibold">
             {readLabel}
-            <ArrowIcon />
+            <ArrowUpRight aria-hidden focusable="false" className="h-3 w-3 shrink-0" />
             <span className="sr-only">: {title}</span>
           </TextLink>
           <CaseLinks screen={screen} spec={spec} className="flex flex-col gap-2" />

@@ -2,7 +2,7 @@
 slug: case-05-rules-orchestrator
 type: product
 status: published
-order: 5
+order: 1
 title: "Orchestrator of metrics and qualitative feedback with AI"
 seo:
   title: "Metrics and feedback with AI | Case study"

@@ -8,10 +8,12 @@ import interRegular from "@fontsource/inter/files/inter-latin-400-normal.woff2?u
 import type { ReactNode } from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
 import { languageFromPath } from "./lib/i18n";
+import { publicUrl } from "./lib/public-url";
 import { themeInitScript } from "./lib/theme";
 import type { Route } from "./+types/root";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: publicUrl("/favicon.svg"), type: "image/svg+xml" },
   { rel: "preload", href: interRegular, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 ];
 

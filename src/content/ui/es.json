@@ -36,7 +36,7 @@
   "home.sobre-mi.systems.title": "Sistemas y accesibilidad",
   "home.sobre-mi.systems.body": "Componentes atómicos y tokens que escalan entre productos manteniendo estándares WCAG.",
   "home.sobre-mi.data.title": "Decisiones con métricas",
-  "home.sobre-mi.data.body": "Decisiones de diseño medibles alineadas a métricas de adopción y retención (Clarity, Amplitude).",
+  "home.sobre-mi.data.body": "Decisiones de diseño medibles alineadas a métricas de adopción y retención (Clarity, Google Analytics).",
   "home.sobre-mi.spec.title": "Spec-Driven Development (SDD)",
   "home.sobre-mi.spec.body": "Reduzco la ambigüedad técnica y la fricción entre diseño e ingeniería. Documento reglas de negocio, flujos asíncronos y comportamientos de IA antes de programar, utilizando metodologías atómicas y entrega de Design Tokens.",
   "home.contacto": "Contacto",

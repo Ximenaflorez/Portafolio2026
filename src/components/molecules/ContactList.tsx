@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ArrowUpRight, Download } from "lucide-react";
 import { publicUrl } from "~/lib/public-url";
 import { Button } from "../atoms/Button";
 import { TextLink } from "../atoms/TextLink";
@@ -18,29 +19,8 @@ type Props = {
 };
 
 function ActionIcon({ kind }: { kind: "external" | "download" }) {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-3 w-3"
-    >
-      {kind === "download" ? (
-        <>
-          <path d="M12 4v12" />
-          <path d="M8 12l4 4 4-4" />
-          <path d="M5 20h14" />
-        </>
-      ) : (
-        <path d="M7 17L17 7M10 7h7v7" />
-      )}
-    </svg>
-  );
+  const Icon = kind === "download" ? Download : ArrowUpRight;
+  return <Icon aria-hidden focusable="false" className="h-3 w-3" />;
 }
 
 function Action({

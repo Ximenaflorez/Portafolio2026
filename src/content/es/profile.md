@@ -124,37 +124,13 @@ career:
     - title: "Service Design: How to Design Integrated Service Experiences"
       organization: "IxDF - The Interaction Design Foundation"
       from: 2025-08
-    - title: "Customer Experience"
-      organization: "Coderhouse"
-      from: 2025-07
     - title: "Mobile UI Design"
       organization: "IxDF - The Interaction Design Foundation"
       from: 2025-06
-    - title: "UI Design Patterns for Successful Software"
-      organization: "IxDF - The Interaction Design Foundation"
-      from: 2025-05
     - title: "Data-Driven Design: Quantitative Research for UX"
       organization: "IxDF - The Interaction Design Foundation"
       from: 2025-04
-    - title: "Google Ads"
-      organization: "Coderhouse"
-      from: 2025-02
-    - title: "Google Analytics"
-      organization: "Google Digital Academy (Skillshop)"
-      from: 2025-02
     - title: "Mobile UX Design: The Beginner's Guide"
       organization: "IxDF - The Interaction Design Foundation"
       from: 2025-01
-    - title: "JavaScript"
-      organization: "Coderhouse"
-      from: 2024-03
-    - title: "User Stories Foundations Certificate"
-      organization: "CertiProf"
-      from: 2023-07
-    - title: "Scrum Master Professional Certificate - SMPC"
-      organization: "CertiProf"
-      from: 2023-05
-    - title: "Desarrollo web"
-      organization: "Coderhouse"
-      from: 2022-11
 ---

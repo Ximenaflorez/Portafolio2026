@@ -2,7 +2,7 @@
 slug: caso-01-microcredito-tiendas
 type: product
 status: published
-order: 1
+order: 5
 title: "Microcrédito en tiendas de barrio para familias colombianas"
 seo:
   title: "Microcréditos en tiendas de barrio | Caso de estudio"
