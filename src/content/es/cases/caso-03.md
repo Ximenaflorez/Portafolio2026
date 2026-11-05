@@ -3,6 +3,7 @@ slug: caso-03-catalogo-candidatos
 type: product
 status: published
 order: 3
+featured: true
 title: "Búsqueda de talento en un catálogo de 50.000 perfiles"
 seo:
   title: "Catálogo de candidatos | Caso de estudio"

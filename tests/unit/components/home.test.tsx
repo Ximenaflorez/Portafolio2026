@@ -328,6 +328,7 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
           caso({
             slug: "pagos",
             order: 1,
+            featured: true,
             body: '![Pantalla de despacho](/casos/despacho.jpg "Figura")',
           }),
         ]}
@@ -452,6 +453,7 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
   it("en inglés usa sus textos y sus direcciones", () => {
     pagina("/en/");
 
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(perfil.name);
     expect(screen.getByRole("heading", { level: 2, name: "Less friction. More impact." })).toBeInTheDocument();
     expect(screen.getByText("01 / Work")).toBeInTheDocument();
     expect(

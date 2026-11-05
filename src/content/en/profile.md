@@ -1,6 +1,6 @@
 ---
 name: "Ximena Alvarez"
-role: "Senior Product Designer & UX/UI Lead"
+role: "Product Designer · B2B UX Lead"
 valueProposition: "I work with product teams to simplify complex system flows, grounding decisions in data, accessibility, and strategic integration of artificial intelligence."
 email: "ximenalvarezflorez11@gmail.com"
 linkedin: "https://www.linkedin.com/in/ximena-alvarez-florez11"

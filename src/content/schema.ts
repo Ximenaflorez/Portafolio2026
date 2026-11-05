@@ -24,6 +24,10 @@ const productSummary = z.object({
   sector: text,
   // Chips extra de la tarjeta, después del rubro. P. ej. «Investigación».
   tags: z.array(text).optional(),
+  // Presentación corta de la grilla de Trabajos. El título del caso no cambia.
+  cardTitle: text.max(80).optional(),
+  cardLine: text.max(200).optional(),
+  cardTags: z.array(text).max(4).optional(),
   // Pantalla publicada y repositorio de los markdown que fundaron el caso.
   screenUrl: z.url().optional(),
   specUrl: z.url().optional(),
@@ -48,7 +52,12 @@ const caseBase = {
 };
 
 const publishedCaseSchema = z.discriminatedUnion("type", [
-  z.object({ ...caseBase, type: z.literal("product"), summary: productSummary }),
+  z.object({
+    ...caseBase,
+    type: z.literal("product"),
+    featured: z.boolean().optional(),
+    summary: productSummary,
+  }),
   z.object({ ...caseBase, type: z.literal("meta"), summary: metaSummary }),
 ]);
 
@@ -185,6 +194,9 @@ export type CaseSummary = {
   productType?: string;
   sector?: string;
   tags?: string[];
+  cardTitle?: string;
+  cardLine?: string;
+  cardTags?: string[];
   kind?: string;
   screenUrl?: string;
   specUrl?: string;
@@ -195,6 +207,8 @@ export type CaseStudy = {
   type: "product" | "meta";
   status: "draft" | "published";
   order: number;
+  /** Tarjeta grande de Trabajos, con foto. El resto va a la grilla compacta. */
+  featured?: boolean;
   title: string;
   seo: { title: string; description: string };
   summary: CaseSummary;

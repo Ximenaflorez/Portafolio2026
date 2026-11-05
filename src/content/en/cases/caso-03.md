@@ -3,6 +3,7 @@ slug: case-03-candidate-catalog
 type: product
 status: published
 order: 3
+featured: true
 title: "Talent search in a catalog of 50,000 profiles"
 seo:
   title: "Candidate catalog search | Case study"

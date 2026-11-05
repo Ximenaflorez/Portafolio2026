@@ -14,6 +14,12 @@ summary:
   duration: "To complete"
   keyResult: "83.3% used the company's own reports, but 33.3% had no financial knowledge."
   indexLine: "Redesigning reports so a partner can read the close and sell the credit."
+  cardTitle: "Clear financial reports for partners"
+  cardLine: "Redesign of reconciliation dashboards for B2B partners. Clearer accounting UX writing."
+  cardTags:
+    - Figma
+    - Fintech
+    - UX Writing
   productType: "B2B / Fintech"
   sector: "Fintech"
   kind: "Research and interface design"

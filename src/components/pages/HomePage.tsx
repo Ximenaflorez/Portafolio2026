@@ -5,9 +5,11 @@ import { casePath, metaCasePath, sectionPath, type Language } from "~/lib/i18n";
 import type { Translate } from "~/lib/ui";
 import { useUi } from "~/lib/use-ui";
 import { Text } from "../atoms/Text";
+import { Heading } from "../atoms/Heading";
+import { CompactCaseCard } from "../molecules/CompactCaseCard";
+import { CaseCard } from "../molecules/CaseCard";
 import { ContactList } from "../molecules/ContactList";
 import { AboutSplit } from "../organisms/AboutSplit";
-import { CaseIndex } from "../organisms/CaseIndex";
 import { Career } from "../organisms/Career";
 import { ProfileIntro } from "../organisms/ProfileIntro";
 import { ContentTemplate } from "../templates/ContentTemplate";
@@ -51,6 +53,21 @@ function caseCard(item: CaseStudy, language: Language, t: Translate) {
   };
 }
 
+function compactCard(item: CaseStudy, language: Language, t: Translate) {
+  const isMeta = item.type === "meta";
+  const tags =
+    (!isMeta && item.summary.cardTags) ||
+    [item.summary.sector, ...(item.summary.tags ?? [])].filter((tag): tag is string => Boolean(tag));
+  return {
+    to: isMeta ? metaCasePath(language) : casePath(language, item.slug),
+    title: (!isMeta && item.summary.cardTitle) || item.title,
+    description:
+      (!isMeta && item.summary.cardLine) || (!isMeta && item.summary.indexLine) || item.summary.keyResult,
+    tags,
+    readLabel: t("work.read"),
+  };
+}
+
 // Una sola página con Inicio, Trabajos, Sobre mí y Contacto (aprobada en T066).
 export function HomePage({
   profile,
@@ -64,7 +81,13 @@ export function HomePage({
   contactCall,
 }: Props) {
   const { language, t } = useUi();
-  const cards = [...cases, ...(meta ? [meta] : [])].map((item) => caseCard(item, language, t));
+  const published = [...cases, ...(meta ? [meta] : [])];
+  const featured = published
+    .filter((item) => item.type === "product" && item.featured)
+    .map((item) => caseCard(item, language, t));
+  const compact = published
+    .filter((item) => !(item.type === "product" && item.featured))
+    .map((item) => compactCard(item, language, t));
   const aboutParts = splitAbout(about);
 
   return (
@@ -93,7 +116,37 @@ export function HomePage({
             title: t("home.trabajos.heading"),
             eyebrow: t("home.trabajos.index"),
             titleSize: "3xl",
-            children: <CaseIndex cases={cards} emptyLabel={t("work.empty")} />,
+            children: (
+              <>
+                {featured.length === 0 && compact.length === 0 ? (
+                  <p className="mt-6 max-w-prose">{t("work.empty")}</p>
+                ) : null}
+                {featured.length > 0 ? (
+                  <div className="mt-6">
+                    <Heading level={3} size="xl">
+                      {t("home.trabajos.featured")}
+                    </Heading>
+                    <ul className="mt-4 flex flex-col gap-4">
+                      {featured.map((item) => (
+                        <CaseCard key={item.to} {...item} />
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {compact.length > 0 ? (
+                  <div className="mt-8">
+                    <Heading level={3} size="lg">
+                      {t("home.trabajos.more")}
+                    </Heading>
+                    <ul className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {compact.map((item) => (
+                        <CompactCaseCard key={item.to} {...item} />
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </>
+            ),
           },
           {
             id: "sobre-mi",

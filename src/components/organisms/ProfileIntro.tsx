@@ -18,8 +18,10 @@ type Props = {
   stats?: { value: string; label: string }[];
 };
 
-// Inicio (FR-018, aprobado en T066): la foto va arriba del titular, a la izquierda; debajo, el
-// nombre como único h1, el rol, la propuesta de valor y los dos botones.
+const photoClass =
+  "aspect-square w-16 shrink-0 rounded-photo border-photo border-primary object-cover";
+
+// Inicio: foto, nombre, rol, propuesta y acciones, en columna.
 export function ProfileIntro({
   name,
   role,
@@ -33,29 +35,31 @@ export function ProfileIntro({
 }: Props) {
   return (
     <div className="py-12">
-      <img
-        src={publicUrl(photo.src)}
-        alt={photo.alt}
-        width={128}
-        height={128}
-        className="aspect-square w-16 rounded-photo border-photo border-primary object-cover"
-      />
-      <Heading level={1} size="4xl" id={headingId} className="mt-4">
-        {name}
-      </Heading>
-      <Text size="lg" tone="muted" className="mt-1">
-        {role}
-      </Text>
-      <Text size="lg" className="mt-4 max-w-prose">
-        {valueProposition}
-      </Text>
-      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-        <Button variant="primary" to={workHref}>
-          {labels.work}
-        </Button>
-        <Button variant="secondary" href={`mailto:${email}`}>
-          {labels.contact}
-        </Button>
+      <div>
+        <img
+          src={publicUrl(photo.src)}
+          alt={photo.alt}
+          width={128}
+          height={128}
+          className={photoClass}
+        />
+        <Heading level={1} size="4xl" id={headingId} className="mt-4">
+          {name}
+        </Heading>
+        <Text size="lg" tone="muted" className="mt-1">
+          {role}
+        </Text>
+        <Text size="lg" className="mt-4 max-w-prose">
+          {valueProposition}
+        </Text>
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+          <Button variant="primary" to={workHref}>
+            {labels.work}
+          </Button>
+          <Button variant="secondary" href={`mailto:${email}`}>
+            {labels.contact}
+          </Button>
+        </div>
       </div>
       {stats.length > 0 ? (
         <ul className="mt-8 grid gap-4 sm:grid-cols-3">

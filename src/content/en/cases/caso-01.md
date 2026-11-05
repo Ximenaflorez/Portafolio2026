@@ -14,6 +14,12 @@ summary:
   duration: "2 months in January 2024"
   keyResult: "Families spend 47.3% on food but budget only 31.5%: they need credit at month end."
   indexLine: "Validating food credit in the traditional channel and neighborhood stores."
+  cardTitle: "Microcredit in neighborhood stores"
+  cardLine: "Qualitative field research to validate food credit in the traditional channel."
+  cardTags:
+    - Field Research
+    - Interviews
+    - Fintech
   productType: "B2B2C / Fintech"
   sector: "Fintech"
   tags:

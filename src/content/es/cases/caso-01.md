@@ -14,6 +14,12 @@ summary:
   duration: "2 meses en enero de 2024"
   keyResult: "Las familias gastan 47,3 % en alimentos pero solo asignan 31,5 %: necesitan crédito a fin de mes."
   indexLine: "Validación de crédito para alimentación en el canal tradicional y tiendas de barrio."
+  cardTitle: "Microcrédito en tiendas de barrio"
+  cardLine: "Investigación cualitativa en campo para validar créditos de alimentación en el canal tradicional."
+  cardTags:
+    - Field Research
+    - Entrevistas
+    - Fintech
   productType: "B2B2C / Fintech"
   sector: "Fintech"
   tags:

@@ -14,6 +14,11 @@ summary:
   duration: "To complete"
   keyResult: "An analyst spent up to 10 days gathering candidates, and more than 50% were dropped in the first two stages."
   indexLine: "Up to 10 days to gather candidates, and more than 50% dropped at the start."
+  cardLine: "Redesign and edge-case mapping for a 20-stage ATS pipeline. The cause of the 50% drop at the start was identified."
+  cardTags:
+    - UX Research
+    - Flow maps
+    - ATS
   productType: "B2B / ATS"
   sector: "ATS"
   kind: "Redesign research"

@@ -14,6 +14,11 @@ summary:
   duration: "Por completar"
   keyResult: "Un analista tardaba hasta 10 días, y más del 50 % se descartaba en las dos primeras etapas."
   indexLine: "Hasta 10 días para reunir candidatos, y más del 50 % se descarta al inicio."
+  cardLine: "Rediseño y mapeo de casos extremos para un pipeline ATS de 20 etapas. Se identificó la causa de caída del 50% de usuarios al inicio."
+  cardTags:
+    - UX Research
+    - Mapas de Flujo
+    - ATS
   productType: "B2B / ATS"
   sector: "ATS"
   kind: "Investigación de rediseño"

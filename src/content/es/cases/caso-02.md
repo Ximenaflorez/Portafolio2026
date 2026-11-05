@@ -14,6 +14,12 @@ summary:
   duration: "Por completar"
   keyResult: "El 83,3 % usaba los informes propios, pero el 33,3 % no tenía conocimientos financieros."
   indexLine: "Rediseño de informes para que el aliado entienda el cierre y pueda vender el crédito."
+  cardTitle: "Informes financieros claros para aliados"
+  cardLine: "Rediseño de tableros de conciliación para aliados B2B. Clarificación de UX Writing contable."
+  cardTags:
+    - Figma
+    - Fintech
+    - UX Writing
   productType: "B2B / Fintech"
   sector: "Fintech"
   kind: "Investigación y diseño de interfaz"
