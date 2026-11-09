@@ -24,7 +24,7 @@ export function Figure({ src, alt, caption, width, height, className = "" }: Pro
         height={height}
         loading="lazy"
         decoding="async"
-        className="h-auto w-full border border-border"
+        className="h-auto w-full rounded-image border border-border"
       />
       <figcaption className="mt-1 text-sm text-text-muted">{caption}</figcaption>
     </figure>

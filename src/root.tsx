@@ -1,10 +1,11 @@
-import "@fontsource/inter/latin-400.css";
-import "@fontsource/inter/latin-600.css";
+import "@fontsource/plus-jakarta-sans/latin-400.css";
+import "@fontsource/plus-jakarta-sans/latin-600.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-700.css";
+import "@fontsource/manrope/latin-800.css";
 import "./styles/main.scss";
 
-import interRegular from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import jakartaRegular from "@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2?url";
 import type { ReactNode } from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
 import { languageFromPath } from "./lib/i18n";
@@ -14,7 +15,7 @@ import type { Route } from "./+types/root";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", href: publicUrl("/favicon.svg"), type: "image/svg+xml" },
-  { rel: "preload", href: interRegular, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "preload", href: jakartaRegular, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {

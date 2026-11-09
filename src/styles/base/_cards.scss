@@ -1,0 +1,41 @@
+// Superficie plana con la sombra de reposo. Las de proyecto, además, suben al pasar el cursor.
+.card-flat,
+.card-lift {
+  box-shadow: var(--shadow-rest);
+}
+
+.card-lift {
+  position: relative;
+  transition-duration: var(--duration-lift);
+  transition-property: transform, box-shadow;
+  transition-timing-function: ease-out;
+}
+
+// El título es el enlace. Su pseudoelemento cubre la tarjeta; los enlaces extra quedan encima.
+.card-hit:focus-visible {
+  outline: none;
+}
+
+.card-hit::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+}
+
+.card-lift:has(.card-hit:focus-visible) {
+  outline: var(--focus-ring-width) solid rgb(var(--color-focus));
+  outline-offset: var(--focus-ring-offset);
+}
+
+.card-actions {
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-lift:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(var(--card-lift));
+  }
+}

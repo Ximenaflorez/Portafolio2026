@@ -33,13 +33,27 @@
     --leading-#{$name}: #{$leading};
   }
 
+  --hero-weight: #{$hero-weight};
+  --hero-title-size: #{$hero-title-size};
+  --hero-title-leading: #{$hero-title-leading};
+  --hero-subtext-size: #{$hero-subtext-size};
+  --hero-subtext-leading: #{$hero-subtext-leading};
+  --hero-subtext-max: #{$hero-subtext-max};
+
+  // Degradado de la línea del medio: la misma escala índigo del Primary, de oscuro a un paso más claro.
+  --hero-accent: linear-gradient(
+    90deg,
+    rgb(var(--color-primary-active)),
+    rgb(var(--color-primary)),
+    rgb(99 102 241)
+  );
+
   @each $name, $space in $spaces {
     --space-#{$name}: #{$space};
   }
 
   --icon-size: #{$icon-size};
   --icon-pad: #{$icon-pad};
-
   --duration-state: #{$duration-state};
   --target-min: #{$target-min};
   --focus-ring-width: #{$focus-ring-width};
@@ -56,10 +70,17 @@
   --state-press: #{$state-press};
   --button-radius: #{$button-radius};
   --card-radius: #{$card-radius};
+  --shadow-rest: #{$shadow-rest};
+  --shadow-lift: #{$shadow-lift};
+  --card-lift: #{$card-lift};
+  --duration-lift: #{$duration-lift};
+  --image-radius: #{$image-radius};
+  --phone-frame: #{$phone-frame};
   --header-alpha: #{$header-alpha};
   --header-blur: #{$header-blur};
   --header-saturate: #{$header-saturate};
   --header-height: #{$header-height};
+
   // Arranque igual a una fila. El encabezado lo sustituye por la altura visible real.
   --header-visible: #{$header-height};
   --header-collapse: #{$header-collapse};
@@ -70,6 +91,15 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     @include color-variables($colors-dark);
+
+    --hero-accent: linear-gradient(
+      90deg,
+      rgb(129 140 248),
+      rgb(var(--color-primary)),
+      rgb(var(--color-primary-hover))
+    );
+    --shadow-rest: #{$shadow-rest-dark};
+    --shadow-lift: #{$shadow-lift-dark};
   }
 }
 
@@ -77,6 +107,15 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   @include color-variables($colors-dark);
+
+  --hero-accent: linear-gradient(
+    90deg,
+    rgb(129 140 248),
+    rgb(var(--color-primary)),
+    rgb(var(--color-primary-hover))
+  );
+  --shadow-rest: #{$shadow-rest-dark};
+  --shadow-lift: #{$shadow-lift-dark};
 }
 
 @media (prefers-reduced-motion: reduce) {

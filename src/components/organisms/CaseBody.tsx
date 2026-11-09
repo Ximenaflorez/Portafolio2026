@@ -13,6 +13,7 @@ import {
   slugify,
   splitBySection,
 } from "~/lib/case-sections";
+import { BeforeAfter } from "../atoms/BeforeAfter";
 import { Figure } from "../atoms/Figure";
 import { Heading } from "../atoms/Heading";
 import { Text } from "../atoms/Text";
@@ -39,6 +40,10 @@ function isElementOfType(
   type: unknown,
 ): node is ReactElement<{ children?: ReactNode }> {
   return isValidElement(node) && node.type === type;
+}
+
+function isMarkdownImage(node: ReactNode): node is ReactElement<ComponentProps<"img">> {
+  return isValidElement(node) && node.type === MarkdownImage;
 }
 
 function firstStrongText(node: ReactNode): string | undefined {
@@ -122,7 +127,15 @@ function peelChunk(chunk: string): { title: string; kicker?: string; rest: strin
 
 // Función con nombre propio para que el párrafo reconozca que contiene solo una imagen.
 function MarkdownImage({ src, alt, title }: ComponentProps<"img">) {
-  return <Figure src={String(src ?? "")} alt={alt ?? ""} caption={title ?? alt ?? ""} />;
+  const path = String(src ?? "");
+  return (
+    <Figure
+      src={path}
+      alt={alt ?? ""}
+      caption={title ?? alt ?? ""}
+      className={path.includes("caso-04-movil") ? "figure-phone" : ""}
+    />
+  );
 }
 
 function MarkdownEmphasis({ children }: { children?: ReactNode }) {
@@ -156,6 +169,33 @@ function buildComponents(): Components {
     ),
     p: ({ children }) => {
       const [first, ...rest] = Children.toArray(children);
+      const shots = Children.toArray(children).filter(isMarkdownImage);
+
+      // Dos imágenes en el mismo párrafo: la primera es el antes y la segunda el después.
+      if (shots.length === 2) {
+        const [earlier, later] = shots;
+        const label =
+          isElementOfType(first, "strong") && textOf(first.props.children).trim().endsWith(":")
+            ? textOf(first.props.children).trim().replace(/:$/, "")
+            : undefined;
+        return (
+          <>
+            {label ? <p className="mt-6 text-sm uppercase text-text-muted">{label}</p> : null}
+            <BeforeAfter
+              before={{
+                src: String(earlier.props.src ?? ""),
+                alt: earlier.props.alt ?? "",
+                caption: earlier.props.title ?? earlier.props.alt ?? "",
+              }}
+              after={{
+                src: String(later.props.src ?? ""),
+                alt: later.props.alt ?? "",
+                caption: later.props.title ?? later.props.alt ?? "",
+              }}
+            />
+          </>
+        );
+      }
 
       // Una imagen sola en su párrafo es una figura: no puede quedar dentro de un `<p>`.
       if (rest.length === 0 && isElementOfType(first, MarkdownImage)) return first;
@@ -179,7 +219,7 @@ function buildComponents(): Components {
         );
       }
 
-      // «**Etiqueta:** texto»: la etiqueta va en negrita encima del texto.
+      // «**Etiqueta:** texto»: la etiqueta va en cursiva gris, separada del párrafo.
       if (isElementOfType(first, "strong") && textOf(first.props.children).trim().endsWith(":")) {
         const label = textOf(first.props.children).trim().replace(/:$/, "");
         if (/insight|rumbo|course/i.test(label)) {
@@ -194,7 +234,7 @@ function buildComponents(): Components {
         }
         return (
           <p className={`mt-2 ${prose}`}>
-            <strong className="block">{label}</strong>
+            <strong className="mb-1 block font-normal italic text-text-muted">{label}</strong>
             {rest}
           </p>
         );
@@ -265,7 +305,7 @@ function FieldGrid({ items, components }: { items: Field[]; components: Componen
         const gap = gapOf(item.body);
         return (
           <div key={item.label} className={spansRow(index, items) ? "md:col-span-2" : undefined}>
-            <strong className="block text-sm font-normal uppercase text-text-muted">
+            <strong className="mb-1 block font-normal italic text-text-muted">
               {item.label}
             </strong>
             {gap ? (

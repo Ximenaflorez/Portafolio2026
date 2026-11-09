@@ -1,0 +1,29 @@
+// Título del Inicio: Manrope 800. La línea del medio es la misma familia, en itálica y con degradado.
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-heading);
+  font-weight: var(--hero-weight);
+  font-size: var(--hero-title-size);
+  line-height: var(--hero-title-leading);
+  color: rgb(var(--color-text));
+}
+
+.line-2-italic {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: var(--hero-weight);
+  background: var(--hero-accent);
+  background-clip: text;
+  -webkit-text-fill-color: rgb(0 0 0 / 0%);
+}
+
+.hero-subtext {
+  max-width: var(--hero-subtext-max);
+  margin-top: var(--space-3);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--hero-subtext-size);
+  line-height: var(--hero-subtext-leading);
+  color: rgb(var(--color-text-muted));
+}

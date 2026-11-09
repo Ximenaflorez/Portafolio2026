@@ -182,7 +182,6 @@ describe("CaseCard (FR-019)", () => {
     sectorLabel: "Rubro",
     role: "Product Designer líder",
     description: "Entre 20% y 30% menos abandono.",
-    readLabel: "Leer el caso",
   };
 
   it("muestra rubro, título, rol y resultado, con un enlace de texto descriptivo", () => {
@@ -192,11 +191,11 @@ describe("CaseCard (FR-019)", () => {
     expect(screen.getByText("Fintech")).toBeInTheDocument();
     expect(screen.getByText(props.role)).toBeInTheDocument();
     expect(screen.getByText(props.description)).toBeInTheDocument();
-    const link = screen.getByRole("link", { name: `Leer el caso: ${props.title}` });
+    const link = screen.getByRole("link", { name: props.title });
     expect(link).toHaveAttribute("href", "/trabajos/despacho");
   });
 
-  it("es una tarjeta tonal: fondo con tinte, esquinas de 16px y borde de 1px", () => {
+  it("es una tarjeta plana: superficie blanca y esquinas de 16px, sin borde", () => {
     const { container } = enRuta(
       <ul>
         <CaseCard {...props} />
@@ -204,10 +203,11 @@ describe("CaseCard (FR-019)", () => {
     );
     const clases = container.querySelector("li")!.className.split(/\s+/);
 
-    for (const esperada of ["bg-surface-tonal", "rounded-card", "border", "border-border"]) {
+    for (const esperada of ["bg-surface", "card-lift", "rounded-card"]) {
       expect(clases).toContain(esperada);
     }
-    expect(clases).not.toContain("bg-surface");
+    expect(clases).not.toContain("border");
+    expect(clases).not.toContain("bg-surface-tonal");
   });
 
   it("recorta la imagen con la esquina de la tarjeta: abajo en teléfono y a la derecha desde `sm`", () => {
@@ -217,15 +217,17 @@ describe("CaseCard (FR-019)", () => {
       </ul>,
     );
     const tarjeta = container.querySelector("li")!;
-    const imagen = tarjeta.lastElementChild!;
+    const media = tarjeta.lastElementChild!;
+    const imagen = media.querySelector("img")!;
     const clases = tarjeta.className.split(/\s+/);
 
     expect(clases).toContain("overflow-hidden");
     expect(clases).toContain("flex-col");
     expect(clases).toContain("sm:flex-row");
     expect(clases).not.toContain("p-4");
+    expect(media.className.split(/\s+/)).toContain("sm:w-1/2");
     expect(imagen.tagName).toBe("IMG");
-    for (const esperada of ["aspect-video", "w-full", "object-cover", "sm:w-1/2"]) {
+    for (const esperada of ["aspect-video", "w-full", "object-cover"]) {
       expect(imagen.className.split(/\s+/)).toContain(esperada);
     }
   });
@@ -381,12 +383,16 @@ describe("CaseBody", () => {
     expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
   });
 
-  it("muestra las etiquetas en negrita encima del texto y atenúa la línea de tensión", () => {
+  it("muestra las etiquetas en cursiva gris, separadas del párrafo, y atenúa la línea de tensión", () => {
     enRuta(<CaseBody markdown={markdown} />);
 
     const etiqueta = screen.getByText("Contexto de negocio");
     expect(etiqueta.tagName).toBe("STRONG");
     expect(etiqueta.className).toContain("block");
+    expect(etiqueta.className).toContain("italic");
+    expect(etiqueta.className).toContain("font-normal");
+    expect(etiqueta.className).toContain("text-text-muted");
+    expect(etiqueta.className).toContain("mb-1");
     expect(etiqueta.parentElement).toHaveTextContent("La empresa es una plataforma SaaS");
     const pregunta = screen.getByText(/Tensión/);
     expect(pregunta.textContent).toMatch(/^01 · /);
@@ -467,7 +473,6 @@ describe("CaseIndex (FR-019)", () => {
     sectorLabel: "Rubro",
     role: indice === 3 ? undefined : "Product Designer",
     description: `Resultado ${indice + 1}.`,
-    readLabel: "Leer el caso",
   }));
 
   it("lista los cuatro casos como tarjetas iguales a todo el ancho", () => {

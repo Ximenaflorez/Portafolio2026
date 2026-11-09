@@ -149,8 +149,7 @@ describe("ContactList (FR-005, FR-034)", () => {
 
 describe("ProfileIntro (FR-018)", () => {
   const props = {
-    name: perfil.name,
-    role: perfil.role,
+    title: ["¡Hola! Soy Ximena", "product designer & AI builder", "para ecosistemas B2B"],
     valueProposition: perfil.valueProposition,
     email: perfil.email,
     workHref: "/#trabajos",
@@ -164,25 +163,27 @@ describe("ProfileIntro (FR-018)", () => {
     ],
   };
 
-  it("muestra la foto, el nombre como h1, el rol y la propuesta de valor, en ese orden", () => {
+  it("muestra la foto, el título en tres líneas y la propuesta de valor, en ese orden", () => {
     enRuta(<ProfileIntro {...props} />);
 
     const foto = screen.getByRole("img", { name: "Foto de Ximena Alvarez" });
-    const h1 = screen.getByRole("heading", { level: 1, name: perfil.name });
-    const rol = screen.getByText(perfil.role);
+    const h1 = screen.getByRole("heading", {
+      level: 1,
+      name: "¡Hola! Soy Ximena product designer & AI builder para ecosistemas B2B",
+    });
     const propuesta = screen.getByText(perfil.valueProposition);
 
     expect(h1).toHaveAttribute("id", "titulo-inicio");
+    expect(h1.querySelector(".line-2-italic")).toHaveTextContent("product designer & AI builder");
     expect(foto.compareDocumentPosition(h1) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(h1.compareDocumentPosition(rol) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(rol.compareDocumentPosition(propuesta) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(h1.compareDocumentPosition(propuesta) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it("la foto es cuadrada, con borde Primary y las esquinas aprobadas", () => {
+  it("la foto es cuadrada, con borde Primary y esquinas de 12px", () => {
     enRuta(<ProfileIntro {...props} />);
 
     const clases = screen.getByRole("img").className;
-    for (const clase of ["aspect-square", "border-photo", "border-primary", "rounded-photo"]) {
+    for (const clase of ["aspect-square", "border-photo", "border-primary", "rounded-image"]) {
       expect(clases).toContain(clase);
     }
   });
@@ -268,11 +269,13 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
     );
   }
 
-  it("tiene un solo h1, el nombre, y las secciones en orden", () => {
+  it("tiene un solo h1, el título del inicio, y las secciones en orden", () => {
     const { container } = pagina();
 
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(perfil.name);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "¡Hola! Soy Ximena product designer & AI builder para ecosistemas B2B",
+    );
     const main = screen.getByRole("main");
     const ids = Array.from(main.querySelectorAll(":scope section[id]"))
       .map((s) => s.id)
@@ -453,7 +456,9 @@ describe("HomePage (FR-018, FR-019, FR-025, FR-034)", () => {
   it("en inglés usa sus textos y sus direcciones", () => {
     pagina("/en/");
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(perfil.name);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Hi! I'm Ximena product designer & AI builder for B2B ecosystems",
+    );
     expect(screen.getByRole("heading", { level: 2, name: "Less friction. More impact." })).toBeInTheDocument();
     expect(screen.getByText("01 / Work")).toBeInTheDocument();
     expect(

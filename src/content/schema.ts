@@ -30,6 +30,8 @@ const productSummary = z.object({
   cardTags: z.array(text).max(4).optional(),
   // Pantalla publicada y repositorio de los markdown que fundaron el caso.
   screenUrl: z.url().optional(),
+  // Texto del botón de la pantalla. Si falta, la interfaz usa «Ver la pantalla».
+  screenLabel: text.max(40).optional(),
   specUrl: z.url().optional(),
   // Tipo de trabajo, distinto del tipo de producto: p. ej. «Investigación de viabilidad».
   kind: text.optional(),
@@ -199,6 +201,7 @@ export type CaseSummary = {
   cardTags?: string[];
   kind?: string;
   screenUrl?: string;
+  screenLabel?: string;
   specUrl?: string;
 };
 

@@ -1,4 +1,5 @@
 import type { CaseStudy } from "~/content/schema";
+import { liftLeadImage } from "~/lib/case-sections";
 import { homePath as languageHome } from "~/lib/i18n";
 import { caseLabels } from "~/lib/ui";
 import { useUi } from "~/lib/use-ui";
@@ -37,7 +38,13 @@ export function CasePage({
   const { language, t } = useUi();
   const text = labels ?? caseLabels(t);
   const home = homePath ?? languageHome(language);
-  const { type, title, summary, body } = caseStudy;
+  const { type, title, summary, body, slug } = caseStudy;
+  const liftsLead =
+    slug.startsWith("caso-03") ||
+    slug.startsWith("case-03") ||
+    slug.startsWith("caso-04") ||
+    slug.startsWith("case-04");
+  const lead = liftsLead ? liftLeadImage(body) : { markdown: body };
   const eyebrow =
     type === "meta"
       ? text.eyebrowMeta
@@ -50,14 +57,16 @@ export function CasePage({
         backLabel={text.back}
         eyebrow={eyebrow}
         title={title}
-        summary={<CaseSummary summary={summary} labels={text.summary} />}
+        summary={<CaseSummary summary={summary} labels={text.summary} image={lead.image} />}
       >
         <CaseBody
-          markdown={body}
+          markdown={lead.markdown}
           afterIntro={
             <CaseLinks
               screen={
-                summary.screenUrl ? { href: summary.screenUrl, label: t("work.screen") } : undefined
+                summary.screenUrl
+                  ? { href: summary.screenUrl, label: summary.screenLabel ?? t("work.screen") }
+                  : undefined
               }
               spec={summary.specUrl ? { href: summary.specUrl, label: t("work.spec") } : undefined}
             />

@@ -154,7 +154,7 @@ export function CareerEntry({
 
   if (kind !== "experience") {
     return (
-      <li className="flex flex-col rounded-card border border-border bg-surface-tonal p-4">
+      <li className="card-flat flex flex-col rounded-card bg-surface p-6">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-2">
           <div>
             <p className="font-semibold">{entry.title}</p>
@@ -186,7 +186,7 @@ export function CareerEntry({
           }
         }}
       >
-        <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 py-4 [&::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 py-6 [&::-webkit-details-marker]:hidden">
           <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
             <p className="font-semibold">{entry.title}</p>
             <p className="text-text-muted">

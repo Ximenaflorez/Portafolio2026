@@ -42,7 +42,6 @@ function caseCard(item: CaseStudy, language: Language, t: Translate) {
     tags: item.summary.tags,
     role: item.summary.role,
     description: (!isMeta && item.summary.indexLine) || item.summary.keyResult,
-    readLabel: t("work.read"),
     screen: item.summary.screenUrl
       ? { href: item.summary.screenUrl, label: t("work.screen") }
       : undefined,
@@ -64,7 +63,6 @@ function compactCard(item: CaseStudy, language: Language, t: Translate) {
     description:
       (!isMeta && item.summary.cardLine) || (!isMeta && item.summary.indexLine) || item.summary.keyResult,
     tags,
-    readLabel: t("work.read"),
   };
 }
 
@@ -95,8 +93,7 @@ export function HomePage({
       <ContentTemplate
         intro={
           <ProfileIntro
-            name={profile.name}
-            role={profile.role}
+            title={[t("home.hero.line1"), t("home.hero.line2"), t("home.hero.line3")]}
             valueProposition={profile.valueProposition}
             email={profile.email}
             workHref={sectionPath(language, "trabajos")}

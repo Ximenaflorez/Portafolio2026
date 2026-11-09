@@ -24,7 +24,7 @@ summary:
 
 _Company names and some figures were anonymized and changed for confidentiality._
 
-![UX metrics for the month: the Excel upload, CSAT and CES for vacancy creation, catalog, and vacancy management, in July and August 2026, with the total and how many people rated.](/casos/caso-05-metricas.png "UX metrics for the month: CSAT and CES by module.")
+![UX metrics for the month: the Excel upload, CSAT and CES for vacancy creation, catalog, and vacancy management, in July and August 2026, with the total and how many people rated.](/casos/caso-05-metricas.jpg "UX metrics for the month: CSAT and CES by module.")
 
 ## 1. Initial problem
 
@@ -83,7 +83,7 @@ _Impact and reflection_
 
 **What I would do differently:** I would leave the 0.85 threshold as a visible decision in the interface, not only in the configuration. Whoever recruits or leads design needs to see that grouping is a rule, not a preference of the model.
 
-![UX metrics for the month: the Excel upload, CSAT and CES for vacancy creation, catalog, and vacancy management, in July and August 2026, with the total and how many people rated.](/casos/caso-05-metricas.png "UX metrics for the month: CSAT and CES by module.")
+![UX metrics for the month: the Excel upload, CSAT and CES for vacancy creation, catalog, and vacancy management, in July and August 2026, with the total and how many people rated.](/casos/caso-05-metricas.jpg "UX metrics for the month: CSAT and CES by module.")
 
 ![Findings for July 2026: summary, module, label, severity, and how many times each repeats, with Stay and Go.](/casos/caso-05-hallazgos.png "Findings for the month: Stay or Go.")
 

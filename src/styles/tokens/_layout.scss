@@ -21,6 +21,19 @@ $button-radius: 9999px;
 // Tarjetas: esquinas de 16px (el espacio 2).
 $card-radius: map.get(spacing.$spaces, "2");
 
+// Sombra de reposo casi plana, y la que aparece al elevar la tarjeta 4px.
+$shadow-rest: 0 1px 2px rgb(28 25 23 / 5%), 0 10px 28px rgb(28 25 23 / 6%);
+$shadow-lift: 0 10px 20px rgb(28 25 23 / 8%), 0 22px 48px rgb(28 25 23 / 12%);
+$shadow-rest-dark: 0 1px 2px rgb(0 0 0 / 40%), 0 10px 28px rgb(0 0 0 / 35%);
+$shadow-lift-dark: 0 12px 24px rgb(0 0 0 / 45%), 0 24px 48px rgb(0 0 0 / 40%);
+$card-lift: -4px;
+
+// Imágenes de contenido: esquinas de 12px.
+$image-radius: 12px;
+
+// Captura de un teléfono: no se estira al ancho de la página.
+$phone-frame: 320px;
+
 // Encabezado fijo con cristal (aprobado el 2026-10-09): el fondo es el color de la página al 90 %
 // y desenfoca lo que pasa por detrás. Más transparente que esto no cumple 4.5:1 en el peor caso.
 $header-alpha: 0.9;

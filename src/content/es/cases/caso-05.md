@@ -24,7 +24,7 @@ summary:
 
 _Los nombres de las empresas y algunos datos se anonimizaron y se modificaron por confidencialidad._
 
-![Métricas UX del mes: carga del Excel, CSAT y CES de creación de vacantes, catálogo y gestión de vacantes, en julio y agosto de 2026, con el total y cuántas personas evaluaron.](/casos/caso-05-metricas.png "Métricas UX del mes: CSAT y CES por módulo.")
+![Métricas UX del mes: carga del Excel, CSAT y CES de creación de vacantes, catálogo y gestión de vacantes, en julio y agosto de 2026, con el total y cuántas personas evaluaron.](/casos/caso-05-metricas.jpg "Métricas UX del mes: CSAT y CES por módulo.")
 
 ## 1. Problema inicial
 
@@ -83,7 +83,7 @@ _Impacto y reflexión_
 
 **Lo que haría distinto:** Dejaría el umbral 0,85 como decisión visible en la interfaz, no solo en la configuración. Quien recluta o lidera diseño necesita ver que el agrupado es una regla, no un gusto del modelo.
 
-![Métricas UX del mes: carga del Excel, CSAT y CES de creación de vacantes, catálogo y gestión de vacantes, en julio y agosto de 2026, con el total y cuántas personas evaluaron.](/casos/caso-05-metricas.png "Métricas UX del mes: CSAT y CES por módulo.")
+![Métricas UX del mes: carga del Excel, CSAT y CES de creación de vacantes, catálogo y gestión de vacantes, en julio y agosto de 2026, con el total y cuántas personas evaluaron.](/casos/caso-05-metricas.jpg "Métricas UX del mes: CSAT y CES por módulo.")
 
 ![Hallazgos del mes en julio de 2026: síntesis, módulo, etiqueta, criticidad y veces que se repite, con Se queda y Se va.](/casos/caso-05-hallazgos.png "Hallazgos del mes: Se queda o Se va.")
 

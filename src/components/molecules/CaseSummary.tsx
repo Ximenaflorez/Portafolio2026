@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { CaseSummary as Summary } from "~/content/schema";
+import { Figure } from "../atoms/Figure";
 import { Heading } from "../atoms/Heading";
 
 export type CaseSummaryLabels = {
@@ -26,9 +27,12 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 export function CaseSummary({
   summary,
   labels,
+  image,
 }: {
   summary: Pick<Summary, "product" | "role" | "team" | "duration" | "keyResult" | "kind">;
   labels: CaseSummaryLabels;
+  /** Primera imagen del caso, justo bajo la frase de producto. */
+  image?: { src: string; alt: string; caption: string };
 }) {
   return (
     <>
@@ -36,6 +40,7 @@ export function CaseSummary({
         {labels.title}
       </Heading>
       <p className="mt-4 max-w-prose text-lg">{summary.product}</p>
+      {image ? <Figure src={image.src} alt={image.alt} caption={image.caption} /> : null}
       <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-4 lg:grid-cols-4">
         <Field label={labels.role}>{summary.role}</Field>
         {summary.team && <Field label={labels.team}>{summary.team}</Field>}

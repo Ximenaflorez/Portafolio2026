@@ -1,0 +1,78 @@
+// Comparador antes/después. La foto de encima se recorta por la izquierda según --compare.
+.compare-stage {
+  position: relative;
+}
+
+.compare-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: inset(0 calc(100% - var(--compare)) 0 0);
+}
+
+.compare-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--compare);
+  width: var(--focus-ring-width);
+  background: rgb(var(--color-surface));
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.compare-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--target-min);
+  height: var(--target-min);
+  border: var(--control-border-width) solid rgb(var(--color-primary));
+  border-radius: var(--button-radius);
+  background: rgb(var(--color-surface));
+  box-shadow: var(--shadow-rest);
+  transform: translate(-50%, -50%);
+}
+
+.compare-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  appearance: none;
+  background: rgb(0 0 0 / 0%);
+
+  &::-webkit-slider-runnable-track {
+    height: 100%;
+    background: rgb(0 0 0 / 0%);
+  }
+
+  &::-webkit-slider-thumb {
+    width: var(--target-min);
+    height: var(--target-min);
+    appearance: none;
+    opacity: 0;
+  }
+
+  &::-moz-range-track {
+    height: 100%;
+    background: rgb(0 0 0 / 0%);
+    border: 0;
+  }
+
+  &::-moz-range-thumb {
+    width: var(--target-min);
+    height: var(--target-min);
+    border: 0;
+    opacity: 0;
+  }
+}
+
+.compare-range:focus-visible ~ .compare-line .compare-grip {
+  outline: var(--focus-ring-width) solid rgb(var(--color-focus));
+  outline-offset: var(--focus-ring-offset);
+}

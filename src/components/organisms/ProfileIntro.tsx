@@ -1,11 +1,9 @@
 import { publicUrl } from "~/lib/public-url";
 import { Button } from "../atoms/Button";
-import { Heading } from "../atoms/Heading";
-import { Text } from "../atoms/Text";
 
 type Props = {
-  name: string;
-  role: string;
+  /** Tres líneas del h1: saludo, acento y contexto. */
+  title: [string, string, string];
   valueProposition: string;
   email: string;
   /** Ancla de la sección Trabajos en el idioma de la página. */
@@ -19,12 +17,11 @@ type Props = {
 };
 
 const photoClass =
-  "aspect-square w-16 shrink-0 rounded-photo border-photo border-primary object-cover";
+  "aspect-square w-16 shrink-0 rounded-image border-photo border-primary object-cover";
 
 // Inicio: foto, nombre, rol, propuesta y acciones, en columna.
 export function ProfileIntro({
-  name,
-  role,
+  title,
   valueProposition,
   email,
   workHref,
@@ -43,15 +40,14 @@ export function ProfileIntro({
           height={128}
           className={photoClass}
         />
-        <Heading level={1} size="4xl" id={headingId} className="mt-4">
-          {name}
-        </Heading>
-        <Text size="lg" tone="muted" className="mt-1">
-          {role}
-        </Text>
-        <Text size="lg" className="mt-4 max-w-prose">
-          {valueProposition}
-        </Text>
+        <div className="hero mt-4">
+          <h1 id={headingId} className="hero-title" aria-label={title.join(" ")}>
+            <span>{title[0]}</span>
+            <span className="line-2-italic">{title[1]}</span>
+            <span>{title[2]}</span>
+          </h1>
+          <p className="hero-subtext">{valueProposition}</p>
+        </div>
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">
           <Button variant="primary" to={workHref}>
             {labels.work}

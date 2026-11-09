@@ -56,7 +56,7 @@ export function AboutSplit({ headingId, index, heading, intro, practices }: Prop
       <Paragraphs text={intro} />
       <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {practices.map((item) => (
-          <li key={item.title} className="rounded-card border border-border bg-surface p-6">
+          <li key={item.title} className="card-flat rounded-card bg-surface p-6">
             <PracticeIcon name={item.icon} />
             <Heading level={3} size="lg" className="mt-2">
               {item.title}

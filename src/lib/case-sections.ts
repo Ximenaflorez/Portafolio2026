@@ -44,6 +44,24 @@ export function extractSections(markdown: string): CaseSection[] {
   return titles.map((title, index) => ({ id: slugify(title), title, number: index + 1 }));
 }
 
+/**
+ * Si el caso abre con una imagen, se muestra bajo el resumen y se quita del cuerpo
+ * para no repetirla. La tarjeta sigue leyendo el Markdown original.
+ */
+export function liftLeadImage(markdown: string): {
+  markdown: string;
+  image?: { src: string; alt: string; caption: string };
+} {
+  const { intro, sections } = splitBySection(markdown);
+  const match = intro.match(/!\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/);
+  if (!match) return { markdown };
+  const without = intro.replace(match[0], "").trim();
+  return {
+    markdown: [without, ...sections].filter((part) => part.trim() !== "").join("\n\n"),
+    image: { alt: match[1], src: match[2], caption: match[3] ?? match[1] },
+  };
+}
+
 /** Primera imagen Markdown del cuerpo: la tarjeta del índice y el apoyo visual usan la misma. */
 export function firstMarkdownImage(markdown: string): { src: string; alt: string } | undefined {
   const match = markdown.match(/!\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/);

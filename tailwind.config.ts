@@ -84,6 +84,7 @@ export default {
         photo: "var(--photo-radius)",
         chip: "var(--chip-radius)",
         card: "var(--card-radius)",
+        image: "var(--image-radius)",
         button: "var(--button-radius)",
         inherit: "inherit",
       },

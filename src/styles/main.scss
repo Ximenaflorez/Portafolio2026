@@ -10,6 +10,23 @@
 @include meta.load-css("base/header");
 @include meta.load-css("base/theme");
 @include meta.load-css("base/icon");
+@include meta.load-css("base/hero");
+@include meta.load-css("base/cards");
+@include meta.load-css("base/compare");
 
 @tailwind components;
 @tailwind utilities;
+
+// Las imágenes de contenido cierran a 12px. La portada de la tarjeta sangra y no tiene radio propio.
+img {
+  border-radius: var(--image-radius);
+}
+
+.card-media img {
+  border-radius: 0;
+}
+
+.figure-phone {
+  max-width: var(--phone-frame);
+  margin-inline: auto;
+}
