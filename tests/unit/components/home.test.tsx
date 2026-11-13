@@ -174,7 +174,7 @@ describe("ProfileIntro (FR-018)", () => {
     const propuesta = screen.getByText(perfil.valueProposition);
 
     expect(h1).toHaveAttribute("id", "titulo-inicio");
-    expect(h1.querySelector(".line-2-italic")).toHaveTextContent("product designer & AI builder");
+    expect(h1.querySelector(".line-2-accent")).toHaveTextContent("product designer & AI builder");
     expect(foto.compareDocumentPosition(h1) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(h1.compareDocumentPosition(propuesta) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

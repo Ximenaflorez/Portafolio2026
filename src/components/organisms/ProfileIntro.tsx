@@ -43,7 +43,7 @@ export function ProfileIntro({
         <div className="hero mt-4">
           <h1 id={headingId} className="hero-title" aria-label={title.join(" ")}>
             <span>{title[0]}</span>
-            <span className="line-2-italic">{title[1]}</span>
+            <span className="line-2-accent">{title[1]}</span>
             <span>{title[2]}</span>
           </h1>
           <p className="hero-subtext">{valueProposition}</p>
