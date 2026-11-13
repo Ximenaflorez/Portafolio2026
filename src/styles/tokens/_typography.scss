@@ -34,9 +34,11 @@ $line-heights: (
   "heading": 1.2,
 );
 
-// Título del Inicio: Manrope a 800 y 36px. La bajada cabe en 540px.
+// Título del Inicio: Manrope a 800. En teléfono, 36px; desde el ancho `sm` de Tailwind, 40px.
 $hero-weight: 800;
 $hero-title-size: 36px;
+$hero-title-size-desktop: 40px;
+$screen-sm: 640px;
 $hero-title-leading: 1.1;
 $hero-subtext-size: 1.125rem;
 $hero-subtext-leading: 1.6;
